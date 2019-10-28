@@ -56,19 +56,27 @@ app.get('/', (req, res) => {
 
 //GET /setupdb
 app.get('/setupdb', (req, res) => {
-  connection.query('drop table if exists data2', function (err, rows, fields) {
+  connection.query('drop table if exists parent_user', function (err, rows, fields) {
     if (err)
       logger.error("Can't drop table");
   });
-  connection.query('create table data2(id int, name varchar(50))', function (err, rows, fields) {
+  connection.query('create table parent_user(id varchar(4), name varchar(50))', function (err, rows, fields) {
     if (err)
-      logger.error("Problem creating the table data2");
+      logger.error("Problem creating the table parent_user")
   });
-  connection.query('insert into data2 values(1, \'mark\')', function(err, rows, fields) {
-      if(err)
-        logger.error('adding row to table failed');
+  // connection.query('insert into parent_user values(\'1\', \'mark\')', function(err, rows, fields) {
+  //     if(err)
+  //       logger.error('adding row to table failed');
+  // });
+  connection.query('drop table if exists credit_card', function (err, rows, fields) {
+    if (err)
+      logger.error("Can't drop table");
   });
-  res.status(200).send('created the table');
+  connection.query('create table credit_card(expdate DATE, number varchar(16), cvv varchar(4), zip_code varchar(5), parent_id varchar(4), CONSTRAINT cardowner FOREIGN KEY (parent_id) REFERENCES parent_user.id', function(err, rows, fields) {
+    if (err)
+      logger.error("Problem creating the table credit_card")
+  });
+  res.status(200).send('created the parent table');
 });
 
 //GET /checkdb
@@ -86,6 +94,8 @@ app.get('/checkdb', (req, res) => {
     res.send('<h1>' + rows[0].id + ' ' + rows[0].name + '</h1>');
   })
 });
+
+
 
 //connecting the express object to listen on a particular port as defined in the config object. 
 app.listen(config.port, config.host, (e) => {
