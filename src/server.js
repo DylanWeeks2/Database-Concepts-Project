@@ -199,6 +199,39 @@ app.get('/save_credit_card:parent_id/:expdate/:cc_number/:cvv/:zip_code', (req, 
   })
 });
 
+//get /addChild
+app.get("/addChild/:id/:parent_id/:name/:parent_name/:bio/:rating", function (req, res) {
+  connection.query('insert into child_info values(?, ?, ?, ?, ?, ?)', [req.params['id'],req.params['parent_id'], req.params['name'],req.params['parent_name'],req.params['bio'],req.params['rating']], function(err, rows, fields) {
+    if(err)
+      logger.error('adding row to table failed');
+  });
+  res.status(200).send("Child user has been added!");
+});
+
+//post /updateChild
+app.get("/updateChild/:id/:parent_id/:name/:parent_name/:bio/:rating", function (req, res) {
+  res.status(200).send("Child has been updated!!");
+});
+app.post("/updateChild", function (req, res) {
+  connection.query('update child_info set parent_name = ? , bio= ? WHERE name = ?;', [req.params['parent_name'],req.params['bio'],req.params['child_name']], function(err, rows, fields) {
+    if(err)
+      logger.error('cant update child');
+  });
+});
+
+//get /createChild
+app.get("/createSchedule", auth, function (req, res) {
+  connection.query('DROP table if exists child_info', function (err, rows, fields) {
+    if (err)
+      logger.error("Can't drop table");
+    });
+  connection.query('CREATE table schedule(id int, parent_id int, child_id int, number_of_rides int, PRIMARY KEY(id))', function (err, rows, fields) {
+    if (err)
+      logger.error("Problem creating the table child_info");
+  });
+  res.status(200).send('The Schedule has been created!!');
+});
+
 //GET /checkdb
 app.get('/checkdb', auth, (req, res) => {
   //execute a query to select * from table named data.
