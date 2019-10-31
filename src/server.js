@@ -65,7 +65,7 @@ app.get('/', (req, res) => {
 });
 
 
-//GET /setupdb
+//GET /setup_parent
 app.get('/setup_parent', (req, res) => {
   connection.query('drop table if exists parent_user', function (err, rows, fields) {
     if (err)
