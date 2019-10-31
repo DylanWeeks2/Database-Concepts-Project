@@ -29,11 +29,11 @@ services:
     image: node:11
     volumes:
       - ./src:/usr/src/app
-      - /usr/src/app/node_modules #don't link node_modules
+      - /usr/src/app/node_modules
     working_dir: /usr/src/app
     depends_on:
       - db
-    command: bash -c "npm install && npm run dev" #runs the dev script
+    command: bash -c "npm install && npm run dev"
     ports: 
       - 3000:3000
     networks:
