@@ -119,7 +119,7 @@ app.get('/setup_cc', (req, res) => {
       logger.error('adding row to table failed');
   }); 
   res.status(200).send('created the credit card table');
-});
+}); 
 
 // GET /setupDriver
 app.get('/setupDriver', (req, res) => {
@@ -128,7 +128,7 @@ app.get('/setupDriver', (req, res) => {
     if (err)
       logger.error("Can't drop table");
   });
-  connection.query('create table driver_user(id varchar(4), name varchar(50), cellPhone varchar(10), fingerprint tinyint(1), reported tinyint(1), password varchar(50))', function (err, rows, fields) {
+  connection.query('create table driver_user(id varchar(4), name varchar(50), bio varchar(200), cellPhone varchar(10), fingerprint tinyint(1), reported tinyint(1), password varchar(50))', function (err, rows, fields) {
     if (err)
       logger.error("Problem creating the table driver_user");
   });
@@ -136,8 +136,8 @@ app.get('/setupDriver', (req, res) => {
 });
 
 // post /addDriver
-app.get('/addDriver/:id/:name/:cellPhone/:fingerprint/:reported/:password', (req, res) => {
-  connection.query('insert into driver_user values(?, ?, ?, ?, ?, ?)',[req.params['id'],req.params['name'], req.params['cellPhone'],req.params['fingerprint'],req.params['reported'],req.params['password']], function(err,rows,fields){
+app.get('/addDriver/:id/:name/:bio/:cellPhone/:fingerprint/:reported/:password', (req, res) => {
+  connection.query('insert into driver_user values(?, ?, ?, ?, ?, ?, ?)',[req.params['id'],req.params['name'], req.params['bio'], req.params['cellPhone'],req.params['fingerprint'],req.params['reported'],req.params['password']], function(err,rows,fields){
     if(err)
       logger.error('adding row to table failed');
   });
