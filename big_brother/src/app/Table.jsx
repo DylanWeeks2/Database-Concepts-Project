@@ -13,7 +13,6 @@ export class BBTable extends React.Component {
             rows: this.props.rows
         }
     }
-
     
     render() {
         return (
