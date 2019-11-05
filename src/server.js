@@ -151,7 +151,7 @@ app.get('/setupCar', (req, res) => {
     if(err)
       logger.error("Can't drop table");
   });
-  connection.query('create table car(numSeats int, numAccidents int, service datetime(6), state varchar(50), model varchar(50), driverID varchar(4) REFERENCES driver_user(id))' , function(err,rows,fields){
+  connection.query('create table car(id varchar(4), numSeats int, numAccidents int, service datetime(6), state varchar(50), model varchar(50), driverID varchar(4) REFERENCES driver_user(id))' , function(err,rows,fields){
     //dconstraint driverID foreign key(driver_ID) references driver_user.id',
     if(err)
       logger.error("Can't add car");
@@ -199,9 +199,22 @@ app.get('/save_credit_card:parent_id/:expdate/:cc_number/:cvv/:zip_code', (req, 
   })
 });
 
+//get /createChild
+app.get("/setupChild", auth, function (req, res) {
+  connection.query('DROP table if exists child_user', function (err, rows, fields) {
+    if (err)
+      logger.error("Can't drop table");
+    });
+  connection.query('CREATE table child_user (id varchar(4), name varchar(50), parent_name varchar(50), bio varchar(200), rating DECIMAL(19,4), parent_id varchar(4) REFERENCES parent_user(id))', function (err, rows, fields) {
+    if (err)
+      logger.error("Problem creating the table child_user");
+  });
+  res.status(200).send('The Child has been created!!');
+});
+
 //get /addChild
-app.get("/addChild/:id/:parent_id/:name/:parent_name/:bio/:rating", function (req, res) {
-  connection.query('insert into child_info values(?, ?, ?, ?, ?, ?)', [req.params['id'],req.params['parent_id'], req.params['name'],req.params['parent_name'],req.params['bio'],req.params['rating']], function(err, rows, fields) {
+app.get("/addChild/:id/:name/:parent_name/:bio/:rating/:parent_id", function (req, res) {
+  connection.query('insert into child_user values(?, ?, ?, ?, ?, ?)', [req.params['id'], req.params['name'],req.params['parent_name'],req.params['bio'],req.params['rating'], req.params['parent_id']], function(err, rows, fields) {
     if(err)
       logger.error('adding row to table failed');
   });
@@ -209,25 +222,25 @@ app.get("/addChild/:id/:parent_id/:name/:parent_name/:bio/:rating", function (re
 });
 
 //post /updateChild
-app.get("/updateChild/:id/:parent_id/:name/:parent_name/:bio/:rating", function (req, res) {
+app.get("/updateChild/:id/:name/:parent_name/:bio/:rating/:parent_id", function (req, res) {
   res.status(200).send("Child has been updated!!");
 });
 app.post("/updateChild", function (req, res) {
-  connection.query('update child_info set parent_name = ? , bio= ? WHERE name = ?;', [req.params['parent_name'],req.params['bio'],req.params['child_name']], function(err, rows, fields) {
+  connection.query('update child_user set parent_name = ? , bio= ? WHERE name = ?;', [req.params['parent_name'],req.params['bio'],req.params['child_name']], function(err, rows, fields) {
     if(err)
       logger.error('cant update child');
   });
 });
 
-//get /createChild
-app.get("/createSchedule", auth, function (req, res) {
-  connection.query('DROP table if exists child_info', function (err, rows, fields) {
+//get /createSchedule
+app.get("/setupSchedule", auth, function (req, res) {
+  connection.query('DROP table if exists schedule', function (err, rows, fields) {
     if (err)
       logger.error("Can't drop table");
     });
-  connection.query('CREATE table schedule(id int, parent_id int, child_id int, number_of_rides int, PRIMARY KEY(id))', function (err, rows, fields) {
+  connection.query('CREATE table schedule(id varchar(4), pick_up_location varchar(50), drop_off_location varchar(50), pick_up_time datetime(6), drop_off_time datetime(6), parent_id varchar(4) REFERENCES parent_user(id), child_id varchar(4) REFERENCES child_user(id), driver_id varchar(4) REFERENCES driver_user(id))', function (err, rows, fields) {
     if (err)
-      logger.error("Problem creating the table child_info");
+      logger.error("Problem creating the table schedule");
   });
   res.status(200).send('The Schedule has been created!!');
 });
