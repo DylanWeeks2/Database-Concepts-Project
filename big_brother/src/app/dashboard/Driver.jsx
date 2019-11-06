@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {Phone, Ride} from '../../Ride'
+import { Phone, Ride } from '../../Ride'
 import { DriveList } from './DriveList'
 export class DriverDashboard extends React.Component {
     state = {
@@ -12,7 +12,11 @@ export class DriverDashboard extends React.Component {
     render() {
         return (
             <>
-                <DriveList activeRides={this.state.activeRides}/>
+                <nav className="navbar">
+                    <button>Profile</button>
+                    <button>Log Out</button>
+                </nav>
+                <DriveList activeRides={this.state.activeRides} />
             </>
         );
     }
