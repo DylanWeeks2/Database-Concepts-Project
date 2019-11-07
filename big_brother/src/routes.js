@@ -8,6 +8,7 @@ import { DriverProfile } from './app/profiles/DriverProfile';
 
 export const ROUTES = [
     { path: '/register', component: Register, authRequired: false, adminRequired: false },
+    { path: '/parent/profile', component: ParentProfile, authRequired: false, adminRequired: false },
     { path: '/parent', component: ParentDashboard, authRequired: false, adminRequired: false },
     { path: '/driver/profile', component: DriverProfile, authRequired: false, adminRequired: false },
     { path: '/driver', component: DriverDashboard, authRequired: false, adminRequired: false }
