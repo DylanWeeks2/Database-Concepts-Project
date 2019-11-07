@@ -229,6 +229,22 @@ app.get("/updateChild/:id/:name/:bio/:parent_name", function (req, res) {
   });
 });
 
+//get /viewChild
+app.get('/viewChild/:name', auth, (req, res) => {
+  //execute a query to select * from table named data.
+  connection.query('SELECT * from child_user WHERE name = ?', [req.params['name']], function (err, rows, fields) {
+    if (err) {
+      logger.error("Error while executing Query");
+    };
+    logger.info(rows[0].name + ' ' + rows[0].id + ' ' + rows[0].parent_name + ' ' + rows[0].bio + ' ' + rows[0].rating + ' ' + rows[0].parent_id);
+ 
+    //writing to the response object
+    res.type('text/html');
+    res.status(200);
+    res.send('<h1>' + rows[0].name + ' ' + rows[0].id + ' ' + rows[0].parent_name + ' ' + rows[0].bio + ' ' + rows[0].rating + ' ' + rows[0].parent_id + '</h1>');
+  })
+});
+
 //get /createSchedule
 app.get("/setupSchedule", auth, function (req, res) {
   connection.query('DROP table if exists schedule', function (err, rows, fields) {
@@ -261,7 +277,7 @@ app.get("/deleteSchedule/:id", function (req, res) {
 });
 
 //post /updateSchedule
-app.get("/updateSchedule:id/:pick_up_location/:drop_off_location/:pick_up_time/:drop_off_time", function (req, res) {
+app.get("/updateSchedule/:id/:pick_up_location/:drop_off_location/:pick_up_time/:drop_off_time", function (req, res) {
   connection.query('update schedule set pick_up_location = ?, drop_off_location = ?, pick_up_time = ?, drop_off_time = ? WHERE id = ?;', [req.params['pick_up_location'], req.params['drop_off_location'], req.params['pick_up_time'], req.params['drop_off_time'],  req.params['id']], function(err, rows, fields) {
     if(err)
       logger.error('cant update child');
@@ -269,13 +285,20 @@ app.get("/updateSchedule:id/:pick_up_location/:drop_off_location/:pick_up_time/:
   });
 });
 
-//get /viewSchedule
-app.get("/viewSchedule/:child_id", function (req, res) {
-  connection.query('SELECT * FROM schedule WHERE child_id = ?;', [req.params['child_id']], function(err, rows, fields) {
-    if(err)
-      logger.error('Could not execute query');
-      res.status(200).send("Selected ALL CHILDS RIDES!!");
-  });
+//get /viewChild
+app.get('/viewSchedule/:child_id', auth, (req, res) => {
+  //execute a query to select * from table named data.
+  connection.query('SELECT * from schedule WHERE child_id = ?', [req.params['child_id']], function (err, rows, fields) {
+    if (err) {
+      logger.error("Error while executing Query");
+    };
+    logger.info(rows[0].pick_up_location + ' ' + rows[0].id + ' ' + rows[0].drop_off_location + ' ' + rows[0].pick_up_time + ' ' + rows[0].drop_off_time + ' ' + rows[0].parent_id + ' ' + rows[0].child_id + ' ' + rows[0].driver_id);
+ 
+    //writing to the response object
+    res.type('text/html');
+    res.status(200);
+    res.send('<h1>' + rows[0].id + ' ' + rows[0].pick_up_location + ' ' + rows[0].drop_off_location + ' ' + rows[0].pick_up_time + ' ' + rows[0].drop_off_time + ' ' + rows[0].parent_id + ' ' + rows[0].child_id + ' ' + rows[0].driver_id + ' ' + rows[0].parent_id + '</h1>');
+  })
 });
 
 //GET /checkdb
