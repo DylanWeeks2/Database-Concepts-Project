@@ -67,6 +67,11 @@ app.get('/login', (req, res) => {
   res.status(200).send('You logged in');
 });
 
+app.get('/login_driver', (req, res) => {
+
+});
+
+
 var auth = function(req, res, next) {
   if (sess)
     return next();
@@ -74,10 +79,36 @@ var auth = function(req, res, next) {
     return res.sendStatus(401);
 };
 
+app.get('/setupDriver_Schedule', (req,res) => {
+  connection.query('drop table if exists driver_schedule', function (err, rows, fields) {
+    if (err)
+      logger.error("Can't drop table");
+  });
+  connection.query('create table driver_schedule(id varchar(4), start datetime(6), end datetime(6), driver_id varchar(4) REFERENCES driver_user(id))', function (err, rows, fields) {
+    if (err)
+      logger.error("Problem creating the table driver_schedule")
+  });
+
+res.status(200).send('created the driver schedule table');
+});
+
+
+// post /addDriver_schedule
+app.get('/addDriver_Schedule/:id/:start/:end/:driver', (req, res) => {
+  connection.query('insert into driver_schedule values(?, ?, ?, ?)',[req.params['id'],req.params['start'], req.params['end'], req.params['driver']], function(err,rows,fields){
+    if(err)
+      logger.error('adding row to table failed');
+  });
+  res.status(200).send('added given free time to driver');
+});
+
+
 
 //GET /setupdb
 app.get('/setupdb', (req, res) => {
   app.get('/setupDriver');
+  app.get('/setup_parent');
+  app.get('/setup_cc');
   app.get('/setupCar');
   //connection.query('insert into driver_user values(1, \'mark\')', function(err, rows, fields) {
   //    if(err)
@@ -151,21 +182,108 @@ app.get('/setupCar', (req, res) => {
     if(err)
       logger.error("Can't drop table");
   });
-  connection.query('create table car(numSeats int, numAccidents int, service datetime(6), state varchar(50), model varchar(50), driverID varchar(4) REFERENCES driver_user(id))' , function(err,rows,fields){
+  connection.query('create table car(id varchar(4), numSeats int, numAccidents int, features varchar(50), licenceNum varchar(8), service datetime(6), state varchar(50), model varchar(50), driverID varchar(4) REFERENCES driver_user(id))' , function(err,rows,fields){
     //dconstraint driverID foreign key(driver_ID) references driver_user.id',
     if(err)
       logger.error("Can't add car");
   });
- res.status(200).send("set up the driver");
+ res.status(200).send("set up the car");
+});
+//create table car(numSeats int, numAccidents int, service datetime(6), state varchar(50), model varchar(50), driverID varchar(4) REFERENCES driver_user(id))' , function(err,rows,fields){
+//GET /getCarModel
+app.get('/getCarModel/:carID', (req, res) => {
+  connection.query('select model from car where id = ?', [req.params['carID']], function(err, rows, fields){
+    if(err)
+      logger.error('failed getting car model');
+    res.status(200).send('<h1>' + rows[0].model + '</h1>');
+  })
+});
+//GET /getCarSeats
+app.get('/getCarSeats/:carID', (req, res) => {
+  connection.query('select numSeats from car where id = ?', [req.params['carID']], function(err, rows, fields){
+    if(err)
+      logger.error('failed getting car seats');
+    res.status(200).send('<h1>' + rows[0].numSeats + '</h1>');
+  });
+});
+//GET /getCarFeatures
+app.get('/getCarFeatures/:carID', (req, res) => {
+  connection.query('select features from car where id = ?', [req.params['carID']], function(err, rows, fields){
+    if(err)
+      logger.error('failed getting car features');
+    res.status(200).send('<h1>' + rows[0].features + '</h1>');
+  });
 });
 
-//post /addDriver
-app.get('/addCar/:numSeats/:numAccidents/:service/:state/:model/:driverID', (req, res) => {
-  connection.query('insert into car values(?,?,?,?,?,?)',[req.params['numSeats'], req.params['numAccidents'] ,req.params['service'] ,req.params['state'] ,req.params['model'] ,req.params['driverID']], function(err,rows,fields){
+//GET /getCarLicence
+app.get('/getCarLicence/:carID', (req, res) => {
+  connection.query('select licenceNum from car where id = ?', [req.params['carID']], function(err, rows, fields){
+    if(err)
+      logger.error('failed getting car licence');
+    res.status(200).send('<h1>' + rows[0].licenceNum + '</h1>');
+  });
+});
+//GET /getCarAccidents
+app.get('/getCarAccidents/:carID', (req, res) => {
+  connection.query('select numAccidents from car where id = ?', [req.params['carID']], function(err, rows, fields){
+    if(err)
+      logger.error('failed getting car accidents');
+    res.status(200).send('<h1>' + rows[0].numAccidents + '</h1>');
+  });
+});
+
+//GET /getCarService
+app.get('/getCarService/:carID', (req, res) => {
+  connection.query('select service from car where id = ?', [req.params['carID']], function(err, rows, fields){
+    if(err)
+      logger.error('failed getting car service');
+    res.status(200).send('<h1>' + rows[0].service + '</h1>');
+  });
+});
+
+//GET /getCarState
+app.get('/getCarState/:carID', (req, res) => {
+  connection.query('select state from car where id = ?', [req.params['carID']], function(err, rows, fields){
+    if(err)
+      logger.error('failed getting car state');
+    res.status(200).send('<h1>' + rows[0].state + '</h1>');
+  });
+});
+//GET /getCarDriverId
+app.get('/getCarDriverId/:carID', (req, res) => {
+  connection.query('select driverId from car where id = ?', [req.params['carID']], function(err, rows, fields){
+    if(err)
+      logger.error('failed getting car driver id');
+    res.status(200).send('<h1>' + rows[0].driverID + '</h1>');
+  });
+});
+
+//post /addCar
+app.get('/addCar/:carID/:numSeats/:numAccidents/:features/:licenceNum/:service/:state/:model/:driverID', (req, res) => {
+  connection.query('insert into car values(?,?,?,?,?,?,?,?,?)', [req.params['carID'], req.params['numSeats'], req.params['numAccidents'], req.params['features'], req.params['licenceNum'], req.params['service'] ,req.params['state'] ,req.params['model'] ,req.params['driverID']], function(err,rows,fields){
     if(err)
       logger.error('adding row to table failed');
+    logger.info(req.params['features']);
+    res.status(200).send('added given car');
   });
-  res.status(200).send('added given car');
+});
+
+//post /updateCarService
+app.get('/updateCarService/:carID/:newService', (req, res) => {
+  connection.query('update car set service = ? where id = ?', [req.params['newService'],req.params['carID']], function (err, rows, fields){
+    if(err)
+      logger.error('updating car service failed');
+  });
+  res.status(200).send('updated car service');
+});
+
+//post /updateCarService
+app.get('/updateCarAccidents/:carID', (req, res) => {
+  connection.query('update car set numAccidents = numAccidents + 1 where id = ?', [req.params['carID']], function (err, rows, fields){
+    if(err)
+      logger.error('updating car accidents failed');
+  });
+  res.status(200).send('updated car accidents');
 });
 
 //post /updatePassword
@@ -199,9 +317,22 @@ app.get('/save_credit_card:parent_id/:expdate/:cc_number/:cvv/:zip_code', (req, 
   })
 });
 
+//get /createChild
+app.get("/setupChild", auth, function (req, res) {
+  connection.query('DROP table if exists child_user', function (err, rows, fields) {
+    if (err)
+      logger.error("Can't drop table");
+    });
+  connection.query('CREATE table child_user (id varchar(4), name varchar(50), parent_name varchar(50), bio varchar(200), rating DECIMAL(19,4), parent_id varchar(4) REFERENCES parent_user(id))', function (err, rows, fields) {
+    if (err)
+      logger.error("Problem creating the table child_user");
+  });
+  res.status(200).send('The Child has been created!!');
+});
+
 //get /addChild
-app.get("/addChild/:id/:parent_id/:name/:parent_name/:bio/:rating", function (req, res) {
-  connection.query('insert into child_info values(?, ?, ?, ?, ?, ?)', [req.params['id'],req.params['parent_id'], req.params['name'],req.params['parent_name'],req.params['bio'],req.params['rating']], function(err, rows, fields) {
+app.get("/addChild/:id/:name/:parent_name/:bio/:rating/:parent_id", function (req, res) {
+  connection.query('insert into child_user values(?, ?, ?, ?, ?, ?)', [req.params['id'], req.params['name'],req.params['parent_name'],req.params['bio'],req.params['rating'], req.params['parent_id']], function(err, rows, fields) {
     if(err)
       logger.error('adding row to table failed');
   });
@@ -209,42 +340,83 @@ app.get("/addChild/:id/:parent_id/:name/:parent_name/:bio/:rating", function (re
 });
 
 //post /updateChild
-app.get("/updateChild/:id/:parent_id/:name/:parent_name/:bio/:rating", function (req, res) {
-  res.status(200).send("Child has been updated!!");
-});
-app.post("/updateChild", function (req, res) {
-  connection.query('update child_info set parent_name = ? , bio= ? WHERE name = ?;', [req.params['parent_name'],req.params['bio'],req.params['child_name']], function(err, rows, fields) {
+app.get("/updateChild/:id/:name/:bio/:parent_name", function (req, res) {
+  connection.query('update child_user set name = ?, bio = ?, parent_name = ? WHERE id = ?;', [req.params['name'], req.params['bio'], req.params['parent_name'], req.params['id']], function(err, rows, fields) {
     if(err)
       logger.error('cant update child');
   });
 });
 
-//get /createChild
-app.get("/createSchedule", auth, function (req, res) {
-  connection.query('DROP table if exists child_info', function (err, rows, fields) {
-    if (err)
-      logger.error("Can't drop table");
-    });
-  connection.query('CREATE table schedule(id int, parent_id int, child_id int, number_of_rides int, PRIMARY KEY(id))', function (err, rows, fields) {
-    if (err)
-      logger.error("Problem creating the table child_info");
-  });
-  res.status(200).send('The Schedule has been created!!');
-});
-
-//GET /checkdb
-app.get('/checkdb', auth, (req, res) => {
+//get /viewChild
+app.get('/viewChild/:name', auth, (req, res) => {
   //execute a query to select * from table named data.
-  connection.query('SELECT * from data2', function (err, rows, fields) {
+  connection.query('SELECT * from child_user WHERE name = ?', [req.params['name']], function (err, rows, fields) {
     if (err) {
       logger.error("Error while executing Query");
     };
-    logger.info(rows[0].name + ' ' + rows[0].id);
+    logger.info(rows[0].name + ' ' + rows[0].id + ' ' + rows[0].parent_name + ' ' + rows[0].bio + ' ' + rows[0].rating + ' ' + rows[0].parent_id);
  
     //writing to the response object
     res.type('text/html');
     res.status(200);
-    res.send('<h1>' + rows[0].id + ' ' + rows[0].name + '</h1>');
+    res.send('<h1>' + rows[0].name + ' ' + rows[0].id + ' ' + rows[0].parent_name + ' ' + rows[0].bio + ' ' + rows[0].rating + ' ' + rows[0].parent_id + '</h1>');
+  })
+});
+
+//get /createSchedule
+app.get("/setupSchedule", auth, function (req, res) {
+  connection.query('DROP table if exists schedule', function (err, rows, fields) {
+    if (err)
+      logger.error("Can't drop table");
+    });
+  connection.query('CREATE table schedule(id varchar(4), pick_up_location varchar(50), drop_off_location varchar(50), pick_up_time datetime(6), drop_off_time datetime(6), parent_id varchar(4) REFERENCES parent_user(id), child_id varchar(4) REFERENCES child_user(id), driver_id varchar(4) REFERENCES driver_user(id))', function (err, rows, fields) {
+    if (err)
+      logger.error("Problem creating the table schedule");
+  });
+  res.status(200).send('The Schedule has been created!!');
+});
+
+//get /addSchedule
+app.get("/addSchedule/:id/:pick_up_location/:drop_off_location/:pick_up_time/:drop_off_time/:parent_id/:child_id/:driver_id", function (req, res) {
+  connection.query('insert into schedule values(?, ?, ?, ?, ?, ?, ?, ?)', [req.params['id'], req.params['pick_up_location'],req.params['drop_off_location'],req.params['pick_up_time'],req.params['drop_off_time'], req.params['parent_id'], req.params['child_id'], req.params['driver_id']], function(err, rows, fields) {
+    if(err)
+      logger.error('adding row to table failed');
+  });
+  res.status(200).send("A Schedule has been added!");
+});
+
+//post /deleteSchedule
+app.get("/deleteSchedule/:id", function (req, res) {
+  connection.query('DELETE FROM schedule WHERE id = ?;', [req.params['id']], function(err, rows, fields) {
+    if(err)
+      logger.error('cant DELETE Schedule!');
+  res.status(200).send("Ride has been removed!!");
+  });
+});
+
+//post /updateSchedule
+app.get("/updateSchedule/:id/:pick_up_location/:drop_off_location/:pick_up_time/:drop_off_time", function (req, res) {
+  connection.query('update schedule set pick_up_location = ?, drop_off_location = ?, pick_up_time = ?, drop_off_time = ? WHERE id = ?;', [req.params['pick_up_location'], req.params['drop_off_location'], req.params['pick_up_time'], req.params['drop_off_time'],  req.params['id']], function(err, rows, fields) {
+    if(err)
+      logger.error('cant update child');
+      res.status(200).send("Schedule UPDATED!!");
+  });
+});
+
+//get /viewSchedule
+app.get('/viewSchedule/:child_id', auth, (req, res) => {
+  //execute a query to select * from table named data.
+
+  connection.query('SELECT * from schedule WHERE child_id = ?', [req.params['child_id']], function (err, rows, fields) {
+    if (err) {
+      logger.error("Error while executing Query");
+    };
+    logger.info(rows[0].pick_up_location + ' ' + rows[0].id + ' ' + rows[0].drop_off_location + ' ' + rows[0].pick_up_time + ' ' + rows[0].drop_off_time + ' ' + rows[0].parent_id + ' ' + rows[0].child_id + ' ' + rows[0].driver_id);
+ 
+    //writing to the response object
+    res.type('text/html');
+    res.status(200);
+    res.send('<h1>' + rows[0].id + ' ' + rows[0].pick_up_location + ' ' + rows[0].drop_off_location + ' ' + rows[0].pick_up_time + ' ' + rows[0].drop_off_time + ' ' + rows[0].parent_id + ' ' + rows[0].child_id + ' ' + rows[0].driver_id + ' ' + rows[0].parent_id + '</h1>');
   })
 });
 
