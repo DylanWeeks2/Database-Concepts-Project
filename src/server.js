@@ -222,11 +222,8 @@ app.get("/addChild/:id/:name/:parent_name/:bio/:rating/:parent_id", function (re
 });
 
 //post /updateChild
-app.get("/updateChild/:id/:name/:parent_name/:bio/:rating/:parent_id", function (req, res) {
-  res.status(200).send("Child has been updated!!");
-});
-app.post("/updateChild", function (req, res) {
-  connection.query('update child_user set parent_name = ? , bio= ? WHERE name = ?;', [req.params['parent_name'],req.params['bio'],req.params['child_name']], function(err, rows, fields) {
+app.get("/updateChild/:id/:name/:bio/:parent_name", function (req, res) {
+  connection.query('update child_user set name = ?, bio = ?, parent_name = ? WHERE id = ?;', [req.params['name'], req.params['bio'], req.params['parent_name'], req.params['id']], function(err, rows, fields) {
     if(err)
       logger.error('cant update child');
   });
@@ -243,6 +240,42 @@ app.get("/setupSchedule", auth, function (req, res) {
       logger.error("Problem creating the table schedule");
   });
   res.status(200).send('The Schedule has been created!!');
+});
+
+//get /addSchedule
+app.get("/addSchedule/:id/:pick_up_location/:drop_off_location/:pick_up_time/:drop_off_time/:parent_id/:child_id/:driver_id", function (req, res) {
+  connection.query('insert into schedule values(?, ?, ?, ?, ?, ?, ?, ?)', [req.params['id'], req.params['pick_up_location'],req.params['drop_off_location'],req.params['pick_up_time'],req.params['drop_off_time'], req.params['parent_id'], req.params['child_id'], req.params['driver_id']], function(err, rows, fields) {
+    if(err)
+      logger.error('adding row to table failed');
+  });
+  res.status(200).send("A Schedule has been added!");
+});
+
+//post /deleteSchedule
+app.get("/deleteSchedule/:id", function (req, res) {
+  connection.query('DELETE FROM schedule WHERE id = ?;', [req.params['id']], function(err, rows, fields) {
+    if(err)
+      logger.error('cant DELETE Schedule!');
+  res.status(200).send("Ride has been removed!!");
+  });
+});
+
+//post /updateSchedule
+app.get("/updateSchedule:id/:pick_up_location/:drop_off_location/:pick_up_time/:drop_off_time", function (req, res) {
+  connection.query('update schedule set pick_up_location = ?, drop_off_location = ?, pick_up_time = ?, drop_off_time = ? WHERE id = ?;', [req.params['pick_up_location'], req.params['drop_off_location'], req.params['pick_up_time'], req.params['drop_off_time'],  req.params['id']], function(err, rows, fields) {
+    if(err)
+      logger.error('cant update child');
+      res.status(200).send("Schedule UPDATED!!");
+  });
+});
+
+//get /viewSchedule
+app.get("/viewSchedule/:child_id", function (req, res) {
+  connection.query('SELECT * FROM schedule WHERE child_id = ?;', [req.params['child_id']], function(err, rows, fields) {
+    if(err)
+      logger.error('Could not execute query');
+      res.status(200).send("Selected ALL CHILDS RIDES!!");
+  });
 });
 
 //GET /checkdb
