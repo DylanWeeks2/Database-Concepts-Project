@@ -285,7 +285,7 @@ app.get("/updateSchedule/:id/:pick_up_location/:drop_off_location/:pick_up_time/
   });
 });
 
-//get /viewChild
+//get /viewSchedule
 app.get('/viewSchedule/:child_id', auth, (req, res) => {
   //execute a query to select * from table named data.
   connection.query('SELECT * from schedule WHERE child_id = ?', [req.params['child_id']], function (err, rows, fields) {
@@ -298,22 +298,6 @@ app.get('/viewSchedule/:child_id', auth, (req, res) => {
     res.type('text/html');
     res.status(200);
     res.send('<h1>' + rows[0].id + ' ' + rows[0].pick_up_location + ' ' + rows[0].drop_off_location + ' ' + rows[0].pick_up_time + ' ' + rows[0].drop_off_time + ' ' + rows[0].parent_id + ' ' + rows[0].child_id + ' ' + rows[0].driver_id + ' ' + rows[0].parent_id + '</h1>');
-  })
-});
-
-//GET /checkdb
-app.get('/checkdb', auth, (req, res) => {
-  //execute a query to select * from table named data.
-  connection.query('SELECT * from data2', function (err, rows, fields) {
-    if (err) {
-      logger.error("Error while executing Query");
-    };
-    logger.info(rows[0].name + ' ' + rows[0].id);
- 
-    //writing to the response object
-    res.type('text/html');
-    res.status(200);
-    res.send('<h1>' + rows[0].id + ' ' + rows[0].name + '</h1>');
   })
 });
 
