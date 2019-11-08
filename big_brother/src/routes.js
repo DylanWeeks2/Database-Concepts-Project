@@ -5,6 +5,7 @@ import { Register } from './app/authentication/Register';
 import { ParentDashboard } from './app/dashboard/Parent';
 import { DriverDashboard } from './app/dashboard/Driver';
 import { DriverProfile } from './app/profiles/DriverProfile';
+import { ParentProfile } from './app/profiles/ParentProfile';
 
 export const ROUTES = [
     { path: '/register', component: Register, authRequired: false, adminRequired: false },
