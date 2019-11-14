@@ -18,8 +18,8 @@ export class ParentProfile extends React.Component {
             <div>Name: {this.state.name}</div>
             <div>Email: {this.state.email}</div>
             <div>Phone Number: {this.state.phone}</div>
-            <div>Home Address: {this.state.car.make}</div>
-            <div>Work: {this.state.car.model}</div>
+            <div>Home Address: {this.state.homeAddress}</div>
+            <div>Work: {this.state.workAddress}</div>
 
             <div> Children
                   <table>
