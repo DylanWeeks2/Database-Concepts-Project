@@ -6,7 +6,7 @@ routes.get('/setupDriver_Schedule', (req,res) => {
       if (err)
         logger.error("Can't drop table");
     });
-    connection.query('create table driver_schedule(id varchar(4), start datetime(6), end datetime(6), driver_id varchar(4) REFERENCES driver_user(id))', function (err, rows, fields) {
+    connection.query('create table driver_schedule(id varchar(4), start datetime(6), end datetime(6), active tinyint(1), driver_id varchar(4) REFERENCES driver_user(id))', function (err, rows, fields) {
       if (err)
         logger.error("Problem creating the table driver_schedule")
     });
@@ -16,11 +16,23 @@ routes.get('/setupDriver_Schedule', (req,res) => {
   
   
   // post /addDriver_schedule
-  routes.get('/addDriver_Schedule/:id/:start/:end/:driver', (req, res) => {
-    connection.query('insert into driver_schedule values(?, ?, ?, ?)',[req.params['id'],req.params['start'], req.params['end'], req.params['driver']], function(err,rows,fields){
+  routes.get('/addDriver_Schedule/:id/:start/:end/:active/:driver', (req, res) => {
+    connection.query('insert into driver_schedule values(?, ?, ?, ?, ?)',[req.params['id'],req.params['start'], req.params['end'], req.params['active'], req.params['driver']], function(err,rows,fields){
       if(err)
         logger.error('adding row to table failed');
     });
     res.status(200).send('added given free time to driver');
   });
-  
+
+ 
+  routes.get('/setDriverScheduleInactive/:id', (req,res) => {
+    connection.query('update driver_schedule set active = 0 where id = ?',[req.params['id']], function(err,rows,fields){
+      if(err)
+        logger.error('updating schedule failed')
+    });
+
+  });
+
+  routes.get('/getAvailableDrivers', (req,res) => {
+    
+  });
