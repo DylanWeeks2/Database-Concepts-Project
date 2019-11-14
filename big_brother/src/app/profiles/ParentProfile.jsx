@@ -8,7 +8,7 @@ export class ParentProfile extends React.Component {
         phoneNumber: "",
         homeAddress: "",
         workAddress: "",
-        child: new Child("Test", "5", "Test Elementary", "Peanut Allergy", "XxTESTxX")
+        children: [new Child("Test", "5", "Test Elementary", "Peanut Allergy", "XxTESTxX")]
     }
 
     render() {
@@ -34,7 +34,7 @@ export class ParentProfile extends React.Component {
                     </thead>
                     <tbody>
                         {
-                            this.state.accidents.map((child, i) =>
+                            this.state.children.map((child, i) =>
                                 <tr>
                                     <td>{child.name}</td>
                                     <td>{child.grade}</td>
