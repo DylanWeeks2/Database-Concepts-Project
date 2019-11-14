@@ -34,5 +34,18 @@ routes.get('/setupDriver_Schedule', (req,res) => {
   });
 
   routes.get('/getAvailableDrivers', (req,res) => {
-    
+    connection.query('select * from driver_schedule where ? > driver_schedule.start and ? < driver_schedule.end', [ req.body['time'], req.body['time']], function(err,rows,fields){
+      if (err) {
+        logger.error("Error while executing Query");
+        res.status(400).json({
+          "data": [],
+          "error": "MySQL error"
+        })
+      }
+      else{
+        res.status(200).json({
+          "data": rows
+        });
+      }
+    });
   });
