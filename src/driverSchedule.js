@@ -25,8 +25,8 @@ routes.get('/setupDriver_Schedule', (req,res) => {
   });
 
  
-  routes.get('/setDriverScheduleInactive/:id', (req,res) => {
-    connection.query('update driver_schedule set active = 0 where id = ?',[req.params['id']], function(err,rows,fields){
+  routes.get('/setDriverScheduleInactive', (req,res) => {
+    connection.query('update driver_schedule set active = ? where id = ?',[req.body['status'],req.body['id']], function(err,rows,fields){
       if(err)
         logger.error('updating schedule failed')
     });
