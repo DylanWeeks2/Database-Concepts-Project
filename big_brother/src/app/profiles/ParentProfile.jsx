@@ -14,16 +14,16 @@ export class ParentProfile extends React.Component {
     render() {
         return (
         <>
-            <h1>Profile Information</h1>
-            <div>Name: {this.state.name}</div>
-            <div>Email: {this.state.email}</div>
-            <div>Phone Number: {this.state.phone}</div>
-            <div>Home Address: {this.state.homeAddress}</div>
-            <div>Work: {this.state.workAddress}</div>
+            <h1 style={{margin: "1em 10em", borderradius: "5em"}} class="jumbotron jumbotron-fluid bg-info text-white w-50">Profile Information</h1>
+            <div class="w-25 p-3 bg-danger text-white">Name: {this.state.name}</div>
+            <div class="w-25 p-3 bg-warning text-white">Email: {this.state.email}</div>
+            <div class="w-25 p-3 bg-info text-black">Phone Number: {this.state.phone}</div>
+            <div class="w-25 p-3 bg-primary text-white">Home Address: {this.state.homeAddress}</div>
+            <div class="w-25 p-3 bg-light text-black">Work: {this.state.workAddress}</div>
 
-            <div> Children
-                  <table>
-                    <thead>
+            <div class="p-3 bg-secondary text-white"> Children
+                  <table class="table">
+                    <thead class="table-dark">
                         <tr>
                             <th> Name </th>
                             <th> Grade </th>
@@ -35,12 +35,12 @@ export class ParentProfile extends React.Component {
                     <tbody>
                         {
                             this.state.children.map((child, i) =>
-                                <tr>
-                                    <td>{child.name}</td>
-                                    <td>{child.grade}</td>
-                                    <td>{child.school}</td>
-                                    <td>{child.health}</td>
-                                    <td>{child.username}</td>
+                                <tr class="table-dark">
+                                    <td >{child.name}</td>
+                                    <td >{child.grade}</td>
+                                    <td >{child.school}</td>
+                                    <td >{child.health}</td>
+                                    <td >{child.username}</td>
                                 </tr>
                             )
                         }
