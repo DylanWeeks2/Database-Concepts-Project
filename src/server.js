@@ -105,8 +105,8 @@ app.get('/setupdb', (req, res) => {
 });
 
 //api endpoints
+app.post('/setupCreditCard', creditCard.setupCreditCard);
 app.post('/saveCreditCard', creditCard.saveCreditCard);
-app.post('/setupCc', creditCard.setup_cc);
 app.get('/getCreditCard', creditCard.getCreditCard);
 
 //connecting the express object to listen on a particular port as defined in the config object. 
