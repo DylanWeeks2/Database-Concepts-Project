@@ -1,13 +1,13 @@
 /**A simple node/express server that include communication with a 
  * mysql db instance. 
 */
-var creditCard = require('./creditCard');
-var parentUser = require('./parentUser');
-var childUser  = require('./childUser');
-var driverUser = require('./driverUser');
-var car        = require('./car');
-var driverSchedule = require('./driverSchedule');
-var rideSchedule = require('./rideSchedule');
+const creditCard = require('./creditCard');
+const parentUser = require('./parentUser');
+const childUser  = require('./childUser');
+const driverUser = require('./driverUser');
+const car        = require('./car');
+const driverSchedule = require('./driverSchedule');
+const rideSchedule = require('./rideSchedule');
 //create main objects
 
 const express = require('express');
@@ -20,16 +20,31 @@ const session = require('express-session');
 var sess; 
 
 //create the mysql connection object.  
-var connection = mysql.createConnection({
-  //db is the host and that name is assigned based on the 
-  //container name given in the docker-compose file
+// var connection = mysql.createConnection({
+//   //db is the host and that name is assigned based on the 
+//   //container name given in the docker-compose file
+//   host: 'db',
+//   port: '3306',
+//   user: 'user',
+//   password: 'password',
+//   database: 'db'
+// });
+//CREATE DATABASE
+const db = mysql.createConnection({
   host: 'db',
-  port: '3306',
   user: 'user',
-  password: 'password',
-  database: 'db'
-});
-
+  port: '3306',
+  database: 'db',
+  password: 'password'
+})
+//CONNECT TO DATABASE
+db.connect((err) => {
+  if(err) {
+    throw err;
+  }
+  logger.info('Connected to the database');
+})
+global.db = db; //probably bad coding but this is how we are getting db to other files
 //set up some configs for express. 
 const config = {
   name: 'sample-express-app',
@@ -45,29 +60,16 @@ app.use(session({
    resave: false,
    saveUninitialized: true,
 }));
-app.use('/', creditCard);
-app.use('/', parentUser);
-app.use('/', childUser);
-app.use('/', driverUser);
-app.use('/', car);
-app.use('/', driverSchedule);
-app.use('/', rideSchedule);
 
 //create a logger object.  Using logger is preferable to simply writing to the console. 
 const logger = log({ console: true, file: false, label: config.name });
 
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: true}));
 app.use(cors());
 app.use(ExpressAPILogMiddleware(logger, { request: true }));
 
-//Attempting to connect to the database.
-connection.connect(function (err) {
-  if (err)
-    logger.error("Cannot connect to DB!");
-  logger.info("Connected to the DB!");
-});
-
-/**     REQUEST HANDLERS        */
+/**     REQUEST HANDLERS       lets get rid of these soon */ 
 
 //GET /
 app.get('/', (req, res) => {
@@ -99,12 +101,13 @@ app.get('/setupdb', (req, res) => {
   app.get('/setup_parent');
   app.get('/setup_cc');
   app.get('/setupCar');
-  //connection.query('insert into driver_user values(1, \'mark\')', function(err, rows, fields) {
-  //    if(err)
-  //      logger.error('adding row to table failed');
-  //});
-  res.status(200).send('created the driver and car tables');
+  res.status(200).send('created the driver, parent, credit card, and car tables');
 });
+
+//api endpoints
+app.post('/saveCreditCard', creditCard.saveCreditCard);
+app.post('/setupCc', creditCard.setup_cc);
+app.get('/getCreditCard', creditCard.getCreditCard);
 
 //connecting the express object to listen on a particular port as defined in the config object. 
 app.listen(config.port, config.host, (e) => {
@@ -113,3 +116,5 @@ app.listen(config.port, config.host, (e) => {
   }
   logger.info(`${config.name} running on ${config.host}:${config.port}`);
 });
+module.exports = app;
+module.exports = db;
