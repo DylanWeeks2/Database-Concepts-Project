@@ -1,28 +1,41 @@
-var routes = require('express').Router();
-module.exports = routes;
-
+//var myapp = require('./server.js');
 //GET /setup_cc
-routes.get('/setup_cc', (req, res) => {
-    connection.query('drop table if exists credit_card', function (err, rows, fields) {
-        if (err)
-            logger.error("Can't drop table");
-        });
-    connection.query('create table credit_card(expdate DATE, cc_number varchar(16), cvv varchar(4), zip_code varchar(5), parent_id varchar(4) REFERENCES parent_user(id))', function(err, rows, fields) {
-        if (err)
-            logger.error("Problem creating the table credit_card")
+exports.setup_cc = (req, res) => {
+    let query = "drop table if exists creditCard";
+    db.query(query, (err, result) => {
+        if(err) {
+            res.redirect('/');
+        }
     });
-    connection.query('insert into credit_card values(\'06-22-24\', \'0000000000000000\', \'999\', \'11111\' \'1\')', function(err, rows, fields) {
-        if(err)
-            logger.error('adding row to table failed');
-        }); 
-    res.status(200).send('created the credit card table');
-}); 
+    query = "create table creditCard(expdate DATE, cc_number varchar(16), cvv varchar(4), zip_code varchar(5), parent_id varchar(4) REFERENCES parent_user(id))";
+    db.query(query, (err, result) => {
+        if(err) { res.redirect('/'); }
+        res.status(200).send('created the credit card table');
+    })
+}; 
 
 //POST /save_credit_card
-routes.get('/save_credit_card:parent_id/:expdate/:cc_number/:cvv/:zip_code', (req, res) => {
-    connection.query('insert into credit_card values ?, ?, ?, ?, ?', [req.params['expdate'], req.params['cc_number'], req.params['cvv'], req.params['zip_code'], requ.params['parent_id']], function (err, rows, fields) {
+exports.saveCreditCard = (req, res) => {
+    console.log(req.body);
+    let query = "insert into creditCard values('" + req.body.expdate + "','" + req.body.cc_number + "','" + req.body.cvv + "','" + req.body.zip_code + "','" + req.body.parent_id + "')"; 
+    db.query(query, (err, result) => {
         if(err) {
             logger.error("failed saving new credit card");
-        };
+            res.status(400);
+        }
+        else{
+            res.status(200).send('added the credit card');
+        }
     })
-});
+};
+
+//GET /getCreditCard
+exports.getCreditCard = (req, res) => {
+    let query = "select * from creditCard where parent_id = '" + req.body.parent_id + "'";
+    db.query(query, function(err,rows, fields) {
+        if(err) {
+            logger.error("failed getting credit card");
+        }
+        res.status(200).send('<h1>' + rows[0].expdate + rows[0].cc_number + rows[0].cvv + rows[0].zip_code + rows[0].parent_id);
+    })
+}
