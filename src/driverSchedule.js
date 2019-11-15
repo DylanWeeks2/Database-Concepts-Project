@@ -1,5 +1,24 @@
-var routes = require('express').Router();
+//var routes = require('express').Router();
 module.exports = routes;
+
+
+exports.setupDriverSchedule = (req, res) => {
+  let query = "drop table if exists driverSchedule";
+  db.query(query, (err,result) => {
+    if(err){
+      res.redirect('/');
+    }
+  });
+  query = "create table driverSchedule(id varchar(4), start datetime(6), end datetime(6), active tinyint(1), driver_id varchar(4) REFERENCES driver_user(id))";
+  db.query(query, (err, result) => {
+    if(err) {
+       res.redirect('/');
+       }
+    res.status(200).send('created the driver schedule table');
+});
+};
+
+
 
 routes.get('/setupDriver_Schedule', (req,res) => {
     connection.query('drop table if exists driver_schedule', function (err, rows, fields) {
