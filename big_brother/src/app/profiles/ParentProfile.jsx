@@ -67,8 +67,8 @@ export class ParentProfile extends React.Component {
             </div>
 
             <div class="d-flex flex-row-reverse">
-                <button class="btn btn-primary p-2" style={{margin: "0.5em"}}>Add Child</button>
-                <button class="btn btn-info p-2" style={{margin: "0.5em"}}>Update Child Information</button>
+                <button class="btn btn-primary p-2" style={{margin: "1% 15% 1% 1%"}}>Add Child</button>
+                <button class="btn btn-info p-2" style={{margin: "1%"}}>Update Child Information</button>
             </div>
         
             <div className="col col-mg-8 resetPassword">
