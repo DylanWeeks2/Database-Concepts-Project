@@ -3,25 +3,43 @@ import { Child } from '../../Child'
 
 export class ParentProfile extends React.Component {
     state = {
-        name: "",
-        email: "",
-        phoneNumber: "",
-        homeAddress: "",
-        workAddress: "",
+        name: "Rando Name",
+        email: "rando@rando.com",
+        phoneNumber: "9995554444",
+        homeAddress: "5 Street Rd Dallas, Tx",
+        workAddress: "6 Road St Dallas, Tx",
         children: [new Child("Test", "5", "Test Elementary", "Peanut Allergy", "XxTESTxX")]
     }
 
     render() {
         return (
         <>
-            <h1 style={{margin: "1em 10em", borderradius: "5em"}} class="jumbotron jumbotron-fluid bg-info text-white w-50">Profile Information</h1>
-            <div class="w-25 p-3 bg-danger text-white">Name: {this.state.name}</div>
-            <div class="w-25 p-3 bg-warning text-white">Email: {this.state.email}</div>
-            <div class="w-25 p-3 bg-info text-black">Phone Number: {this.state.phone}</div>
-            <div class="w-25 p-3 bg-primary text-white">Home Address: {this.state.homeAddress}</div>
-            <div class="w-25 p-3 bg-light text-black">Work: {this.state.workAddress}</div>
-
-            <div class="p-3 bg-secondary text-white"> Children
+        <div style={{margin: "5em"}}>
+            <h1 style={{margin: "auto", borderradius: "5em"}} class="jumbotron jumbotron-fluid bg-info text-white w-50">Profile Information</h1>
+            
+            <ul class="list-group">
+            <div style={{margin: "1% 30%"}}>
+            <li class="list-group-item glyphicon glyphicon-user p-3 text-white text-center bg-info"> Name</li>
+            <li class="list-group-item p-3 text-black text-center"> {this.state.name}</li>
+            </div>
+            <div style={{margin: "1% 30%"}}>
+            <li class="list-group-item glyphicon glyphicon-envelope p-3 text-white text-center bg-secondary"> Email</li>
+            <li class="list-group-item p-3 text-black text-center"> {this.state.email}</li>
+            </div>
+            <div style={{margin: "1% 30%"}}>
+            <li class="list-group-item glyphicon glyphicon-phone p-3 text-white text-center bg-info"> Phone Number</li>
+            <li class="list-group-item p-3 text-black text-center"> {this.state.phoneNumber}</li>
+            </div>
+            <div style={{margin: "1% 30%"}}>
+            <li class="list-group-item glyphicon glyphicon-home p-3 text-white text-center bg-secondary"> Home Address</li>
+            <li class="list-group-item p-3 text-black text-center"> {this.state.homeAddress}</li>
+            </div>
+            <div style={{margin: "1% 30%"}}>
+            <li class="list-group-item glyphicon glyphicon-briefcase p-3 text-white text-center bg-info"> Work</li>
+            <li class="list-group-item p-3 text-black text-center"> {this.state.workAddress}</li>
+            </div>
+            </ul>
+            <div class="p-3 bg-secondary text-white text-center" style={{margin: "1% 15%"}}> Children
                   <table class="table">
                     <thead class="table-dark">
                         <tr>
@@ -48,9 +66,11 @@ export class ParentProfile extends React.Component {
                 </table>
             </div>
 
-            <button>Add Child</button>
-            <button>Update Child Information</button>
-
+            <div class="d-flex flex-row-reverse">
+                <button class="btn btn-primary p-2" style={{margin: "0.5em"}}>Add Child</button>
+                <button class="btn btn-info p-2" style={{margin: "0.5em"}}>Update Child Information</button>
+            </div>
+        
             <div className="col col-mg-8 resetPassword">
                 <h3>Change Password</h3>
                 <form>
@@ -58,10 +78,11 @@ export class ParentProfile extends React.Component {
                         <input type="password" className="form-control" id="newPassword" />
                     </div>
                     <div className="input-group-append">
-                        <button className="resetButton">Reset</button>
+                        <button className="resetButton" class="btn btn-danger">Reset</button>
                     </div>
                 </form>
             </div>
+        </div>
         </>
         );
     }
