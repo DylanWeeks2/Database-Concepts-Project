@@ -109,6 +109,13 @@ app.post('/saveCreditCard', creditCard.saveCreditCard);
 app.post('/setupCc', creditCard.setup_cc);
 app.get('/getCreditCard', creditCard.getCreditCard);
 
+
+app.post('/setupDriverSchedule', driverSchedule.setupDriverSchedule);
+app.post('/addDriverSchedule', driverSchedule.addDriverSchedule);
+app.post('/setDriverScheduleStatus', driverSchedule.setDriverScheduleStatus);
+app.get('/getAvailableDrivers', driverSchedule.getAvailableDrivers);
+
+
 //connecting the express object to listen on a particular port as defined in the config object. 
 app.listen(config.port, config.host, (e) => {
   if (e) {
