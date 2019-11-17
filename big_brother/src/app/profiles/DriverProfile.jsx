@@ -20,7 +20,9 @@ export class DriverProfile extends React.Component {
     render() {
         return (
         <>
+        
         <div style={{margin: "5em"}}>
+        
         <h1 style={{margin: "auto", borderradius: "5em"}} className="jumbotron jumbotron-fluid bg-info text-white w-50">Profile Information</h1>
             <ul className="list-group">
             <div style={{margin: "1% 30%"}}>
