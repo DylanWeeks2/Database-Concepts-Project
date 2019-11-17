@@ -31,6 +31,8 @@ export class Header extends React.Component {
 			<head>
         <title>Big Brother</title>
         <link rel="stylesheet" href="sign_up.css"></link>
+        <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css"></link>
+			
       </head>
       <body>
           <nav className="navbar bg-dark navbar-inverse">
@@ -43,7 +45,7 @@ export class Header extends React.Component {
                   <div className="input-group mr-2">
                     <div className="input-group-prepend">
                       <div className="input-group-text">@</div>
-                    </div>
+                    
                     <input type="text"
                            id="userName"
                            name="userName"
@@ -51,12 +53,13 @@ export class Header extends React.Component {
                            placeholder="Username"
                            value={this.state.userName}
                            onChange={ e => this.setState({userName: e.target.value})}></input>
+                    </div>
                   </div>
 
                   <div className="input-group">
                     <div className="input-group-prepend">
                       <div className="input-group-text">P</div>
-                    </div>
+                    
                     <input type="password"
                            id="pass"
                            name="pass"
@@ -64,6 +67,7 @@ export class Header extends React.Component {
                            placeholder="Password"
                            value={this.state.pass}
                            onChange={ e => this.setState({pass: e.target.value})}></input>
+                    </div>
                   </div>
 
                   <div className="button-group ml-2">
