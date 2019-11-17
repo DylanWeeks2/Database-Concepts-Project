@@ -5,9 +5,22 @@ import "./authentication/Register.css"
 export class Header extends React.Component {
 
   state = {
-    isLoggedIn: false
+    isLoggedIn: false,
+    userId: 0,
+    userName: "",
+    pass: "",
+
+
   }
 
+  onLogin() {
+
+  }
+
+  onForgotPass() {
+
+  }
+  
 	Login() {
 		alert("Sdsd");
 	}
@@ -31,14 +44,26 @@ export class Header extends React.Component {
                     <div className="input-group-prepend">
                       <div className="input-group-text">@</div>
                     </div>
-                    <input type="text" className="form-control" placeholder="Username"></input>
+                    <input type="text"
+                           id="userName"
+                           name="userName"
+                           className="form-control"
+                           placeholder="Username"
+                           value={this.state.userName}
+                           onChange={ e => this.setState({userName: e.target.value})}></input>
                   </div>
 
                   <div className="input-group">
                     <div className="input-group-prepend">
                       <div className="input-group-text">P</div>
                     </div>
-                    <input type="password" className="form-control" placeholder="Password"></input>
+                    <input type="password"
+                           id="pass"
+                           name="pass"
+                           className="form-control"
+                           placeholder="Password"
+                           value={this.state.pass}
+                           onChange={ e => this.setState({pass: e.target.value})}></input>
                   </div>
 
                   <div className="button-group ml-2">
@@ -51,8 +76,12 @@ export class Header extends React.Component {
               </div>
 
               <div className="btn-group navbar-right" style={ {"display": this.state.isLoggedIn ? 'block' : 'none'} }>
-                <button type="button" className="btn btn-secondary">Profile</button>
-                <button type="button" className="btn btn-secondary">Log Out</button>
+                <button type="button"
+                        className="btn btn-secondary"
+                        onClick={ () => this.onLogin() }>Profile</button>
+                <button type="button"
+                        className="btn btn-secondary"
+                        onClick={ () => this.onForgotPass() }>Log Out</button>
               </div>
             </div>
           </nav>
