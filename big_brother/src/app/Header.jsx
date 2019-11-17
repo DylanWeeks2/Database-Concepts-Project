@@ -4,6 +4,10 @@ import { NavLink } from 'react-router-dom';
 import "./authentication/Register.css"
 export class Header extends React.Component {
 
+  state = {
+    isLoggedIn: false
+  }
+
 	Login() {
 		alert("Sdsd");
 	}
@@ -19,29 +23,36 @@ export class Header extends React.Component {
           <nav className="navbar bg-dark navbar-inverse">
             <div className="container-fluid">
               <div className="navbar-header">   
-                <a className="navbar-brand" href="#">Big Brother</a>
+                <a className="navbar-brand text-white" href="#">Big Brother</a>
               </div>
-              <div className="navbar-form navbar-right">
-                <form className="form-inline navbar-form navbar-right">
-                  <ul className="list-group-flush">
-                    <li className="list-group-item list-group-item-primary">
-                      <div className="input-group">
-                        <span className="input-group-text">@</span>
-                        <input type="text" className="form-control" placeholder="Username"/>
-                      </div>
-                    </li>
-                    <li className="list-group-item list list-group-item-primary">
-                      <div className="input-group">
-                        <span className="input-group-text">P</span>
-                        <input type="password" className="form-control" placeholder="Password"/>
-                      </div>
-                    </li>
-                  </ul>
-                  <div className="btn-group-vertical ml-2">
-                    <button className="btn btn-outline-success mr-3" type="submit">Login</button>
-                    <button className="btn btn-outline-success" type="submit">Forgot Password</button>                    
+              <div className="navbar-form navbar-right" style={ {"display": this.state.isLoggedIn ? 'none' : 'block'} }>
+                <div className="btn-toolbar">
+                  <div className="input-group mr-2">
+                    <div className="input-group-prepend">
+                      <div className="input-group-text">@</div>
+                    </div>
+                    <input type="text" className="form-control" placeholder="Username"></input>
                   </div>
-                </form>
+
+                  <div className="input-group">
+                    <div className="input-group-prepend">
+                      <div className="input-group-text">P</div>
+                    </div>
+                    <input type="password" className="form-control" placeholder="Password"></input>
+                  </div>
+
+                  <div className="button-group ml-2">
+                    <button type="button" className="btn btn-secondary">Log In</button>
+                  </div>
+                  <div className="button-group ml-2">
+                    <button type="button" className="btn btn-secondary">Forgot Password</button>
+                  </div>
+                </div>
+              </div>
+
+              <div className="btn-group navbar-right" style={ {"display": this.state.isLoggedIn ? 'block' : 'none'} }>
+                <button type="button" className="btn btn-secondary">Profile</button>
+                <button type="button" className="btn btn-secondary">Log Out</button>
               </div>
             </div>
           </nav>
