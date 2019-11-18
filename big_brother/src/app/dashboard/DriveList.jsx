@@ -28,7 +28,13 @@ export const DriveList = (props) => (
                     </div>
                     </ul>
                     <div>
-                        <button className="btn btn-info p-2">{ride.childName} ˅</button>                      
+                        <button className="btn btn-info p-2" onClick=
+                        {() => {
+                            alert('yes'); 
+                            alert('The child is ' + ride.childName);
+                        }}>
+                            {ride.childName} ˅
+                        </button>                      
                     </div>
                 </span>
                 </div>
