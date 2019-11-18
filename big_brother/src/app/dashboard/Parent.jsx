@@ -1,28 +1,77 @@
-import React, { Component } from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import { StorageManager } from '../StorageManager';
-import { Calendar, Views } from 'react-big-calendar'
-import events from './events'
-import localizer from 'react-big-calendar/lib/localizers/globalize'
-import  Selectable  from "./Calendar"
+import React from 'react';
+import { Ride } from "../../Ride";
+import { Child } from "../../Child";
+import  AddRide from "./AddRide";
 import "./table.css"
+import { ParentUser } from '../../models/ParentUser';
+import { RideItem } from './RideItem';
+import { DriverUser } from '../../models/DriverUser';
 //const globalizeLocalizer = localizer(globalize)
 
 
 export class ParentDashboard extends React.Component {
 
-    state = {
-      
+    cancelRide(id) {
+        //change for things here
+        console.log(id);
+        console.log(this.state.rides);
+        this.setState({rides: this.state.rides.filter(x => {return x.id !== id})});
     }
 
+    addRide(time, children, driver, address, notes) {
+        console.log(this.state.account.children);
+        const rides =  new Ride(0, new Date(), new Date(), 
+            this.state.account.children.find(y => y.id == children).id, this.state.account.children.find(y => y.id == children).name,
+            this.state.account.children.find(y => y.id == children).health,
+            address,
+            notes,
+            this.state.drivers.find(y => y.id == driver).id,
+            this.state.drivers.find(y => y.id == driver).name);
+        this.setState(prevState => {
+            prevState.rides.push(rides);
+            return prevState;
+        })
+    }
+    state = {
+        modalVisible: false,
+        account: new ParentUser(1, "Joe Mama",
+        [
+            (new Child("Ben Dover", 2, "Good School", "Water Allergy", "xXx_BENDOVER69", 0)),
+            (new Child("Mike Hawk", 3, "BEst School", "Pain Allergy", "MIKE", 1))
+        ]
+        ),
+        rides: [
+            new Ride(0, new Date(), new Date(), 0, "Ben Dover", "5555 St.", "4444 Rd.", "This kid is fucking dope", 0 , "Sofa King")
+        ],
+        drivers: [
+            new DriverUser(1, "Buck", "Chevy", 2009)
+        ]
+    }
+    toggleModel() {
+        this.state.modalVisible
+        ? this.setState({
+          modalVisible: false
+        })
+        : this.setState({ modalVisible: true });
+    };
 
     render () {
         return (
-          <>
-            <div class = "white">
-            <Selectable />
-            </div>
-            </>
+        <>
+        <div className="row header-box">
+            <h1 className="" id="row-h1">Rides</h1>
+            <AddRide children={this.state.account.children} drivers={this.state.drivers} submitRide={(time, children, driver, address, notes) => this.addRide(time, children, driver, address, notes)}/>  
+        </div>   
+            {
+                this.state.rides.map(x => 
+                    <RideItem 
+                    ride={x}
+                    onRideCanceled={y => this.cancelRide(y)}
+                    />
+                    
+                    )
+            }
+        </>
         );
     }
 }
