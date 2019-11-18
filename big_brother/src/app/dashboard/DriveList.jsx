@@ -9,7 +9,7 @@ export const DriveList = (props) => (
             props.activeRides.map((ride, i) => 
             <div style={{margin: "0% 5%"}}>
             
-            <li className="list-group-item" key={i}>
+            <li style={{backgroundColor: "#a8a8a8"}} className="list-group-item" key={i}>
             <div>
                 <span className="badge bg-secondary p-4 text-white">{days[ride.date]}</span>
                 <span className="badge bg-info p-4 text-white">{ride.time}</span>
