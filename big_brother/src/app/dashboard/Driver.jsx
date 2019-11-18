@@ -12,6 +12,9 @@ export class DriverDashboard extends React.Component {
     render() {
         return (
             <>
+                <div className="row header-box" style={{margin: "2% 0%"}}>
+                    <h1 id="row-h1">Rides</h1>   
+                </div>  
                 <DriveList activeRides={this.state.activeRides} />
             </>
         );
