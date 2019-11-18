@@ -2,3 +2,24 @@
     background-color: white !important;
 }
 
+.header-box {
+    background: black;
+    border: 20px solid lightgray;
+    color: white;
+    position: relative;
+    width: 90%;
+    left: 5%;
+    right: 5%;
+    border-collapse: separate;
+    border-radius: 15%;
+}
+
+#row-h1 {
+    padding-left: 10%;
+}
+
+#submit-row {
+    margin-left: 70%;
+    border-radius: 15%;
+}
+
