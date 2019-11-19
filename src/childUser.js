@@ -42,22 +42,6 @@ exports.addChild = (req, res) => {
   })
 };
 
-
-//post /updateChild
-exports.updateChild = (req, res) => {
-  console.log(req.body);
-  let query = "update childUser set name = " + req.body.name + "', bio ='" + req.body.bio + "',parent_name ='" + req.body.parentName + "',health_conditions='" + req.body.healthConditions + "',emergency_contact_name='" + req.body.emergencyContactName + "','" + req.body.emergencyContactName + "',emergency_contact_number='" + req.body.emergencyContactNumber + "')"; 
-  db.query(query, (err, result) => {
-      if(err) {
-          logger.error("failed too update child");
-          res.status(400);
-      }
-      else{
-          res.status(200).send('Child has been updated!!');
-      }
-  })
-};
-
 //GET /viewChild
 exports.getChild = (req, res) => {
   let query = "select * from childUser where id = '" + req.body.id + "'";
@@ -101,4 +85,94 @@ exports.getChildBio = (req, res) => {
       res.status(200).send('<h1>' + rows[0].bio + '</h1>');
   })
 }
+
+//post /updateChildName
+exports.updateChildName = (req, res) => {
+  console.log(req.body);
+  let query = "update child set name = '" + req.body.name + "' where id = '" + req.body.id + "'";
+  db.query(query, (err, result) => {
+      if(err) {
+          logger.error("failed too update child");
+          res.status(400);
+      }
+      else{
+          res.status(200).send('Child has been updated!!');
+      }
+  })
+};
+
+//post /updateChildBio
+exports.updateChildBio = (req, res) => {
+  console.log(req.body);
+  let query = "update car set bio = '" + req.body.bio + "' where id = '" + req.body.id + "'";
+  db.query(query, (err, result) => {
+      if(err) {
+          logger.error("failed too update child");
+          res.status(400);
+      }
+      else{
+          res.status(200).send('child has been updated!!');
+      }
+  })
+};
   
+
+//post /updateChildHealthConditions
+exports.updateChildHealthConditions = (req, res) => {
+  console.log(req.body);
+  let query = "update child set name = '" + req.body.healthConditions + "' where id = '" + req.body.id + "'";
+  db.query(query, (err, result) => {
+      if(err) {
+          logger.error("failed too update child");
+          res.status(400);
+      }
+      else{
+          res.status(200).send('Child has been updated!!');
+      }
+  })
+};
+
+//post /updateChildEmergencyContactName
+exports.updateChildEmergencyContactName = (req, res) => {
+  console.log(req.body);
+  let query = "update car set emergencyContactName = '" + req.body.emergencyContactName + "' where id = '" + req.body.id + "'";
+  db.query(query, (err, result) => {
+      if(err) {
+          logger.error("failed too update child");
+          res.status(400);
+      }
+      else{
+          res.status(200).send('child has been updated!!');
+      }
+  })
+};
+
+//post /updateChildRating
+exports.updateChildRating = (req, res) => {
+  console.log(req.body);
+  let query = "update child set rating = '" + req.body.rating + "' where id = '" + req.body.id + "'";
+  db.query(query, (err, result) => {
+      if(err) {
+          logger.error("failed too update child");
+          res.status(400);
+      }
+      else{
+          res.status(200).send('Child has been updated!!');
+      }
+  })
+};
+
+//post /updateChildEmergencyContactNumber
+exports.updateChildEmergencyContactNumber = (req, res) => {
+  console.log(req.body);
+  let query = "update car set emergencyContactNumber = '" + req.body.emergencyContactNumber + "' where id = '" + req.body.id + "'";
+  db.query(query, (err, result) => {
+      if(err) {
+          logger.error("failed too update child");
+          res.status(400);
+      }
+      else{
+          res.status(200).send('child has been updated!!');
+      }
+  })
+};

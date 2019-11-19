@@ -105,16 +105,24 @@ app.get('/setupdb', (req, res) => {
 });
 
 //api endpoints
+//creditCard
 app.post('/saveCreditCard', creditCard.saveCreditCard);
 app.post('/setupCc', creditCard.setup_cc);
 app.get('/getCreditCard', creditCard.getCreditCard);
+//child
 app.post('/setupChild', childUser.setupChild);
 app.post('/addChild', childUser.addChild);
-app.post('/updateChild', childUser.updateChild);
+app.post('/updateChildName', childUser.updateChildName);
+app.post('/updateChildBio', childUser.updateChildBio);
+app.post('/updateChildHealthConditions', childUser.updateChildHealthConditions);
+app.post('/updateChildEmergencyContactName', childUser.updateChildEmergencyContactName);
+app.post('/updateChildEmergencyContactNumber', childUser.updateChildEmergencyContactNumber);
+app.post('/updateRating', childUser.rating);
 app.get('/getChild', childUser.getChild);
 app.get('/getChildHealthConditions', childUser.getChildHealthConditions);
 app.get('/getChildEmergencyContact', childUser.getChildEmergencyContact);
 app.get('/getChildBio', childUser.getChildBio);
+//car
 app.post('/setupCar', car.setupCar);
 app.post('/addCar', car.addCar);
 app.get('/getCarModel', car.getCarModel);
