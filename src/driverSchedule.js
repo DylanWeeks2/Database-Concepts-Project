@@ -1,5 +1,5 @@
 //var routes = require('express').Router();
-module.exports = routes;
+//module.exports = routes;
 
 // post setup driver schedule
 exports.setupDriverSchedule = (req, res) => {
@@ -21,7 +21,7 @@ exports.setupDriverSchedule = (req, res) => {
 // post addDriverSchedule
 exports.addDriverSchedule = (req, res) => {
   console.log(req.body);
-  let query = "insert into driverSchedule values('" + req.body.expdate + "','" + req.body.cc_number + "','" + req.body.cvv + "','" + req.body.zip_code + "','" + req.body.parent_id + "')"; 
+  let query = "insert into driverSchedule values('" + req.body.id + "','" + req.body.start + "','" + req.body.end + "','" + req.body.active + "','" + req.body.parent_id + "')"; 
   db.query(query, (err, result) => {
       if(err) {
           logger.error("failed saving new credit card");
