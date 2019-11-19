@@ -1,9 +1,11 @@
-//TODO::: Get functionality on this page
+//TODO:::   Make sure Child id is passed in as part of props here (used to rate child)
+//          Get buttons to actually do something (rate child in this case)
 
-import React from "react"
-import { Ride } from "../../Ride"
-
-var days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+import React from 'react';
+import {Card, Button } from 'react-bootstrap';
+import "../../App.css"
+import Info  from "./modals/Info";
+import { Modal } from 'react-bootstrap';
 
 export const DriveList = (props) => (
     <ul className="list-group">
@@ -16,7 +18,7 @@ export const DriveList = (props) => (
                 <span className="badge bg-secondary p-4 text-white">{days[ride.date]}</span>
                 <span className="badge bg-info p-4 text-white">{ride.time}</span>
                 <span>
-                    <button className="float-right btn btn-warning p-2">Cancel</button>
+                    <button className="float-right btn btn-warning p-2">Rate this Child</button>
                     <ul className="list-group text-center">
                     <div className="d-flex flex-row text-center justify-content-center">
                         <div style={{width: "25%"}}>
