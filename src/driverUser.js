@@ -8,7 +8,7 @@ routes.get('/setupDriver', (req, res) => {
     if (err)
       logger.error("Can't drop table");
   });
-  connection.query('create table driver_user(id varchar(4), name varchar(50), bio varchar(200), cellPhone varchar(10), fingerprint tinyint(1), reported tinyint(1), password varchar(50))', function (err, rows, fields) {
+  connection.query('create table driver_user(id int, name varchar(50), bio varchar(200), cellPhone varchar(10), fingerprint tinyint(1), reported tinyint(1), password varchar(50))', function (err, rows, fields) {
     if (err)
       logger.error("Problem creating the table driver_user");
   });
