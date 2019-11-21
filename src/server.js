@@ -120,7 +120,7 @@ app.post('/setupDriver', driverUser.setupDriver);
 app.post('/changeDriverPassword', driverUser.changeDriverPassword);
 app.post('/addDriver', driverUser.addDriver);
 app.post('/getDriver', driverUser.getDriver);
-//child
+//childUser
 app.post('/setupChild', childUser.setupChild);
 app.post('/addChild', childUser.addChild);
 app.post('/updateChildName', childUser.updateChildName);
@@ -133,6 +133,8 @@ app.get('/getChildHealthConditions', childUser.getChildHealthConditions);
 app.get('/getChildEmergencyContactName', childUser.getChildEmergencyContactName);
 app.get('/getChildEmergencyContactNumber', childUser.getChildEmergencyContactNumber);
 app.get('/getChildBio', childUser.getChildBio);
+app.get('/getChildName', childUser.getChildName);
+app.get('/getChildRating', childUser.getChildRating);
 //car
 app.post('/setupCar', car.setupCar);
 app.post('/addCar', car.addCar);

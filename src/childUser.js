@@ -3,13 +3,13 @@
 
 //post /setupChild
 exports.setupChild = (req, res) => {
-  let query = "drop table if exists child_info";
+  let query = "drop table if exists childUser";
   db.query(query, (err, result) => {
       if(err) {
           res.redirect('/');
       }
   });
-  query = "CREATE table childUser (id int NOT NULL AUTO_INCREMENT PRIMARY KEY, name varchar(50), parentName varchar(50), bio varchar(200), healthConditions varchar(200), emergencyContactName varchar(50), emergencyContactNumber varchar(50), rating DECIMAL(19,4), parentId int REFERENCES parentUser(id))";
+  query = "CREATE table childUser (id int NOT NULL AUTO_INCREMENT PRIMARY KEY, name varchar(50), bio varchar(200), healthConditions varchar(200), emergencyContactName varchar(50), emergencyContactNumber varchar(50), rating DECIMAL(19,4), parentId int REFERENCES parentUser(id))";
   db.query(query, (err, result) => {
       if(err) { res.redirect('/'); }
       else{
@@ -30,7 +30,7 @@ query = "alter table childUser autoIncrement = 100000"
 //post /addChild
 exports.addChild = (req, res) => {
   console.log(req.body);
-  let query = "INSERT into childUser values(NULL,'" + req.body.name + "','" + req.body.parentName + "','" + req.body.bio + "','" + req.body.healthConditions + "','" + req.body.emergencyContactName + "','" + req.body.emergencyContactNumber + "','" + req.body.rating + "','" + req.body.parentId + "')"; 
+  let query = "INSERT into childUser values(NULL,'" + req.body.name + "','" + req.body.bio + "','" + req.body.healthConditions + "','" + req.body.emergencyContactName + "','" + req.body.emergencyContactNumber + "','" + req.body.rating + "','" + req.body.parentId + "')"; 
   db.query(query, (err, result) => {
       if(err) {
           logger.error("failed too add child");
@@ -41,6 +41,44 @@ exports.addChild = (req, res) => {
       }
   })
 };
+
+//GET /viewChildHealthConditions
+exports.getChildName = (req, res) => {
+  let query = "select * from childUser where id = '" + req.body.id + "'";
+  db.query(query, function(err,rows, fields) {
+    if(err){
+        logger.error("couldn't get child name");
+        res.status(400).json({
+          "data": [],
+          "error": "MySQL error"
+        });
+      }
+      else{
+        res.status(200).json({
+          "name": rows[0].name
+        });
+      }
+  })
+}
+
+//GET /viewChildHealthConditions
+exports.getChildRating = (req, res) => {
+  let query = "select * from childUser where id = '" + req.body.id + "'";
+  db.query(query, function(err,rows, fields) {
+    if(err){
+        logger.error("couldn't get child rating");
+        res.status(400).json({
+          "data": [],
+          "error": "MySQL error"
+        });
+      }
+      else{
+        res.status(200).json({
+          "rating": rows[0].rating
+        });
+      }
+  })
+}
 
 //GET /viewChildHealthConditions
 exports.getChildHealthConditions = (req, res) => {
