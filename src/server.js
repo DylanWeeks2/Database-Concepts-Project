@@ -108,7 +108,14 @@ app.get('/setupdb', (req, res) => {
 app.post('/setupCreditCard', creditCard.setupCreditCard);
 app.post('/saveCreditCard', creditCard.saveCreditCard);
 app.get('/getCreditCard', creditCard.getCreditCard);
-
+app.post('/setupParent', parentUser.setupParent);
+app.post('/changeParentPassword', parentUser.changeParentPassword);
+app.post('/addParent', parentUser.addParent);
+app.get('/getParent', parentUser.getParent);
+app.post('/setupDriver', driverUser.setupDriver);
+app.post('/changeDriverPassword', driverUser.changeDriverPassword);
+app.post('/addDriver', driverUser.addDriver);
+app.post('/getDriver', driverUser.getDriver);
 //connecting the express object to listen on a particular port as defined in the config object. 
 app.listen(config.port, config.host, (e) => {
   if (e) {

@@ -7,7 +7,7 @@ exports.setupCreditCard = (req, res) => {
             res.redirect('/');
         }
     });
-    query = "create table creditCard(expDate DATE, ccNumber varchar(16), cvv varchar(4), zipCode varchar(5), parentId varchar(4) REFERENCES parentUser(id))";
+    query = "create table creditCard(id int not null auto_increment primary key, expDate DATE, ccNumber varchar(16), cvv varchar(4), zipCode varchar(5), parentId int REFERENCES parentUser(id))";
     db.query(query, (err, result) => {
         if(err) { res.redirect('/'); }
         res.status(200).send('created the credit card table');
@@ -17,7 +17,7 @@ exports.setupCreditCard = (req, res) => {
 //POST /save_credit_card
 exports.saveCreditCard = (req, res) => {
     console.log(req.body);
-    let query = "insert into creditCard values('" + req.body.expDate + "','" + req.body.ccNumber + "','" + req.body.cvv + "','" + req.body.zipCode + "','" + req.body.parentId + "')"; 
+    let query = "insert into creditCard values(NULL,'" + req.body.expDate + "','" + req.body.ccNumber + "','" + req.body.cvv + "','" + req.body.zipCode + "','" + req.body.parentId + "')"; 
     db.query(query, (err, result) => {
         if(err) {
             logger.error("failed saving new credit card");
@@ -33,9 +33,17 @@ exports.saveCreditCard = (req, res) => {
 exports.getCreditCard = (req, res) => {
     let query = "select * from creditCard where parentId = '" + req.body.parentId + "'";
     db.query(query, function(err,rows, fields) {
-        if(err) {
-            logger.error("failed getting credit card");
-        }
-        res.status(200).send('<h1>' + rows[0].expDate + rows[0].ccNumber + rows[0].cvv + rows[0].zipCode + rows[0].parentId);
+        if(err){
+            logger.error("couldn't get credit card");
+            res.status(400).json({
+              "data": [],
+              "error": "MySQL error"
+            });
+          }
+          else{
+            res.status(200).json({
+              "data": rows
+            });
+          }
     })
 }
