@@ -1,57 +1,75 @@
-var routes = require('express').Router();
-module.exports = routes;
-//get /createRideSchedule
-routes.get("/setupSchedule", function (req, res) {
-    connection.query('DROP table if exists schedule', function (err, rows, fields) {
-      if (err)
-        logger.error("Can't drop table");
+//var routes = require('express').Router();
+//module.exports = routes;
+
+//post createRideSchedule
+exports.setupRideSchedule = (req,res) => {
+  let query = "drop table if exists rideSchedule";
+  db.query(query, (err,result) => {
+    if(err){
+      res.redirect('/');
+    }
+  });
+  query = "create table rideSchedule(id int, pick_up_location varchar(50), drop_off_location varchar(50), pick_up_time datetime(6), drop_off_time datetime(6), active tinyint(1), parent_id int REFERENCES parent_user(id), child_id int REFERENCES child_user(id), driver_id int REFERENCES driver_user(id), primary key (driver_id, child_id, parent_id, id))";
+  db.query(query, (err, result) => {
+    if(err) {
+       res.redirect('/');
+       }
+    res.status(200).send('created the ride schedule table'); 
+  });
+};
+
+//post /addRideSchedule
+exports.addRideSchedule = (req, res) => {
+  let query = "insert into rideSchedule values('"+req.body.id+"','"+req.body.pick_up_location+"','"+req.body.drop_off_location+"','"+req.body.pick_up_time+"','"+req.body.drop_off_time+"','"+req.body.active+"','"+req.body.parent_id+"');";
+  db.query(query, (err,result) => {
+    if(err) {
+      res.redirect('/');
+      res.status(200).send('ride couldnt be scheduled');
+    }else{
+      res.status(200).send('ride scheduled');
+    }
+  });
+};
+
+//post /deleteRideSchedule
+exports.deleteRideSchedule = (req,res) => {
+  let query = "delete from rideSchedule where id = '" + req.body.id + "';";
+  db.query(query, (err,result) => {
+    if(err) {
+      logger.error("cant delete schedule");
+    }
+    res.status(200).send("ride has been removed");
+  });
+};
+  
+//post /updateRideSchedule
+exports.updateRideSchedule = (req,res) => {
+  let query = "update schedule set pick_up_location = '" + req.body.pick_up_location + "', drop_off_location = '" + req.body.drop_off_location + "', pick_up_time = '" + req.body.pick_up_time + "', drop_off_time = '" + req.body.pick_up_time + "' where id = '" + req.body.id +"';";
+  db.query(query, (err,result) => {
+    if(err) {
+      logger.error("cant update ride");
+    }
+    res.status(200).send("ride updated");
+  });
+};
+  
+//get /viewRideSchedule
+exports.viewRideSchedule = (req,res) => {
+  let query = "select * from schedule where child_id = '" + req.body.child_id+"';";
+  db.query(query, (err,rows, fields) => {
+    if(err){
+      logger.error("couldn't get rides");
+      res.status(400).json({
+        "data": [],
+        "error": "MySQL error"
       });
-    connection.query('CREATE table schedule(id varchar(4), pick_up_location varchar(50), drop_off_location varchar(50), pick_up_time datetime(6), drop_off_time datetime(6), parent_id varchar(4) REFERENCES parent_user(id), child_id varchar(4) REFERENCES child_user(id), driver_id varchar(4) REFERENCES driver_user(id))', function (err, rows, fields) {
-      if (err)
-        logger.error("Problem creating the table schedule");
-    });
-    res.status(200).send('The Schedule has been created!!');
+    }
+    else{
+      res.status(200).json({
+        "data": rows
+      });
+    }
   });
+}
   
-  //get /addRideSchedule
-  routes.get("/addSchedule/:id/:pick_up_location/:drop_off_location/:pick_up_time/:drop_off_time/:parent_id/:child_id/:driver_id", function (req, res) {
-    connection.query('insert into schedule values(?, ?, ?, ?, ?, ?, ?, ?)', [req.params['id'], req.params['pick_up_location'],req.params['drop_off_location'],req.params['pick_up_time'],req.params['drop_off_time'], req.params['parent_id'], req.params['child_id'], req.params['driver_id']], function(err, rows, fields) {
-      if(err)
-        logger.error('adding row to table failed');
-    });
-    res.status(200).send("A Schedule has been added!");
-  });
-  
-  //post /deleteRideSchedule
-  routes.get("/deleteSchedule/:id", function (req, res) {
-    connection.query('DELETE FROM schedule WHERE id = ?;', [req.params['id']], function(err, rows, fields) {
-      if(err)
-        logger.error('cant DELETE Schedule!');
-    res.status(200).send("Ride has been removed!!");
-    });
-  });
-  
-  //post /updateRideSchedule
-  routes.get("/updateSchedule/:id/:pick_up_location/:drop_off_location/:pick_up_time/:drop_off_time", function (req, res) {
-    connection.query('update schedule set pick_up_location = ?, drop_off_location = ?, pick_up_time = ?, drop_off_time = ? WHERE id = ?;', [req.params['pick_up_location'], req.params['drop_off_location'], req.params['pick_up_time'], req.params['drop_off_time'],  req.params['id']], function(err, rows, fields) {
-      if(err)
-        logger.error('cant update child');
-        res.status(200).send("Schedule UPDATED!!");
-    });
-  });
-  
-  //get /viewRideSchedule
-  routes.get('/viewSchedule/:child_id', (req, res) => {
-    connection.query('SELECT * from schedule WHERE child_id = ?', [req.params['child_id']], function (err, rows, fields) {
-      if (err) {
-        logger.error("Error while executing Query");
-      };
-      logger.info(rows[0].pick_up_location + ' ' + rows[0].id + ' ' + rows[0].drop_off_location + ' ' + rows[0].pick_up_time + ' ' + rows[0].drop_off_time + ' ' + rows[0].parent_id + ' ' + rows[0].child_id + ' ' + rows[0].driver_id);
-   
-      //writing to the response object
-      res.type('text/html');
-      res.status(200);
-      res.send('<h1>' + rows[0].id + ' ' + rows[0].pick_up_location + ' ' + rows[0].drop_off_location + ' ' + rows[0].pick_up_time + ' ' + rows[0].drop_off_time + ' ' + rows[0].parent_id + ' ' + rows[0].child_id + ' ' + rows[0].driver_id + ' ' + rows[0].parent_id + '</h1>');
-    })
-  });
   

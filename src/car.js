@@ -1,112 +1,139 @@
-var routes = require('express').Router();
-module.exports = routes;
 
-routes.get('/setupCar', (req, res) => {
-    // set up car information
-    connection.query('drop table if exists car', function (err, rows, fields) {
-      if(err)
-        logger.error("Can't drop table");
-    });
-    connection.query('create table car(id varchar(4), numSeats int, numAccidents int, features varchar(50), licenceNum varchar(8), service datetime(6), state varchar(50), model varchar(50), driverID varchar(4) REFERENCES driver_user(id))' , function(err,rows,fields){
-      //dconstraint driverID foreign key(driver_ID) references driver_user.id',
-      if(err)
-        logger.error("Can't add car");
-    });
-   res.status(200).send("set up the car");
+//post /setupChild
+exports.setupCar = (req, res) => {
+  let query = "drop table if exists car";
+  db.query(query, (err, result) => {
+      if(err) {
+          res.redirect('/');
+      }
   });
-
-  //GET /getCarModel
-routes.get('/getCarModel/:carID', (req, res) => {
-  connection.query('select model from car where id = ?', [req.params['carID']], function(err, rows, fields){
-    if(err)
-      logger.error('failed getting car model');
-    res.status(200).send('<h1>' + rows[0].model + '</h1>');
+  query = "create table car(id int NOT NULL AUTO_INCREMENT PRIMARY KEY, numSeats int, numAccidents int, features varchar(50), licenceNum varchar(8), service datetime, state varchar(50), model varchar(50), driverId int REFERENCES driverUser(id))";
+  db.query(query, (err, result) => {
+      if(err) { res.redirect('/'); }
+      else{
+        res.status(200).send('Car Table has been created.');
+      }
   })
-});
-//GET /getCarSeats
-routes.get('/getCarSeats/:carID', (req, res) => {
-  connection.query('select numSeats from car where id = ?', [req.params['carID']], function(err, rows, fields){
-    if(err)
-      logger.error('failed getting car seats');
-    res.status(200).send('<h1>' + rows[0].numSeats + '</h1>');
-  });
-});
-//GET /getCarFeatures
-routes.get('/getCarFeatures/:carID', (req, res) => {
-  connection.query('select features from car where id = ?', [req.params['carID']], function(err, rows, fields){
-    if(err)
-      logger.error('failed getting car features');
-    res.status(200).send('<h1>' + rows[0].features + '</h1>');
-  });
-});
+}; 
 
-//GET /getCarLicence
-routes.get('/getCarLicence/:carID', (req, res) => {
-  connection.query('select licenceNum from car where id = ?', [req.params['carID']], function(err, rows, fields){
-    if(err)
-      logger.error('failed getting car licence');
-    res.status(200).send('<h1>' + rows[0].licenceNum + '</h1>');
-  });
-});
+//post /addChild
+exports.addCar = (req, res) => {
+  console.log(req.body);
+  let query = "INSERT into car values(NULL,'" + req.body.numSeats + "','" + req.body.numAccidents + "','" + req.body.features + "','" + req.body.licenceNum + "', now(),'" + req.body.state + "','" + req.body.model + "','" + req.body.driverId + "')"; 
+  db.query(query, (err, result) => {
+      if(err) {
+          logger.error("failed too add car");
+          res.status(400);
+      }
+      else{
+          res.status(200).send('Child has been added!!');
+      }
+  })
+};
+
+//GET /getCarModel
+exports.getCarModel = (req, res) => {
+  let query = "select * from car where id = '" + req.body.id + "'";
+  db.query(query, function(err,rows, fields) {
+      if(err) {
+          logger.error("failed getting car");
+      }
+      res.status(200).send('<h1>' + rows[0].model + '</h1>');
+  })
+}
+
+//GET /getCarseats
+exports.getCarSeats = (req, res) => {
+  let query = "select * from car where id = '" + req.body.id + "'";
+  db.query(query, function(err,rows, fields) {
+      if(err) {
+          logger.error("failed getting car");
+      }
+      res.status(200).send('<h1>' + rows[0].numSeats + '</h1>');
+  })
+}
+
+//GET /getCarFeatures
+exports.getCarFeatures = (req, res) => {
+  let query = "select * from car where id = '" + req.body.id + "'";
+  db.query(query, function(err,rows, fields) {
+      if(err) {
+          logger.error("failed getting car");
+      }
+      res.status(200).send('<h1>' + rows[0].features + '</h1>');
+  })
+}
+
+//GET /getcarLicence
+exports.getCarLicence = (req, res) => {
+  let query = "select * from car where id = '" + req.body.id + "'";
+  db.query(query, function(err,rows, fields) {
+      if(err) {
+          logger.error("failed getting car");
+      }
+      res.status(200).send('<h1>' + rows[0].licenceNum + '</h1>');
+  })
+}
+
 //GET /getCarAccidents
-routes.get('/getCarAccidents/:carID', (req, res) => {
-  connection.query('select numAccidents from car where id = ?', [req.params['carID']], function(err, rows, fields){
-    if(err)
-      logger.error('failed getting car accidents');
-    res.status(200).send('<h1>' + rows[0].numAccidents + '</h1>');
-  });
-});
+exports.getCarAccidents = (req, res) => {
+  let query = "select * from car where id = '" + req.body.id + "'";
+  db.query(query, function(err,rows, fields) {
+      if(err) {
+          logger.error("failed getting car");
+      }
+      res.status(200).send('<h1>' + rows[0].numAccidents + '</h1>');
+  })
+}
 
 //GET /getCarService
-routes.get('/getCarService/:carID', (req, res) => {
-  connection.query('select service from car where id = ?', [req.params['carID']], function(err, rows, fields){
-    if(err)
-      logger.error('failed getting car service');
-    res.status(200).send('<h1>' + rows[0].service + '</h1>');
-  });
-});
+exports.getCarService = (req, res) => {
+  let query = "select * from car where id = '" + req.body.id + "'";
+  db.query(query, function(err,rows, fields) {
+      if(err) {
+          logger.error("failed getting car");
+      }
+      res.status(200).send('<h1>' + rows[0].service + '</h1>');
+  })
+}
 
 //GET /getCarState
-routes.get('/getCarState/:carID', (req, res) => {
-  connection.query('select state from car where id = ?', [req.params['carID']], function(err, rows, fields){
-    if(err)
-      logger.error('failed getting car state');
-    res.status(200).send('<h1>' + rows[0].state + '</h1>');
-  });
-});
-//GET /getCarDriverId
-routes.get('/getCarDriverId/:carID', (req, res) => {
-  connection.query('select driverId from car where id = ?', [req.params['carID']], function(err, rows, fields){
-    if(err)
-      logger.error('failed getting car driver id');
-    res.status(200).send('<h1>' + rows[0].driverID + '</h1>');
-  });
-});
+exports.getCarState = (req, res) => {
+  let query = "select * from car where id = '" + req.body.id + "'";
+  db.query(query, function(err,rows, fields) {
+      if(err) {
+          logger.error("failed getting car");
+      }
+      res.status(200).send('<h1>' + rows[0].state + '</h1>');
+  })
+}
 
-//post /addCar
-routes.get('/addCar/:carID/:numSeats/:numAccidents/:features/:licenceNum/:service/:state/:model/:driverID', (req, res) => {
-  connection.query('insert into car values(?,?,?,?,?,?,?,?,?)', [req.params['carID'], req.params['numSeats'], req.params['numAccidents'], req.params['features'], req.params['licenceNum'], req.params['service'] ,req.params['state'] ,req.params['model'] ,req.params['driverID']], function(err,rows,fields){
-    if(err)
-      logger.error('adding row to table failed');
-    logger.info(req.params['features']);
-    res.status(200).send('added given car');
-  });
-});
+//post /updateChild
+exports.updateCarService = (req, res) => {
+  console.log(req.body);
+  let query = "update car set service = '" + req.body.service + "' where id = '" + req.body.id + "'";
+  db.query(query, (err, result) => {
+      if(err) {
+          logger.error("failed too update car");
+          res.status(400);
+      }
+      else{
+          res.status(200).send('car has been updated!!');
+      }
+  })
+};
 
-//post /updateCarService
-routes.get('/updateCarService/:carID/:newService', (req, res) => {
-  connection.query('update car set service = ? where id = ?', [req.params['newService'],req.params['carID']], function (err, rows, fields){
-    if(err)
-      logger.error('updating car service failed');
-  });
-  res.status(200).send('updated car service');
-});
-
-//post /updateCarAccidents
-routes.get('/updateCarAccidents/:carID', (req, res) => {
-  connection.query('update car set numAccidents = numAccidents + 1 where id = ?', [req.params['carID']], function (err, rows, fields){
-    if(err)
-      logger.error('updating car accidents failed');
-  });
-  res.status(200).send('updated car accidents');
-});
+//post /updateChild
+exports.updateCarAccidents = (req, res) => {
+  console.log(req.body);
+  let query = "update car set numAccidents = '" + req.body.numAccidents + "' where id = '" + req.body.id + "'";
+  db.query(query, (err, result) => {
+      if(err) {
+          logger.error("failed too update car");
+          res.status(400);
+      }
+      else{
+          res.status(200).send('car has been updated!!');
+      }
+  })
+};

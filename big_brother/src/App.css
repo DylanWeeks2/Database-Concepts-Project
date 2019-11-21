@@ -20,3 +20,18 @@
 .App-link {
   color: #09d3ac;
 }
+
+.boot-card {
+  height: auto;
+  width: 90%;
+  margin-left: 5%;
+  margin-top: 5rem;
+}
+
+#cancel-btn {
+  float: right;
+}
+.my-modal {
+  z-index: 1000;
+  opacity: .5, !important;
+}

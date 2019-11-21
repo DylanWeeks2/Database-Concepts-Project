@@ -1,51 +1,66 @@
-var routes = require('express').Router();
-module.exports = routes;
+//var routes = require('express').Router();
+//module.exports = routes;
 
-routes.get('/setupDriver_Schedule', (req,res) => {
-    connection.query('drop table if exists driver_schedule', function (err, rows, fields) {
-      if (err)
-        logger.error("Can't drop table");
-    });
-    connection.query('create table driver_schedule(id varchar(4), start datetime(6), end datetime(6), active tinyint(1), driver_id varchar(4) REFERENCES driver_user(id))', function (err, rows, fields) {
-      if (err)
-        logger.error("Problem creating the table driver_schedule")
-    });
-  
-  res.status(200).send('created the driver schedule table');
+// post setup driver schedule
+exports.setupDriverSchedule = (req, res) => {
+  let query = "drop table if exists driverSchedule";
+  db.query(query, (err,result) => {
+    if(err){
+      res.redirect('/');
+    }
   });
-  
-  
-  // post /addDriver_schedule
-  routes.get('/addDriver_Schedule/:id/:start/:end/:active/:driver', (req, res) => {
-    connection.query('insert into driver_schedule values(?, ?, ?, ?, ?)',[req.params['id'],req.params['start'], req.params['end'], req.params['active'], req.params['driver']], function(err,rows,fields){
-      if(err)
-        logger.error('adding row to table failed');
-    });
-    res.status(200).send('added given free time to driver');
-  });
+  query = "create table driverSchedule(id int, start datetime(6), end datetime(6), active tinyint(1), driver_id int REFERENCES driver_user(id), primary key(driver_id,id))";
+  db.query(query, (err, result) => {
+    if(err) {
+       res.redirect('/');
+       }
+    res.status(200).send('created the driver schedule table');
+});
+};
 
- 
-  routes.get('/setDriverScheduleStatus', (req,res) => {
-    connection.query('update driver_schedule set active = ? where id = ?',[req.body['status'],req.body['id']], function(err,rows,fields){
-      if(err)
-        logger.error('updating schedule failed')
-    });
-
-  });
-
-  routes.get('/getAvailableDrivers', (req,res) => {
-    connection.query('select * from driver_schedule where ? > driver_schedule.start and ? < driver_schedule.end', [ req.body['time'], req.body['time']], function(err,rows,fields){
-      if (err) {
-        logger.error("Error while executing Query");
-        res.status(400).json({
-          "data": [],
-          "error": "MySQL error"
-        })
+// post addDriverSchedule
+exports.addDriverSchedule = (req, res) => {
+  console.log(req.body);
+  let query = "insert into driverSchedule values('" + req.body.id + "','" + req.body.start + "','" + req.body.end + "','" + req.body.active + "','" + req.body.parent_id + "')"; 
+  db.query(query, (err, result) => {
+      if(err) {
+          logger.error("failed saving new credit card");
+          res.status(400);
       }
       else{
-        res.status(200).json({
-          "data": rows
-        });
+          res.status(200).send('added the credit card');
       }
-    });
   });
+};
+  
+//post setDriverScheduleStatus
+exports.setDriverScheduleStatus = (req, res) => {
+  console.log(req,body);
+  let query = "update driverSchedule set active = '" + req.body.status + "' where id = '" +req.body.id+ "';";
+  db.query(query, (err,result) => {
+    if(err){
+      logger.error("updating schedule failed");
+    }
+  });
+};
+
+
+ //get getAvailableDrivers
+ exports.getAvailableDrivers = (req, res) =>{
+  console.log(req,body);
+  let query = "select * from driverSchedule where '"+req.body.time+"' > driverSchedule.start and '"+req.body.time+ "'< driverSchedule.end";
+  db.query(query, (err,rows, fields) => {
+    if(err){
+      logger.error("couldn't get drivers");
+      res.status(400).json({
+        "data": [],
+        "error": "MySQL error"
+      });
+    }
+    else{
+      res.status(200).json({
+        "data": rows
+      });
+    }
+  });
+ };

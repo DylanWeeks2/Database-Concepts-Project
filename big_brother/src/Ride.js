@@ -1,5 +1,6 @@
 export class Ride {
-    constructor(date, time, childId, childName, pickupAddr, destAddr, notes) {
+    constructor(id,date, time, childId, childName, pickupAddr, destAddr, notes, driverId, driverName) {
+        this.id = id;
         this.date = date;
         this.time = time;
         this.childId = childId;
@@ -7,5 +8,7 @@ export class Ride {
         this.pickupAddr = pickupAddr;
         this.destAddr = destAddr;
         this.notes = notes;
+        this.driverId = driverId;
+        this.driverName = driverName;
     }
 }

@@ -3,44 +3,62 @@ import { Child } from '../../Child'
 
 export class ParentProfile extends React.Component {
     state = {
-        name: "",
-        email: "",
-        phoneNumber: "",
-        homeAddress: "",
-        workAddress: "",
+        name: "Rando Name",
+        email: "rando@rando.com",
+        phoneNumber: "9995554444",
+        homeAddress: "5 Street Rd Dallas, Tx",
+        workAddress: "6 Road St Dallas, Tx",
         children: [new Child("Test", "5", "Test Elementary", "Peanut Allergy", "XxTESTxX")]
     }
 
     render() {
         return (
         <>
-            <h1>Profile Information</h1>
-            <div>Name: {this.state.name}</div>
-            <div>Email: {this.state.email}</div>
-            <div>Phone Number: {this.state.phone}</div>
-            <div>Home Address: {this.state.homeAddress}</div>
-            <div>Work: {this.state.workAddress}</div>
-
-            <div> Children
-                  <table>
-                    <thead>
+        <div style={{margin: "5em"}}>
+            <h1 style={{margin: "auto", borderradius: "5em"}} className="jumbotron jumbotron-fluid bg-info text-white w-50">Profile Information</h1>
+            
+            <ul className="list-group">
+            <div style={{margin: "1% 30%"}}>
+            <li className="list-group-item glyphicon glyphicon-user p-3 text-white text-center bg-info"> Name</li>
+            <li className="list-group-item p-3 text-black text-center"> {this.state.name}</li>
+            </div>
+            <div style={{margin: "1% 30%"}}>
+            <li className="list-group-item glyphicon glyphicon-envelope p-3 text-white text-center bg-secondary"> Email</li>
+            <li className="list-group-item p-3 text-black text-center"> {this.state.email}</li>
+            </div>
+            <div style={{margin: "1% 30%"}}>
+            <li className="list-group-item glyphicon glyphicon-phone p-3 text-white text-center bg-info"> Phone Number</li>
+            <li className="list-group-item p-3 text-black text-center"> {this.state.phoneNumber}</li>
+            </div>
+            <div style={{margin: "1% 30%"}}>
+            <li className="list-group-item glyphicon glyphicon-home p-3 text-white text-center bg-secondary"> Home Address</li>
+            <li className="list-group-item p-3 text-black text-center"> {this.state.homeAddress}</li>
+            </div>
+            <div style={{margin: "1% 30%"}}>
+            <li className="list-group-item glyphicon glyphicon-briefcase p-3 text-white text-center bg-info"> Work</li>
+            <li className="list-group-item p-3 text-black text-center"> {this.state.workAddress}</li>
+            </div>
+            </ul>
+            <div className="p-3 bg-secondary text-white text-center" style={{margin: "1% 15%"}}> Children
+                  <table className="table">
+                    <thead className="table-dark">
                         <tr>
-                            <th> Name </th>
-                            <th> Grade </th>
-                            <th> School </th>
-                            <th> Health </th>
-                            <th> Username </th>
+                            <th className="text-center">Name</th>
+                            <th className="text-center">Grade</th>
+                            <th className="text-center">School</th>
+                            <th className="text-center">Health</th>
+                            <th className="text-center">Username</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody className="text-center">
                         {
                             this.state.children.map((child, i) =>
-                                <tr>
-                                    <td>{child.name}</td>
-                                    <td>{child.grade}</td>
-                                    <td>{child.school}</td>
-                                    <td>{child.health}</td>
-                                    <td>{child.username}</td>
+                                <tr className="table-dark">
+                                    <td className="text-center">{child.name}</td>
+                                    <td className="text-center">{child.grade}</td>
+                                    <td className="text-center">{child.school}</td>
+                                    <td className="text-center">{child.health}</td>
+                                    <td className="text-center">{child.username}</td>
                                 </tr>
                             )
                         }
@@ -48,20 +66,23 @@ export class ParentProfile extends React.Component {
                 </table>
             </div>
 
-            <button>Add Child</button>
-            <button>Update Child Information</button>
-
+            <div className="d-flex flex-row-reverse">
+                <button className="btn btn-primary p-2" style={{margin: "1% 15% 1% 1%"}}>Add Child</button>
+                <button className="btn btn-info p-2" style={{margin: "1%"}}>Update Child Information</button>
+            </div>
+        
             <div className="col col-mg-8 resetPassword">
                 <h3>Change Password</h3>
                 <form>
-                    <div class="form-group">
+                    <div className="form-group">
                         <input type="password" className="form-control" id="newPassword" />
                     </div>
                     <div className="input-group-append">
-                        <button className="resetButton">Reset</button>
+                        <button className="resetButton" className="btn btn-danger">Reset</button>
                     </div>
                 </form>
             </div>
+        </div>
         </>
         );
     }

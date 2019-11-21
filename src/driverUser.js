@@ -1,3 +1,4 @@
+
 exports.setupDriver = (req, res) => {
   let query = "drop table if exists driverUser";
   db.query(query, (err, result) => {
