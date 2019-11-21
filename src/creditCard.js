@@ -1,13 +1,13 @@
 //var myapp = require('./server.js');
 //GET /setup_cc
-exports.setup_cc = (req, res) => {
+exports.setupCreditCard = (req, res) => {
     let query = "drop table if exists creditCard";
     db.query(query, (err, result) => {
         if(err) {
             res.redirect('/');
         }
     });
-    query = "create table creditCard(expdate DATE, cc_number varchar(16), cvv varchar(4), zip_code varchar(5), parent_id varchar(4) REFERENCES parent_user(id))";
+    query = "create table creditCard(id int not null auto_increment primary key, expDate DATE, ccNumber varchar(16), cvv varchar(4), zipCode varchar(5), parentId int REFERENCES parentUser(id))";
     db.query(query, (err, result) => {
         if(err) { res.redirect('/'); }
         res.status(200).send('created the credit card table');
@@ -17,7 +17,7 @@ exports.setup_cc = (req, res) => {
 //POST /save_credit_card
 exports.saveCreditCard = (req, res) => {
     console.log(req.body);
-    let query = "insert into creditCard values('" + req.body.expdate + "','" + req.body.cc_number + "','" + req.body.cvv + "','" + req.body.zip_code + "','" + req.body.parent_id + "')"; 
+    let query = "insert into creditCard values(NULL,'" + req.body.expDate + "','" + req.body.ccNumber + "','" + req.body.cvv + "','" + req.body.zipCode + "','" + req.body.parentId + "')"; 
     db.query(query, (err, result) => {
         if(err) {
             logger.error("failed saving new credit card");
@@ -31,11 +31,19 @@ exports.saveCreditCard = (req, res) => {
 
 //GET /getCreditCard
 exports.getCreditCard = (req, res) => {
-    let query = "select * from creditCard where parent_id = '" + req.body.parent_id + "'";
+    let query = "select * from creditCard where parentId = '" + req.body.parentId + "'";
     db.query(query, function(err,rows, fields) {
-        if(err) {
-            logger.error("failed getting credit card");
-        }
-        res.status(200).send('<h1>' + rows[0].expdate + rows[0].cc_number + rows[0].cvv + rows[0].zip_code + rows[0].parent_id);
+        if(err){
+            logger.error("couldn't get credit card");
+            res.status(400).json({
+              "data": [],
+              "error": "MySQL error"
+            });
+          }
+          else{
+            res.status(200).json({
+              "data": rows
+            });
+          }
     })
 }

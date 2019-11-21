@@ -105,10 +105,21 @@ app.get('/setupdb', (req, res) => {
 });
 
 //api endpoints
+
 //creditCard
+app.post('/setupCreditCard', creditCard.setupCreditCard);
 app.post('/saveCreditCard', creditCard.saveCreditCard);
-app.post('/setupCc', creditCard.setup_cc);
 app.get('/getCreditCard', creditCard.getCreditCard);
+//parentUser
+app.post('/setupParent', parentUser.setupParent);
+app.post('/changeParentPassword', parentUser.changeParentPassword);
+app.post('/addParent', parentUser.addParent);
+app.get('/getParent', parentUser.getParent);
+//driverUser
+app.post('/setupDriver', driverUser.setupDriver);
+app.post('/changeDriverPassword', driverUser.changeDriverPassword);
+app.post('/addDriver', driverUser.addDriver);
+app.post('/getDriver', driverUser.getDriver);
 //child
 app.post('/setupChild', childUser.setupChild);
 app.post('/addChild', childUser.addChild);
@@ -134,21 +145,17 @@ app.get('/getCarService', car.getCarService);
 app.get('/getCarState', car.getCarState);
 app.post('/updateCarService', car.updateCarService);
 app.post('/updateCarAccidents', car.updateCarAccidents);
-
-
-
-
+//driverSchedule
 app.post('/setupDriverSchedule', driverSchedule.setupDriverSchedule);
 app.post('/addDriverSchedule', driverSchedule.addDriverSchedule);
 app.post('/setDriverScheduleStatus', driverSchedule.setDriverScheduleStatus);
 app.get('/getAvailableDrivers', driverSchedule.getAvailableDrivers);
-
+//rideSchedule
 app.post('/setupRideSchedule', rideSchedule.setupRideSchedule);
 app.post('/addRideSchedule', rideSchedule.addRideSchedule);
 app.post('/deleteRideSchedule', rideSchedule.deleteRideSchedule);
 app.post('/updateRideSchedule', rideSchedule.updateRideSchedule);
-app.get('/viewRideSchedule', rideSchedule.viewRideSchedule);
-
+app.get('/getRideSchedule', rideSchedule.viewRideSchedule);
 
 //connecting the express object to listen on a particular port as defined in the config object. 
 app.listen(config.port, config.host, (e) => {

@@ -9,7 +9,7 @@ exports.setupRideSchedule = (req,res) => {
       res.redirect('/');
     }
   });
-  query = "create table rideSchedule(id int primary key, pick_up_location varchar(50), drop_off_location varchar(50), pick_up_time datetime(6), drop_off_time datetime(6), active tinyint(1), parent_id varchar(4) REFERENCES parent_user(id), child_id varchar(4) REFERENCES child_user(id), driver_id varchar(4) REFERENCES driver_user(id))";
+  query = "create table rideSchedule(id int, pick_up_location varchar(50), drop_off_location varchar(50), pick_up_time datetime(6), drop_off_time datetime(6), active tinyint(1), parent_id int REFERENCES parent_user(id), child_id int REFERENCES child_user(id), driver_id int REFERENCES driver_user(id), primary key (driver_id, child_id, parent_id, id))";
   db.query(query, (err, result) => {
     if(err) {
        res.redirect('/');
