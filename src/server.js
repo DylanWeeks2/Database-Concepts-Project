@@ -137,6 +137,19 @@ app.post('/updateCarAccidents', car.updateCarAccidents);
 
 
 
+
+app.post('/setupDriverSchedule', driverSchedule.setupDriverSchedule);
+app.post('/addDriverSchedule', driverSchedule.addDriverSchedule);
+app.post('/setDriverScheduleStatus', driverSchedule.setDriverScheduleStatus);
+app.get('/getAvailableDrivers', driverSchedule.getAvailableDrivers);
+
+app.post('/setupRideSchedule', rideSchedule.setupRideSchedule);
+app.post('/addRideSchedule', rideSchedule.addRideSchedule);
+app.post('/deleteRideSchedule', rideSchedule.deleteRideSchedule);
+app.post('/updateRideSchedule', rideSchedule.updateRideSchedule);
+app.get('/viewRideSchedule', rideSchedule.viewRideSchedule);
+
+
 //connecting the express object to listen on a particular port as defined in the config object. 
 app.listen(config.port, config.host, (e) => {
   if (e) {
