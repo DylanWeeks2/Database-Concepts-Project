@@ -1,34 +1,68 @@
-var routes = require('express').Router();
-module.exports = routes;
 
-// GET /setupDriver
-routes.get('/setupDriver', (req, res) => {
-   //set up the driver table
-   connection.query('drop table if exists driver_user', function (err, rows, fields) {
-    if (err)
-      logger.error("Can't drop table");
+exports.setupDriver = (req, res) => {
+  let query = "drop table if exists driverUser";
+  db.query(query, (err, result) => {
+    if(err){
+      res.redirect('/');
+      res.status(400);
+    }
   });
-  connection.query('create table driver_user(id int, name varchar(50), bio varchar(200), cellPhone varchar(10), fingerprint tinyint(1), reported tinyint(1), password varchar(50))', function (err, rows, fields) {
-    if (err)
-      logger.error("Problem creating the table driver_user");
-  });
-  res.status(200).send("set up the driver");
-});
+  query = "create table driverUser(id int not null auto_increment primary key, name varchar(50), bio varchar(200), cellPhone varchar(10), fingerprint tinyint(1), reported tinyint(1), password varchar(50))";
+  db.query(query, (err, result) => {
+    if(err) {
+      logger.error("failed creating driver user table");
+      res.status(400)
+    }
+    else {
+      res.status(200).send('added the credit card');
+    }
+  })
+};
 
 // post /addDriver
-routes.get('/addDriver/:id/:name/:bio/:cellPhone/:fingerprint/:reported/:password', (req, res) => {
-  connection.query('insert into driver_user values(?, ?, ?, ?, ?, ?, ?)',[req.params['id'],req.params['name'], req.params['bio'], req.params['cellPhone'],req.params['fingerprint'],req.params['reported'],req.params['password']], function(err,rows,fields){
-    if(err)
-      logger.error('adding row to table failed');
-  });
-  res.status(200).send('added given driver');
-});
+exports.addDriver = (req, res) => {
+  let query = "insert into driverUser values(NULL,'"+ req.body.name + "','" + req.body.bio + "','" + req.body.cellPhone + "','" + req.body.fingerprint + "','" + req.body.reported + "','" + req.body.password + "')";
+  db.query(query, (err, result) => {
+    if(err) {
+      logger.error("failed adding a driver user");
+      res.status(400);
+    }
+    else{
+      res.status(200).send("added the driver user");
+    }
+
+  })
+}
 
 //post /updateDriverPassword
-routes.post('/updateDriverPassword/:id/:pass', (req, res) => {
-    connection.query('update driver_user set password = ? where id = ?', [req.params['new_password'],req.params['id']], function (err, rows, fields){
-      if(err)
-        logger.error('updating password failed');
-    });
-    res.status(200).send('updated driver password');
-});
+exports.changeDriverPassword = (req, res) => {
+  let query = "update driverUser set password ='" + req.body.password + "'where id = '" + req.body.id + "'";
+  db.query(query, (err, result) => {
+    if(err) {
+      logger.error("failed updatingdriver password");
+      res.status(400);
+    }
+    else{
+      res.status(200).send('updated the driver user password');
+    }
+  })
+}
+
+//GET /getDriver
+exports.getDriver = (req, res) => {
+  let query = "select * from driverUser where id = '" + req.body.id + "'";
+  db.query(query, function(err,rows, fields) {
+      if(err){
+          logger.error("couldn't get driver user");
+          res.status(400).json({
+            "data": [],
+            "error": "MySQL error"
+          });
+        }
+        else{
+          res.status(200).json({
+            "data": rows
+          });
+        }
+  })
+}
