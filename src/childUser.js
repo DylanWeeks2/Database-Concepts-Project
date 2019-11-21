@@ -3,7 +3,7 @@
 
 //post /setupChild
 exports.setupChild = (req, res) => {
-  let query = "drop table if exists childUser";
+  let query = "drop table if exists child_info";
   db.query(query, (err, result) => {
       if(err) {
           res.redirect('/');
@@ -42,48 +42,79 @@ exports.addChild = (req, res) => {
   })
 };
 
-//GET /viewChild
-exports.getChild = (req, res) => {
-  let query = "select * from childUser where id = '" + req.body.id + "'";
-  db.query(query, function(err,rows, fields) {
-      if(err) {
-          logger.error("failed getting childUser");
-      }
-      res.status(200).send('<h1>' + rows[0].name + ' ' + rows[0].id + ' ' + rows[0].parentName + ' ' + rows[0].bio + ' ' + rows[0].healthConditions + ' ' + rows[0].emergencyContactName + ' ' + rows[0].emergencyContactNumber + ' ' + rows[0].rating + ' ' + rows[0].parentId + '</h1>');
-  })
-}
-
 //GET /viewChildHealthConditions
 exports.getChildHealthConditions = (req, res) => {
   let query = "select * from childUser where id = '" + req.body.id + "'";
   db.query(query, function(err,rows, fields) {
-      if(err) {
-          logger.error("failed getting childUser");
+    if(err){
+        logger.error("couldn't get healthConditions");
+        res.status(400).json({
+          "data": [],
+          "error": "MySQL error"
+        });
       }
-      res.status(200).send('<h1>' + rows[0].healthConditions + '</h1>');
+      else{
+        res.status(200).json({
+          "healthConditions": rows[0].healthConditions
+        });
+      }
   })
 }
 
 //GET /viewChildEmergencyContact
-exports.getChildEmergencyContact = (req, res) => {
+exports.getChildEmergencyContactName = (req, res) => {
   let query = "select * from childUser where id = '" + req.body.id + "'";
   db.query(query, function(err,rows, fields) {
-      if(err) {
-          logger.error("failed getting childUser");
+    if(err){
+        logger.error("couldn't get emergency contact name");
+        res.status(400).json({
+          "data": [],
+          "error": "MySQL error"
+        });
       }
-      res.status(200).send('<h1>' + 'NAME = ' +rows[0].emergencyContactName +  ' NUMBER = ' + rows[0].emergencyContactNumber +'</h1>');
-  })
+      else{
+        res.status(200).json({
+          "emergencyContact": rows[0].emergencyContactName
+        });
+      }  
+    })
 }
+
+exports.getChildEmergencyContactNumber = (req, res) => {
+    let query = "select * from childUser where id = '" + req.body.id + "'";
+    db.query(query, function(err,rows, fields) {
+      if(err){
+          logger.error("couldn't get emergency contact number");
+          res.status(400).json({
+            "data": [],
+            "error": "MySQL error"
+          });
+        }
+        else{
+          res.status(200).json({
+            "emergencyContact": rows[0].emergencyContactNumber
+          });
+        }  
+      })
+  }
 
 //GET /viewChildBio
 exports.getChildBio = (req, res) => {
   let query = "select * from childUser where id = '" + req.body.id + "'";
   db.query(query, function(err,rows, fields) {
-      if(err) {
-          logger.error("failed getting childUser");
+    if(err){
+        logger.error("couldn't get bio");
+        res.status(400).json({
+          "data": [],
+          "error": "MySQL error"
+        });
       }
-      res.status(200).send('<h1>' + rows[0].bio + '</h1>');
-  })
+      else{
+        res.status(200).json({
+          "bio": rows[0].bio
+        });
+      }  
+    })
 }
 
 //post /updateChildName

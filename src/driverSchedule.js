@@ -9,7 +9,7 @@ exports.setupDriverSchedule = (req, res) => {
       res.redirect('/');
     }
   });
-  query = "create table driverSchedule(id varchar(4), start datetime(6), end datetime(6), active tinyint(1), driver_id varchar(4) REFERENCES driver_user(id))";
+  query = "create table driverSchedule(id int primary key, start datetime(6), end datetime(6), active tinyint(1), driver_id varchar(4) REFERENCES driver_user(id))";
   db.query(query, (err, result) => {
     if(err) {
        res.redirect('/');

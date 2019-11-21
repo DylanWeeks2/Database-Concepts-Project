@@ -118,9 +118,9 @@ app.post('/updateChildHealthConditions', childUser.updateChildHealthConditions);
 app.post('/updateChildEmergencyContactName', childUser.updateChildEmergencyContactName);
 app.post('/updateChildEmergencyContactNumber', childUser.updateChildEmergencyContactNumber);
 app.post('/updateChildRating', childUser.updateChildRating);
-app.get('/getChild', childUser.getChild);
 app.get('/getChildHealthConditions', childUser.getChildHealthConditions);
-app.get('/getChildEmergencyContact', childUser.getChildEmergencyContact);
+app.get('/getChildEmergencyContactName', childUser.getChildEmergencyContactName);
+app.get('/getChildEmergencyContactNumber', childUser.getChildEmergencyContactNumber);
 app.get('/getChildBio', childUser.getChildBio);
 //car
 app.post('/setupCar', car.setupCar);

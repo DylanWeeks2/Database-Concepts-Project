@@ -7,7 +7,7 @@ routes.get('/setup_parent', (req, res) => {
       if (err)
         logger.error("Can't drop table");
     });
-    connection.query('create table parent_user(id varchar(4), name varchar(50), password varchar(50))', function (err, rows, fields) {
+    connection.query('create table parent_user(id int primary key, name varchar(50), password varchar(50))', function (err, rows, fields) {
       if (err)
         logger.error("Problem creating the table parent_user")
     });
