@@ -155,7 +155,7 @@ app.post('/setupRideSchedule', rideSchedule.setupRideSchedule);
 app.post('/addRideSchedule', rideSchedule.addRideSchedule);
 app.post('/deleteRideSchedule', rideSchedule.deleteRideSchedule);
 app.post('/updateRideSchedule', rideSchedule.updateRideSchedule);
-app.get('/viewRideSchedule', rideSchedule.viewRideSchedule);
+app.get('/getRideSchedule', rideSchedule.viewRideSchedule);
 
 //connecting the express object to listen on a particular port as defined in the config object. 
 app.listen(config.port, config.host, (e) => {
