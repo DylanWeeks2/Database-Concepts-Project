@@ -9,7 +9,7 @@ exports.setupDriverSchedule = (req, res) => {
       res.redirect('/');
     }
   });
-  query = "create table driverSchedule(id varchar(4), start datetime(6), end datetime(6), active tinyint(1), driver_id varchar(4) REFERENCES driver_user(id))";
+  query = "create table driverSchedule(id int, start datetime(6), end datetime(6), active tinyint(1), driver_id int REFERENCES driver_user(id), primary key(driver_id,id))";
   db.query(query, (err, result) => {
     if(err) {
        res.redirect('/');
@@ -49,7 +49,7 @@ exports.setDriverScheduleStatus = (req, res) => {
  exports.getAvailableDrivers = (req, res) =>{
   console.log(req,body);
   let query = "select * from driverSchedule where '"+req.body.time+"' > driverSchedule.start and '"+req.body.time+ "'< driverSchedule.end";
-  db.query(query, (err,result) => {
+  db.query(query, (err,rows, fields) => {
     if(err){
       logger.error("couldn't get drivers");
       res.status(400).json({
