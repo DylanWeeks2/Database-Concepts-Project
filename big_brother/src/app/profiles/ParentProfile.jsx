@@ -48,6 +48,7 @@ export class ParentProfile extends React.Component {
                             <th className="text-center">School</th>
                             <th className="text-center">Health</th>
                             <th className="text-center">Username</th>
+                            <th/>
                         </tr>
                     </thead>
                     <tbody className="text-center">
@@ -59,6 +60,7 @@ export class ParentProfile extends React.Component {
                                     <td className="text-center">{child.school}</td>
                                     <td className="text-center">{child.health}</td>
                                     <td className="text-center">{child.username}</td>
+                                    <td className="text-center"><button className="btn btn-info p-2" style={{margin: "1%"}}>Update Child Information</button></td>
                                 </tr>
                             )
                         }
@@ -68,7 +70,6 @@ export class ParentProfile extends React.Component {
 
             <div className="d-flex flex-row-reverse">
                 <button className="btn btn-primary p-2" style={{margin: "1% 15% 1% 1%"}}>Add Child</button>
-                <button className="btn btn-info p-2" style={{margin: "1%"}}>Update Child Information</button>
             </div>
         
             <div className="col col-mg-8 resetPassword">
