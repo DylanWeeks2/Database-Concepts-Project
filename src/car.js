@@ -35,77 +35,132 @@ exports.addCar = (req, res) => {
 exports.getCarModel = (req, res) => {
   let query = "select * from car where id = '" + req.body.id + "'";
   db.query(query, function(err,rows, fields) {
-      if(err) {
-          logger.error("failed getting car");
+    if(err){
+        logger.error("couldn't get car model");
+        res.status(400).json({
+          "data": [],
+          "error": "MySQL error"
+        });
       }
-      res.status(200).send('<h1>' + rows[0].model + '</h1>');
-  })
+      else{
+        res.status(200).json({
+          "model": rows[0].model
+        });
+      }  
+    })
 }
 
 //GET /getCarseats
 exports.getCarSeats = (req, res) => {
-  let query = "select * from car where id = '" + req.body.id + "'";
-  db.query(query, function(err,rows, fields) {
-      if(err) {
-          logger.error("failed getting car");
-      }
-      res.status(200).send('<h1>' + rows[0].numSeats + '</h1>');
-  })
+    db.query(query, function(err,rows, fields) {
+        if(err){
+            logger.error("couldn't get number of seats");
+            res.status(400).json({
+              "data": [],
+              "error": "MySQL error"
+            });
+          }
+          else{
+            res.status(200).json({
+              "numSeats": rows[0].numSeats
+            });
+          }  
+        })
 }
 
 //GET /getCarFeatures
 exports.getCarFeatures = (req, res) => {
   let query = "select * from car where id = '" + req.body.id + "'";
   db.query(query, function(err,rows, fields) {
-      if(err) {
-          logger.error("failed getting car");
+    if(err){
+        logger.error("couldn't get car features");
+        res.status(400).json({
+          "data": [],
+          "error": "MySQL error"
+        });
       }
-      res.status(200).send('<h1>' + rows[0].features + '</h1>');
-  })
+      else{
+        res.status(200).json({
+          "features": rows[0].features
+        });
+      }  
+    })
 }
 
 //GET /getcarLicence
 exports.getCarLicence = (req, res) => {
   let query = "select * from car where id = '" + req.body.id + "'";
   db.query(query, function(err,rows, fields) {
-      if(err) {
-          logger.error("failed getting car");
+    if(err){
+        logger.error("couldn't get licence plate number");
+        res.status(400).json({
+          "data": [],
+          "error": "MySQL error"
+        });
       }
-      res.status(200).send('<h1>' + rows[0].licenceNum + '</h1>');
-  })
+      else{
+        res.status(200).json({
+          "licenceNum": rows[0].licenceNum
+        });
+      }  
+    })
 }
 
 //GET /getCarAccidents
 exports.getCarAccidents = (req, res) => {
   let query = "select * from car where id = '" + req.body.id + "'";
   db.query(query, function(err,rows, fields) {
-      if(err) {
-          logger.error("failed getting car");
+    if(err){
+        logger.error("couldn't get number of accidents");
+        res.status(400).json({
+          "data": [],
+          "error": "MySQL error"
+        });
       }
-      res.status(200).send('<h1>' + rows[0].numAccidents + '</h1>');
-  })
+      else{
+        res.status(200).json({
+          "numAccidents": rows[0].numAccidents
+        });
+      }  
+    })
 }
 
 //GET /getCarService
 exports.getCarService = (req, res) => {
   let query = "select * from car where id = '" + req.body.id + "'";
   db.query(query, function(err,rows, fields) {
-      if(err) {
-          logger.error("failed getting car");
+    if(err){
+        logger.error("couldn't get service");
+        res.status(400).json({
+          "data": [],
+          "error": "MySQL error"
+        });
       }
-      res.status(200).send('<h1>' + rows[0].service + '</h1>');
-  })
+      else{
+        res.status(200).json({
+          "service": rows[0].service
+        });
+      }  
+    })
 }
 
 //GET /getCarState
 exports.getCarState = (req, res) => {
   let query = "select * from car where id = '" + req.body.id + "'";
   db.query(query, function(err,rows, fields) {
-      if(err) {
-          logger.error("failed getting car");
+    if(err){
+        logger.error("couldn't get state");
+        res.status(400).json({
+          "data": [],
+          "error": "MySQL error"
+        });
       }
-      res.status(200).send('<h1>' + rows[0].state + '</h1>');
-  })
+      else{
+        res.status(200).json({
+          "state": rows[0].state
+        });
+      }  
+    })
 }
 
 //post /updateChild
