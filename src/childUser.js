@@ -3,13 +3,14 @@
 
 //post /setupChild
 exports.setupChild = (req, res) => {
-  let query = "drop table if exists childUser";
+  let query = "drop table if exists 'childUser'";
   db.query(query, (err, result) => {
       if(err) {
           res.redirect('/');
+          res.status(200);
       }
   });
-  query = "CREATE TABLE `db`.`childUser` (`id` INT NOT NULL AUTO_INCREMENT, `name` VARCHAR(50) NOT NULL, `bio` VARCHAR(200) NOT NULL, `healthConditions` VARCHAR(200) NOT NULL, `emergencyContactName` VARCHAR(50) NOT NULL, `emergencyContactNumber` VARCHAR(50) NOT NULL, `rating` DECIMAL(19,4) NOT NULL, `parentID` INT NULL, PRIMARY KEY (`id`), UNIQUE INDEX `id_UNIQUE` (`id` ASC), INDEX `parentID_idx` (`parentID` ASC), CONSTRAINT `parentID` FOREIGN KEY (`parentID`) REFERENCES `db`.`parentUser` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION);";
+  query = "CREATE TABLE `childUser` (`id` INT NOT NULL AUTO_INCREMENT, `name` VARCHAR(50) NOT NULL, `bio` VARCHAR(200) NOT NULL, `healthConditions` VARCHAR(200) NOT NULL, `emergencyContactName` VARCHAR(50) NOT NULL, `emergencyContactNumber` VARCHAR(50) NOT NULL, `rating` DECIMAL(19,4) NOT NULL, `parentID` INT NULL, PRIMARY KEY (`id`), UNIQUE INDEX `id_UNIQUE` (`id` ASC), INDEX `parentID_idx` (`parentID` ASC), CONSTRAINT `parentID` FOREIGN KEY (`parentID`) REFERENCES `db`.`parentUser` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION);";
   db.query(query, (err, result) => {
       if(err) { res.redirect('/'); }
       else{
@@ -39,7 +40,28 @@ exports.addChild = (req, res) => {
       else{
           res.status(200).send('Child has been added!!');
       }
-  })
+  });
+  var currID;
+  query = "select * from childUser where name = '" + req.body.name + "' limit one;"
+  db.query(query, (err,rows,fields) => {
+    if(err){
+      logger.error("couldnt find the user we just added");
+      res.status(400);
+    }
+    else{
+      currID = rows[0].id;
+      res.status(200).send('got the userID back');
+    }
+  });
+  query = "insert into accounts values (NULL,'" + req.body.username +"','" + req.body.password +"','" + currID +"');";
+  db.query(query, (err,result) => {
+    if(err){
+      logger.error("couldnt add new account into the accounts table");
+      res.status(400);
+    }else{
+      res.status(200).send("completed adding new user to accounts table");
+    }
+  });
 };
 
 //GET /viewChildHealthConditions
