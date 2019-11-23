@@ -6,7 +6,7 @@ what is addDriverSchedule endpoint
 What are any of driverschedule calls
 there should be an endpoint for transactions, not getting a cc
 creating parent account is all wrong
-There's no login endpoint
+There's no login endpoint -- working on it
 changePasswords should be a put request
 Car services and Accidents should be adds, not updates
 */
@@ -116,7 +116,7 @@ export class Repo {
     deleteRideSchedule(rideId) {
         return new Promise((resolve, reject) => {
             axios.delete(`${this.url}/deleteRideSchedule`, rideId, this.config)
-            .then(resp => resolve(resp.data) /*handle successful delete*/)
+            .then(re sp => resolve(resp.data) /*handle successful delete*/)
             .catch(resp => /*handle failure */);
         });
     }
