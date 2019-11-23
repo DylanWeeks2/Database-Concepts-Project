@@ -13,7 +13,12 @@ export class Header extends React.Component {
 
   onLogin() {
     //axios call with userName and pass, store userid
-      //and send to setAuthStatus
+    //this.props.setAuthState();
+  }
+
+  onLogout() {
+    localStorage.clear();
+    //route to home
   }
 
 	render() {
