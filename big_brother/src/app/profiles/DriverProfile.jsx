@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import { Accident } from '../../Accident';
-import { Service } from '../../Service';
-import { Availability } from "../../models/Availability";
-import { Car } from '../../Car';
+import { Accident, Service, Availability, Car } from '../../models';
+//import { Service } from '../../models/Service';
+//import { Availability } from "../../models/Availability";
+//import { Car } from '../../models/Car';
 import AddAccident  from './models/AddAccident';
 import AddService from './models/AddService';
 import AddAvailability from './models/AddAvailability';

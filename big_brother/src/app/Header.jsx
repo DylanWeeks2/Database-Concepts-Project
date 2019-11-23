@@ -10,7 +10,7 @@ import "./authentication/Register.css"
 export class Header extends React.Component {
 
   state = {
-    isLoggedIn: true,
+    isLoggedIn: false,
     userId: 200002,
     userName: "",
     pass: "",

@@ -1,7 +1,7 @@
 import React from "react"
-import { Child } from '../../Child'
-import { DriverUser } from '../../models/DriverUser'
-import { Ride } from "../../Ride"
+import { Child, DriverUser, Ride } from '../../models'
+//import { DriverUser } from '../../models/DriverUser'
+//import { Ride } from "../../models/Ride"
 import "../dashboard/table.css"
 import {Card, Button } from 'react-bootstrap';
 import "../../App.css"
