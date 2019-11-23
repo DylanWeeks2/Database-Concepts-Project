@@ -14,7 +14,7 @@ exports.setupDriver = (req, res) => {
       res.status(400)
     }
     else {
-      res.status(200).send('added the credit card');
+      res.status(200).send('added the driver user');
     }
   })
 };
