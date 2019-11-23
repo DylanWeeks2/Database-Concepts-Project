@@ -11,6 +11,7 @@ function AddService(props) {
     const handleSubmit = (event) => {
         event.preventDefault();
         const form = event.target;
+        const driverId = 0;
         // console.log(form.elements);
         const date = form.elements.date.value;
         let type = form.elements.type.value;
@@ -18,7 +19,7 @@ function AddService(props) {
             type = form.elements.other.value;
         }
         const description = form.elements.description.value;
-        props.submitService(date, type, description);
+        props.submitService(driverId, date, type, description);
     };
     return (
         <>
