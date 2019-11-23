@@ -9,7 +9,7 @@ exports.setupChild = (req, res) => {
           res.redirect('/');
       }
   });
-  query = "CREATE table childUser (id int NOT NULL AUTO_INCREMENT PRIMARY KEY, name varchar(50), bio varchar(200), healthConditions varchar(200), emergencyContactName varchar(50), emergencyContactNumber varchar(50), rating DECIMAL(19,4), parentId int REFERENCES parentUser(id))";
+  query = "CREATE TABLE `db`.`childUser` (`id` INT NOT NULL AUTO_INCREMENT, `name` VARCHAR(50) NOT NULL, `bio` VARCHAR(200) NOT NULL, `healthConditions` VARCHAR(200) NOT NULL, `emergencyContactName` VARCHAR(50) NOT NULL, `emergencyContactNumber` VARCHAR(50) NOT NULL, `rating` DECIMAL(19,4) NOT NULL, `parentID` INT NULL, PRIMARY KEY (`id`), UNIQUE INDEX `id_UNIQUE` (`id` ASC), INDEX `parentID_idx` (`parentID` ASC), CONSTRAINT `parentID` FOREIGN KEY (`parentID`) REFERENCES `db`.`parentUser` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION);";
   db.query(query, (err, result) => {
       if(err) { res.redirect('/'); }
       else{
