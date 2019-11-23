@@ -7,7 +7,7 @@ exports.setupAccounts = (req, res) => {
         res.status(400);
       }
     });
-    query = "CREATE TABLE `db`.`accounts` (`id` INT NOT NULL AUTO_INCREMENT, `username` VARCHAR(50) NOT NULL, `password` VARCHAR(50) NOT NULL, `userID` INT NOT NULL, PRIMARY KEY (`id`), UNIQUE INDEX `userID_UNIQUE` (`userID` ASC),UNIQUE INDEX `username_UNIQUE` (`username` ASC))";
+    query = "CREATE TABLE accounts` (`id` INT NOT NULL AUTO_INCREMENT, `username` VARCHAR(50) NOT NULL, `password` VARCHAR(50) NOT NULL, `userID` INT NOT NULL, PRIMARY KEY (`id`), UNIQUE INDEX `userID_UNIQUE` (`userID` ASC),UNIQUE INDEX `username_UNIQUE` (`username` ASC))";
     db.query(query, (err, result) => { 
         if(err) {
           logger.error("failed creating accounts table");
@@ -39,4 +39,17 @@ exports.login = (req, res) => {
         })
       }
     })
+  }
+
+  exports.changePassword = (req, res) => {
+//userID, oldPass, newPass, username
+    let query = "update accounts set password = '" + req.body.newPassword + "' where userID = '" + req.body.userID + "' AND username = '" + req.body.username + "';"
+    db.query(query, (err,result) => {
+      if(err){
+        logger.error("couldnt change password");
+        res.status(400);
+      }else{
+        res.status(200).send("successful change of password");
+      }
+    });
   }

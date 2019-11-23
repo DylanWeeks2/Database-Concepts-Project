@@ -106,19 +106,22 @@ app.get('/setupdb', (req, res) => {
 });
 
 //api endpoints
-
+//accounts
+app.post('/setupAccounts', accounts.setupAccounts);
+app.get('/login', accounts.login);
+app.put('/changePassword', accounts.changePassword);
 //creditCard
 app.post('/setupCreditCard', creditCard.setupCreditCard);
 app.post('/saveCreditCard', creditCard.saveCreditCard);
 app.get('/getCreditCard', creditCard.getCreditCard);
 //parentUser
 app.post('/setupParent', parentUser.setupParent);
-app.post('/changeParentPassword', parentUser.changeParentPassword);
+//app.put('/changeParentPassword', parentUser.changeParentPassword);
 app.post('/addParent', parentUser.addParent);
 app.get('/getParent', parentUser.getParent);
 //driverUser
 app.post('/setupDriver', driverUser.setupDriver);
-app.post('/changeDriverPassword', driverUser.changeDriverPassword);
+//app.put('/changeDriverPassword', driverUser.changeDriverPassword);
 app.post('/addDriver', driverUser.addDriver);
 app.post('/getDriver', driverUser.getDriver);
 //childUser
@@ -146,6 +149,8 @@ app.get('/getRideSchedule', rideSchedule.viewRideSchedule);
 app.post('/setupReviews', reviews.setupReviews);
 app.post('/addReview', reviews.addReview);
 app.get('/getReviews', reviews.getReviews);
+
+
 
 //connecting the express object to listen on a particular port as defined in the config object. 
 app.listen(config.port, config.host, (e) => {

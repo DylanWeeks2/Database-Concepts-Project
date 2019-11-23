@@ -4,7 +4,7 @@ exports.setupParent = (req, res) => {
   db.query(query, (err, result) => {
     if(err) { res.redirect('/'); }
   });
-  query = "CREATE TABLE `db`.`parentUser` (`id` INT NOT NULL AUTO_INCREMENT,`name` VARCHAR(50) NOT NULL,`password` VARCHAR(50) NOT NULL,PRIMARY KEY (`id`),UNIQUE INDEX `id_UNIQUE` (`id` ASC));";
+  query = "CREATE TABLE 'parentUser` (`id` INT NOT NULL AUTO_INCREMENT, `name` VARCHAR(50) NOT NULL, PRIMARY KEY (`id`), UNIQUE INDEX `id_UNIQUE` (`id` ASC));";
   db.query(query, (err, result) => {
     if(err) { res.redirect('/'); }
     res.status(200).send('created the parent table');
@@ -30,7 +30,7 @@ exports.changeParentPassword = (req, res) => {
 }
 
 exports.addParent = (req,res) => {
-  let query = "insert into parentUser values(NULL,'" + req.body.name + "','" + req.body.password + "')";
+  let query = "insert into parentUser values(NULL,'" + req.body.name + "')";
   console.log(req.body);
   db.query(query, (err, result) => {
     if(err) {
@@ -41,10 +41,31 @@ exports.addParent = (req,res) => {
       res.status(200).send('added the parent User');
     }
   })
+  var currID;
+  query = "select * from parentUser where name = '" + req.body.name + "' limit one;"
+  db.query(query, (err,rows,fields) => {
+    if(err){
+      logger.error("couldnt find the user we just added");
+      res.status(400);
+    }
+    else{
+      currID = rows[0].id;
+      res.status(200).send('got the userID back');
+    }
+  });
+  query = "insert into accounts values (NULL,'" + req.body.username +"','" + req.body.password +"','" + currID +"');";
+  db.query(query, (err,result) => {
+    if(err){
+      logger.error("couldnt add new account into the accounts table");
+      res.status(400);
+    }else{
+      res.status(200).send("completed adding new user to accounts table");
+    }
+  });
 }
 
 exports.getParent = (req, res) => {
-  let query = "select * from parentUser where id = '" + req.body.id + "'";
+  let query = "select * from parentUser where id = '" + req.body.id + "';";
   db.query(query, function(err, rows, fields) {
     if(err){
       logger.error("couldn't get parent user");
