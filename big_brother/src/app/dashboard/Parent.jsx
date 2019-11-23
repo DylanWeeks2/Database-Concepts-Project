@@ -1,11 +1,11 @@
 import React from 'react';
-import { Ride } from "../../Ride";
-import { Child } from "../../Child";
+import { Ride, Child, ParentUser, DriverUser } from "../../models";
+//import { Child } from "../../models/Child";
 import  AddRide from "./AddRide";
 import "./table.css"
-import { ParentUser } from '../../models/ParentUser';
+//import { ParentUser } from '../../models/ParentUser';
 import { RideItem } from './RideItem';
-import { DriverUser } from '../../models/DriverUser';
+//import { DriverUser } from '../../models/DriverUser';
 //const globalizeLocalizer = localizer(globalize)
 
 

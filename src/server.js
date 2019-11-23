@@ -1,7 +1,6 @@
 /**A simple node/express server that include communication with a 
  * mysql db instance. 
 */
-const accounts   = require('./accounts');
 const creditCard = require('./creditCard');
 const parentUser = require('./parentUser');
 const childUser  = require('./childUser');
@@ -128,42 +127,24 @@ app.post('/getDriver', driverUser.getDriver);
 //childUser
 app.post('/setupChild', childUser.setupChild);
 app.post('/addChild', childUser.addChild);
-app.put('/updateChildName', childUser.updateChildName);
-app.put('/updateChildBio', childUser.updateChildBio);
-app.put('/updateChildHealthConditions', childUser.updateChildHealthConditions);
-app.put('/updateChildEmergencyContactName', childUser.updateChildEmergencyContactName);
-app.put('/updateChildEmergencyContactNumber', childUser.updateChildEmergencyContactNumber);
-app.put('/updateChildRating', childUser.updateChildRating);
-app.get('/getChildHealthConditions', childUser.getChildHealthConditions);
-app.get('/getChildEmergencyContactName', childUser.getChildEmergencyContactName);
-app.get('/getChildEmergencyContactNumber', childUser.getChildEmergencyContactNumber);
-app.get('/getChildBio', childUser.getChildBio);
-app.get('/getChildName', childUser.getChildName);
-app.get('/getChildRating', childUser.getChildRating);
+app.post('/updateChild', childUser.updateChild);
+app.get('/getChild', childUser.getChild);
 //car
 app.post('/setupCar', car.setupCar);
 app.post('/addCar', car.addCar);
-app.get('/getCarModel', car.getCarModel);
-app.get('/getCarAccidents', car.getCarAccidents);
-app.get('/getCarFeatures', car.getCarFeatures);
-app.get('/getCarLicence', car.getCarLicence);
-app.get('/getCarSeats', car.getCarSeats);
-app.get('/getCarService', car.getCarService);
-app.get('/getCarState', car.getCarState);
-app.put('/updateCarService', car.updateCarService);
-app.put('/updateCarAccidents', car.updateCarAccidents);
+app.get('/getCar', car.getCar);
+app.post('/updateCar', car.updateCar);
 //driverSchedule
 app.post('/setupDriverSchedule', driverSchedule.setupDriverSchedule);
 app.post('/addDriverSchedule', driverSchedule.addDriverSchedule);
-app.put('/setDriverScheduleStatus', driverSchedule.setDriverScheduleStatus);
+app.post('/setDriverScheduleStatus', driverSchedule.setDriverScheduleStatus);
 app.get('/getAvailableDrivers', driverSchedule.getAvailableDrivers);
 //rideSchedule
 app.post('/setupRideSchedule', rideSchedule.setupRideSchedule);
 app.post('/addRideSchedule', rideSchedule.addRideSchedule);
-app.put('/deleteRideSchedule', rideSchedule.deleteRideSchedule);
-app.put('/updateRideSchedule', rideSchedule.updateRideSchedule);
+app.post('/deleteRideSchedule', rideSchedule.deleteRideSchedule);
+app.post('/updateRideSchedule', rideSchedule.updateRideSchedule);
 app.get('/getRideSchedule', rideSchedule.viewRideSchedule);
-
 //reivews
 app.post('/setupReviews', reviews.setupReviews);
 app.post('/addReview', reviews.addReview);

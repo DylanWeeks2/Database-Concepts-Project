@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Child } from '../../Child'
+import { Child } from '../../models'
 
 export class ParentProfile extends React.Component {
     state = {
@@ -70,6 +70,10 @@ export class ParentProfile extends React.Component {
 
             <div className="d-flex flex-row-reverse">
                 <button className="btn btn-primary p-2" style={{margin: "1% 15% 1% 1%"}}>Add Child</button>
+            </div>
+
+            <div className="d-flex flex-row-reverse">
+            <button className="btn btn-info p-2" style={{margin: "1% 15% 1% 1%"}}>Update My Information</button>
             </div>
         
             <div className="col col-mg-8 resetPassword">
