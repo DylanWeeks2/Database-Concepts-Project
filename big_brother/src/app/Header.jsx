@@ -10,27 +10,19 @@ import "./authentication/Register.css"
 export class Header extends React.Component {
 
   state = {
-    isLoggedIn: false,
-    userId: 200002,
     userName: "",
     pass: "",
   }
 
   onLogin() {
-
+    //axios call with userName and pass, store userid
+    //this.props.setAuthState();
   }
 
-  onForgotPass() {
-
+  onLogut() {
+    localStorage.clear();
+    //route to home
   }
-
-  onLogOut() {
-
-  }
-  
-	Login() {
-		alert("Sdsd");
-	}
 
 	render() {
     let profileLink;
@@ -58,7 +50,7 @@ export class Header extends React.Component {
               <div className="navbar-header">   
                 <a className="navbar-brand text-white" href="#">Big Brother</a>
               </div>
-              <div className="navbar-form navbar-right" style={ {"display": this.state.isLoggedIn ? 'none' : 'block'} }>
+              <div className="navbar-form navbar-right" style={ {"display": localStorage.getItem("isLoggedIn") ? 'none' : 'block'} }>
                 <div className="btn-toolbar">
                   <div className="input-group mr-2">
                     <div className="input-group-prepend">
@@ -91,18 +83,13 @@ export class Header extends React.Component {
                   <div className="button-group ml-2">
                     <button type="button" className="btn btn-secondary">Log In</button>
                   </div>
-                  <div className="button-group ml-2">
-                    <button type="button" className="btn btn-secondary">Forgot Password</button>
-                  </div>
                 </div>
               </div>
 
-              <div className="btn-group navbar-right" style={ {"display": this.state.isLoggedIn ? 'block' : 'none'} }>
-                {
-                  /*<button type="button"
+              <div className="btn-group navbar-right" style={ {"display": localStorage.getItem("isLoggedIn") ? 'block' : 'none'} }>
+                <button type="button"
                         className="btn btn-secondary"
-                        onClick={ () => this.onLogin() }>Profile</button> */
-                }
+                        onClick={ () => this.onLogin() }>Profile</button>
 
                 <Link to={profileLink} className="btn btn-secondary" params={{id: this.state.userId}}>Profile</Link>
 
