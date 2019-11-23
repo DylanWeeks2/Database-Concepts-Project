@@ -12,6 +12,7 @@ function AddAccident(props) {
         event.preventDefault();
         const form = event.target;
         // console.log(form.elements);
+        let driverId = 0;
         const date = form.elements.date.value;
         const severity = form.elements.severity.value;
         let type = form.elements.type.value;
@@ -19,7 +20,7 @@ function AddAccident(props) {
             type = form.elements.other.value;
         }
         const description = form.elements.description.value;
-        props.submitAccident(date, severity, type, description);
+        props.submitAccident(driverId, date, severity, type, description);
     };
     return (
         <>

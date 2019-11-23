@@ -7,7 +7,7 @@ exports.setupReviews = (req, res) => {
         res.status(400);
       }
     });
-    query = "create table reviews(id int not null auto_increment primary key, stars int, text varchar(500), driverId int not null, FOREIGN KEY (driverId) REFERENCES driverUser(id))";
+    query = "CREATE TABLE `db`.`review` ( `id` INT NOT NULL AUTO_INCREMENT, `stars` INT NOT NULL, `text` VARCHAR(500) NULL,  `driverID` INT NOT NULL, PRIMARY KEY (`id`), INDEX `driver_ID_idx` (`driverID` ASC), CONSTRAINT `driverUser`  FOREIGN KEY (`driverID`) REFERENCES `db`.`driverUser` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION); ";
     db.query(query, (err, result) => { 
       if(err) {
         logger.error("failed creating reviews table");

@@ -22,25 +22,23 @@ export class DriverProfile extends React.Component {
         availability: []
     }
 
-    AddAccident(date, severity, type, description) {
-        var accident = new Accident(date, severity, type, description);
+    AddAccident(driverId, date, severity, type, description) {
+        var accident = new Accident(driverId, date, severity, type, description);
         this.setState(prevState => {
             prevState.accidents.push(accident);
             return prevState;
         })
     }
 
-    AddService(date, type, description) {
-        var accident = new Service(date, type, description);
+    AddService(driverId, date, type, description) {
+        var accident = new Service(driverId, date, type, description);
         this.setState(prevState => {
             prevState.services.push(accident);
             return prevState;
         })
     }
 
-    AddAvailability(date, start, end) {
-        const driverId = 0; //CHANGE THIS
-        debugger;
+    AddAvailability(driverId, date, start, end) {
         let availability = new Availability(driverId, date, start.toString(), end.toString());
         this.setState(prevState => {
             prevState.availability.push(availability);
@@ -119,7 +117,7 @@ export class DriverProfile extends React.Component {
             </table>
             </div>
             <div className="d-flex flex-row-reverse">
-            <AddAccident submitAccident={(date, severity, type, description) => this.AddAccident(date, severity, type, description)}/>
+            <AddAccident submitAccident={(driverId, date, severity, type, description) => this.AddAccident(driverId, date, severity, type, description)}/>
             </div>
 
             <div className="p-3 bg-secondary text-white text-center" style={{margin: "1% 15%"}}> Service History
@@ -146,7 +144,7 @@ export class DriverProfile extends React.Component {
             </div>
 
             <div className="d-flex flex-row-reverse">
-            <AddService submitService={(date, type, description) => this.AddService(date, type, description)}/>
+            <AddService submitService={(driverId, date, type, description) => this.AddService(driverId, date, type, description)}/>
             </div>
 
             <div className="d-flex flex-row-reverse">
@@ -176,7 +174,7 @@ export class DriverProfile extends React.Component {
             </table>
             </div>
             <div className="d-flex flex-row-reverse">
-            <AddAvailability submitAvailability={(date, start, end) => this.AddAvailability(date, start, end)} />
+            <AddAvailability submitAvailability={(driverId, date, start, end) => this.AddAvailability(driverId, date, start, end)} />
             </div>
 
             <div className="col col-mg-8 resetPassword">

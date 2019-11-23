@@ -12,8 +12,8 @@ function AddAvailiability(props) {
         event.preventDefault();
         const form = event.target;
         // we should add the date and start and convert to a datetime
+        let driverId = 0;
         let date = form.elements.date.value;
-        debugger;
         let start = form.elements.start.value;
         let end = form.elements.end.value;
         if(date === "") {
@@ -25,7 +25,7 @@ function AddAvailiability(props) {
             return;
         }
         debugger;
-        props.submitAvailability(date, new Date(String(date) + " " + String(start)), new Date(String(date) + " " + String(end)));
+        props.submitAvailability(driverId, date, new Date(String(date) + " " + String(start)), new Date(String(date) + " " + String(end)));
     };
     return (
         <>

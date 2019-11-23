@@ -116,24 +116,23 @@ app.post('/saveCreditCard', creditCard.saveCreditCard);
 app.get('/getCreditCard', creditCard.getCreditCard);
 //parentUser
 app.post('/setupParent', parentUser.setupParent);
-app.post('/changeParentPassword', parentUser.changeParentPassword);
+app.put('/changeParentPassword', parentUser.changeParentPassword);
 app.post('/addParent', parentUser.addParent);
 app.get('/getParent', parentUser.getParent);
 //driverUser
 app.post('/setupDriver', driverUser.setupDriver);
-app.get('/login/driver', driverUser.login);
-app.post('/changeDriverPassword', driverUser.changeDriverPassword);
+app.put('/changeDriverPassword', driverUser.changeDriverPassword);
 app.post('/addDriver', driverUser.addDriver);
 app.post('/getDriver', driverUser.getDriver);
 //childUser
 app.post('/setupChild', childUser.setupChild);
 app.post('/addChild', childUser.addChild);
-app.post('/updateChildName', childUser.updateChildName);
-app.post('/updateChildBio', childUser.updateChildBio);
-app.post('/updateChildHealthConditions', childUser.updateChildHealthConditions);
-app.post('/updateChildEmergencyContactName', childUser.updateChildEmergencyContactName);
-app.post('/updateChildEmergencyContactNumber', childUser.updateChildEmergencyContactNumber);
-app.post('/updateChildRating', childUser.updateChildRating);
+app.put('/updateChildName', childUser.updateChildName);
+app.put('/updateChildBio', childUser.updateChildBio);
+app.put('/updateChildHealthConditions', childUser.updateChildHealthConditions);
+app.put('/updateChildEmergencyContactName', childUser.updateChildEmergencyContactName);
+app.put('/updateChildEmergencyContactNumber', childUser.updateChildEmergencyContactNumber);
+app.put('/updateChildRating', childUser.updateChildRating);
 app.get('/getChildHealthConditions', childUser.getChildHealthConditions);
 app.get('/getChildEmergencyContactName', childUser.getChildEmergencyContactName);
 app.get('/getChildEmergencyContactNumber', childUser.getChildEmergencyContactNumber);
@@ -150,18 +149,18 @@ app.get('/getCarLicence', car.getCarLicence);
 app.get('/getCarSeats', car.getCarSeats);
 app.get('/getCarService', car.getCarService);
 app.get('/getCarState', car.getCarState);
-app.post('/updateCarService', car.updateCarService);
-app.post('/updateCarAccidents', car.updateCarAccidents);
+app.put('/updateCarService', car.updateCarService);
+app.put('/updateCarAccidents', car.updateCarAccidents);
 //driverSchedule
 app.post('/setupDriverSchedule', driverSchedule.setupDriverSchedule);
 app.post('/addDriverSchedule', driverSchedule.addDriverSchedule);
-app.post('/setDriverScheduleStatus', driverSchedule.setDriverScheduleStatus);
+app.put('/setDriverScheduleStatus', driverSchedule.setDriverScheduleStatus);
 app.get('/getAvailableDrivers', driverSchedule.getAvailableDrivers);
 //rideSchedule
 app.post('/setupRideSchedule', rideSchedule.setupRideSchedule);
 app.post('/addRideSchedule', rideSchedule.addRideSchedule);
-app.post('/deleteRideSchedule', rideSchedule.deleteRideSchedule);
-app.post('/updateRideSchedule', rideSchedule.updateRideSchedule);
+app.put('/deleteRideSchedule', rideSchedule.deleteRideSchedule);
+app.put('/updateRideSchedule', rideSchedule.updateRideSchedule);
 app.get('/getRideSchedule', rideSchedule.viewRideSchedule);
 
 //reivews
