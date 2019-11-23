@@ -66,3 +66,25 @@ exports.getDriver = (req, res) => {
         }
   })
 }
+
+exports.login = (req, res) => {
+  let username = req.body.username;
+  let password = req.body.password;
+  let query = "select * from parentUser where name = '" + req.body.username + "' and password = '" + req.body.password + "' limit 1";
+  db.query(query, function(err, rows, field) {
+    if(rows == null  ||rows.length == 0){
+      res.status(200).json({
+        "data": []
+      });
+    }
+    else if(err) {
+      logger.error("failed logging in parent");
+      res.status(400);
+    }
+    else{
+      res.status(200).json({
+        "data": rows
+      })
+    }
+  })
+}

@@ -1,6 +1,7 @@
 /**A simple node/express server that include communication with a 
  * mysql db instance. 
 */
+const accounts   = require('./accounts');
 const creditCard = require('./creditCard');
 const parentUser = require('./parentUser');
 const childUser  = require('./childUser');
@@ -106,7 +107,9 @@ app.get('/setupdb', (req, res) => {
 });
 
 //api endpoints
-
+//accounts
+app.post('/setupAccounts', accounts.setupAccounts);
+app.get('/login', accounts.login);
 //creditCard
 app.post('/setupCreditCard', creditCard.setupCreditCard);
 app.post('/saveCreditCard', creditCard.saveCreditCard);
