@@ -147,10 +147,6 @@ export class DriverProfile extends React.Component {
             <AddService submitService={(driverId, date, type, description) => this.AddService(driverId, date, type, description)}/>
             </div>
 
-            <div className="d-flex flex-row-reverse">
-            <button className="btn btn-info p-2" style={{margin: "1% 15% 1% 1%"}}>Update My Information</button>
-            </div>
-
             <div className="p-3 bg-info text-white text-center" style={{margin: "1% 15%"}}>Availability
             <table className="table">
                     <thead className="table-dark">
@@ -175,6 +171,10 @@ export class DriverProfile extends React.Component {
             </div>
             <div className="d-flex flex-row-reverse">
             <AddAvailability submitAvailability={(driverId, date, start, end) => this.AddAvailability(driverId, date, start, end)} />
+            </div>
+
+            <div className="d-flex flex-row-reverse">
+            <button className="btn btn-info p-2" style={{margin: "1% 15% 1% 1%"}}>Update My Information</button>
             </div>
 
             <div className="col col-mg-8 resetPassword">
