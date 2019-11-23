@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Phone, Ride } from '../../Ride'
+import { Phone, Ride } from '../../models'
 import { DriveList } from './DriveList'
 export class DriverDashboard extends React.Component {
     state = {

@@ -1,5 +1,5 @@
 import React from "react"
-import { Ride } from "../../Ride"
+import { Ride } from "../../models/Ride"
 
 var days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 

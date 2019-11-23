@@ -1,4 +1,9 @@
+/*
+TODO:: What will the profile button do for children
+*/
+
 import React from 'react';
+import {Link} from 'react-router-dom';
 
 import { NavLink } from 'react-router-dom';
 import "./authentication/Register.css"
@@ -7,8 +12,6 @@ export class Header extends React.Component {
   state = {
     userName: "",
     pass: "",
-
-
   }
 
   onLogin() {
@@ -16,12 +19,23 @@ export class Header extends React.Component {
     //this.props.setAuthState();
   }
 
-  onLogout() {
+  onLogut() {
     localStorage.clear();
     //route to home
   }
 
 	render() {
+    let profileLink;
+    if(this.state.isLoggedIn) {
+      if(this.state.userId < 200000) {
+        profileLink = '/parent/profile';
+      } else if(this.state.userId < 300000) {
+        profileLink = '/driver/profile';
+      } else if(this.state.userId >= 300000) {
+        profileLink = '';
+      }
+    }
+
 		return (
 			<>
 			<head>
@@ -76,6 +90,12 @@ export class Header extends React.Component {
                 <button type="button"
                         className="btn btn-secondary"
                         onClick={ () => this.onLogin() }>Profile</button>
+
+                <Link to={profileLink} className="btn btn-secondary" params={{id: this.state.userId}}>Profile</Link>
+
+                <button type="button"
+                        className="btn btn-secondary"
+                        onClick={ () => this.onLogOut() }>Log Out</button>
               </div>
             </div>
           </nav>

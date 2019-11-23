@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Child } from '../../Child'
+import { Child } from '../../models'
 
 export class ParentProfile extends React.Component {
     state = {
