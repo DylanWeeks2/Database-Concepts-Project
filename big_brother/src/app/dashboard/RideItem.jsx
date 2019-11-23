@@ -14,7 +14,9 @@ export class RideItem extends React.Component {
       };
 
       cancelRide = () => {
-          this.props.onRideCanceled(this.props.ride.id);
+            var answer = prompt("Please type y if you want to cancel the ride", "");
+            if(answer != null && (answer==="y" || answer==="Y"))
+                this.props.onRideCanceled(this.props.ride.id);
       }
     state = {
         modalVisible: false
