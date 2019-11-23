@@ -17,9 +17,16 @@ class App extends Component {
     }
 
     getAuthStatus() {
-        //TODO: use local storage
-        return true;
+        if (localStorage.getItem("isLoggedIn"))
+            return true;
+        else
+            return false;
     
+    }
+
+    setAuthState(auth, userId) {
+        localStorage.setItem("uid", userId);
+        localStorage.setItem("isLoggedIn", true);
     }
 
     render() {

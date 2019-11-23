@@ -5,8 +5,6 @@ import "./authentication/Register.css"
 export class Header extends React.Component {
 
   state = {
-    isLoggedIn: false,
-    userId: 0,
     userName: "",
     pass: "",
 
@@ -14,16 +12,9 @@ export class Header extends React.Component {
   }
 
   onLogin() {
-
+    //axios call with userName and pass, store userid
+      //and send to setAuthStatus
   }
-
-  onForgotPass() {
-
-  }
-  
-	Login() {
-		alert("Sdsd");
-	}
 
 	render() {
 		return (
@@ -40,7 +31,7 @@ export class Header extends React.Component {
               <div className="navbar-header">   
                 <a className="navbar-brand text-white" href="#">Big Brother</a>
               </div>
-              <div className="navbar-form navbar-right" style={ {"display": this.state.isLoggedIn ? 'none' : 'block'} }>
+              <div className="navbar-form navbar-right" style={ {"display": localStorage.getItem("isLoggedIn") ? 'none' : 'block'} }>
                 <div className="btn-toolbar">
                   <div className="input-group mr-2">
                     <div className="input-group-prepend">
@@ -73,19 +64,13 @@ export class Header extends React.Component {
                   <div className="button-group ml-2">
                     <button type="button" className="btn btn-secondary">Log In</button>
                   </div>
-                  <div className="button-group ml-2">
-                    <button type="button" className="btn btn-secondary">Forgot Password</button>
-                  </div>
                 </div>
               </div>
 
-              <div className="btn-group navbar-right" style={ {"display": this.state.isLoggedIn ? 'block' : 'none'} }>
+              <div className="btn-group navbar-right" style={ {"display": localStorage.getItem("isLoggedIn") ? 'block' : 'none'} }>
                 <button type="button"
                         className="btn btn-secondary"
                         onClick={ () => this.onLogin() }>Profile</button>
-                <button type="button"
-                        className="btn btn-secondary"
-                        onClick={ () => this.onForgotPass() }>Log Out</button>
               </div>
             </div>
           </nav>
