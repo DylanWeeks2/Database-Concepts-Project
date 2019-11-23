@@ -13,8 +13,18 @@ function AddAvailiability(props) {
         const form = event.target;
         // we should add the date and start and convert to a datetime
         let date = form.elements.date.value;
+        debugger;
         let start = form.elements.start.value;
         let end = form.elements.end.value;
+        if(date === "") {
+            alert("Please enter a valid date!");
+            return;
+        }
+        if (!/^( )*\d{1,2}:\d{2}(:\d{2}){0,1} (PM|AM)( )*$/.test(start) || !/^( )*\d{1,2}:\d{2}(:\d{2}){0,1} (PM|AM)( )*$/.test(end)) {
+            alert("Time is not in the correct format! Ex: '12:00 PM'");
+            return;
+        }
+        debugger;
         props.submitAvailability(date, new Date(String(date) + " " + String(start)), new Date(String(date) + " " + String(end)));
     };
     return (
@@ -36,7 +46,7 @@ function AddAvailiability(props) {
                 </Modal.Header>
                 <Modal.Body className="clearfix">
                     <Form onSubmit={handleSubmit}>
-                        <Form.Group controlId="date">
+                        <Form.Group required controlId="date">
                             <Form.Label>date</Form.Label>
                             <Form.Control type="date" />
                         </Form.Group>
