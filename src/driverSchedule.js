@@ -9,7 +9,7 @@ exports.setupDriverSchedule = (req, res) => {
       res.redirect('/');
     }
   });
-  query = "create table driverSchedule(id int, start datetime(6), end datetime(6), active tinyint(1), driver_id int REFERENCES driver_user(id), primary key(driver_id,id))";
+  query = "CREATE TABLE `db`.`driverSchedule` (`id` INT NOT NULL AUTO_INCREMENT,`start` DATETIME(6) NULL,`end` DATETIME(6) NULL,`active` TINYINT(1) NULL,`driverID` INT NULL,PRIMARY KEY (`id`),INDEX `driver_idx` (`driverID` ASC),  CONSTRAINT `driver` FOREIGN KEY (`driverID`) REFERENCES `db`.`driverUser` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION);";
   db.query(query, (err, result) => {
     if(err) {
        res.redirect('/');

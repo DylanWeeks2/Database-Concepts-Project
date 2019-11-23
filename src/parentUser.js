@@ -4,7 +4,7 @@ exports.setupParent = (req, res) => {
   db.query(query, (err, result) => {
     if(err) { res.redirect('/'); }
   });
-  query = "create table parentUser(id int not null auto_increment primary key, name varchar(50), password varchar(50))";
+  query = "CREATE TABLE `db`.`parentUser` (`id` INT NOT NULL AUTO_INCREMENT,`name` VARCHAR(50) NOT NULL,`password` VARCHAR(50) NOT NULL,PRIMARY KEY (`id`),UNIQUE INDEX `id_UNIQUE` (`id` ASC));";
   db.query(query, (err, result) => {
     if(err) { res.redirect('/'); }
     res.status(200).send('created the parent table');

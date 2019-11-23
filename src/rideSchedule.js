@@ -9,7 +9,7 @@ exports.setupRideSchedule = (req,res) => {
       res.redirect('/');
     }
   });
-  query = "create table rideSchedule(id int, pick_up_location varchar(50), drop_off_location varchar(50), pick_up_time datetime(6), drop_off_time datetime(6), active tinyint(1), parent_id int REFERENCES parent_user(id), child_id int REFERENCES child_user(id), driver_id int REFERENCES driver_user(id), primary key (driver_id, child_id, parent_id, id))";
+  query = "CREATE TABLE `db`.`rideSchedule` ( `id` INT NOT NULL AUTO_INCREMENT, `pick_up_location` VARCHAR(45) NOT NULL, `drop_off_location` VARCHAR(45) NOT NULL, `pick_up_time` DATETIME(6) NOT NULL, `drop_off_time` DATETIME(6) NOT NULL, `active` TINYINT(1) NOT NULL, `parent` INT NOT NULL, `child` INT NOT NULL, `driver` INT NOT NULL, PRIMARY KEY (`id`), INDEX `driverID_idx` (`driver` ASC), INDEX `parentID_idx` (`parent` ASC), INDEX `childID_idx` (`child` ASC), UNIQUE INDEX `id_UNIQUE` (`id` ASC), CONSTRAINT `driver_ID`  FOREIGN KEY (`driver`) REFERENCES `db`.`driverUser` (`id`) ON DELETE NO ACTION  ON UPDATE NO ACTION, CONSTRAINT `parent_ID` FOREIGN KEY (`parent`) REFERENCES `db`.`parentUser` (`id`) ON DELETE NO ACTION  ON UPDATE NO ACTION, CONSTRAINT `child_ID`  FOREIGN KEY (`child`) REFERENCES `db`.`childUser` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION);";
   db.query(query, (err, result) => {
     if(err) {
        res.redirect('/');

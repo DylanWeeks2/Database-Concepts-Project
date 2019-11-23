@@ -7,7 +7,7 @@ exports.setupCar = (req, res) => {
           res.redirect('/');
       }
   });
-  query = "create table car(id int NOT NULL AUTO_INCREMENT PRIMARY KEY, numSeats int, numAccidents int, features varchar(50), licenceNum varchar(8), service datetime, state varchar(50), model varchar(50), driverId int REFERENCES driverUser(id))";
+  query = "CREATE TABLE `db`.`Car` (`id` INT NOT NULL AUTO_INCREMENT,`numSeats` INT NOT NULL, `numAccidents` INT NOT NULL, `features` VARCHAR(50) NOT NULL, `licenseNum` VARCHAR(8) NOT NULL, `service` DATETIME NOT NULL, `state` VARCHAR(50) NOT NULL, `model` VARCHAR(50) NOT NULL, `driverID` INT NOT NULL, PRIMARY KEY (`id`), UNIQUE INDEX `id_UNIQUE` (`id` ASC), INDEX `driverID_idx` (`driverID` ASC), CONSTRAINT `driverID` FOREIGN KEY (`driverID`) REFERENCES `db`.`driverUser` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION);";
   db.query(query, (err, result) => {
       if(err) { res.redirect('/'); }
       else{
