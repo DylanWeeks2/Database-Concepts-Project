@@ -6,7 +6,7 @@ import { StorageManager } from './../app/StorageManager';
 export class Repo {
     storage = new StorageManager();
 
-    url = "http://54.197.41.69:3000"
+    url = "localhost:3000"
     config = {
         headers: {
             Authorization: "hdonofrio"

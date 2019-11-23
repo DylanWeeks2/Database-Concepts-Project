@@ -1,7 +1,11 @@
 import React, { Component } from 'react';
 import { Accident } from '../../Accident';
 import { Service } from '../../Service';
+import { Availability } from "../../models/Availability";
 import { Car } from '../../Car';
+import AddAccident  from './models/AddAccident';
+import AddService from './models/AddService';
+import AddAvailability from './models/AddAvailability';
 
 
 //TODO: Make this a className instead of a function because it has to handle adding accidents and changing profile information
@@ -16,6 +20,32 @@ export class DriverProfile extends React.Component {
         accidents: [],
         services: [],
         availability: []
+    }
+
+    AddAccident(date, severity, type, description) {
+        var accident = new Accident(date, severity, type, description);
+        this.setState(prevState => {
+            prevState.accidents.push(accident);
+            return prevState;
+        })
+    }
+
+    AddService(date, type, description) {
+        var accident = new Service(date, type, description);
+        this.setState(prevState => {
+            prevState.services.push(accident);
+            return prevState;
+        })
+    }
+
+    AddAvailability(date, start, end) {
+        const driverId = 0; //CHANGE THIS
+        debugger;
+        let availability = new Availability(driverId, date, start.toString(), end.toString());
+        this.setState(prevState => {
+            prevState.availability.push(availability);
+            return prevState;
+        })
     }
 
     render() {
@@ -89,7 +119,7 @@ export class DriverProfile extends React.Component {
             </table>
             </div>
             <div className="d-flex flex-row-reverse">
-            <button className="btn btn-primary p-2" style={{margin: "1% 15% 1% 1%"}}>Add an Accident</button>
+            <AddAccident submitAccident={(date, severity, type, description) => this.AddAccident(date, severity, type, description)}/>
             </div>
 
             <div className="p-3 bg-secondary text-white text-center" style={{margin: "1% 15%"}}> Service History
@@ -116,7 +146,7 @@ export class DriverProfile extends React.Component {
             </div>
 
             <div className="d-flex flex-row-reverse">
-            <button className="btn btn-primary p-2" style={{margin: "1% 15% 1% 1%"}}>Add to Service History</button>
+            <AddService submitService={(date, type, description) => this.AddService(date, type, description)}/>
             </div>
 
             <div className="d-flex flex-row-reverse">
@@ -128,7 +158,8 @@ export class DriverProfile extends React.Component {
                     <thead className="table-dark">
                         <tr>
                             <th className="text-center">Date</th>
-                            <th className="text-center">Time</th>
+                            <th className="text-center">Start</th>
+                            <th className="text-center">End</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -136,7 +167,8 @@ export class DriverProfile extends React.Component {
                             this.state.availability.map((avail, i) =>
                                 <tr className="table-dark">
                                     <td className="text-center">{avail.date}</td>
-                                    <td className="text-center">{avail.time}</td>
+                                    <td className="text-center">{new Date(avail.start).toLocaleTimeString()}</td>
+                                    <td className="text-center">{new Date(avail.end).toLocaleTimeString()}</td>
                                 </tr>
                             )
                         }
@@ -144,7 +176,7 @@ export class DriverProfile extends React.Component {
             </table>
             </div>
             <div className="d-flex flex-row-reverse">
-            <button className="btn btn-primary p-2" style={{margin: "1% 15% 1% 1%"}}>Add to Availability</button>
+            <AddAvailability submitAvailability={(date, start, end) => this.AddAvailability(date, start, end)} />
             </div>
 
             <div className="col col-mg-8 resetPassword">
