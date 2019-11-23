@@ -9,7 +9,7 @@ function Info(props) {
         return (
             <>
               <Button variant="primary" onClick={handleShow}>
-                Launch demo modal
+                More info
               </Button>
         
               <Modal style={{opacity:1}} show={show} onHide={handleClose}

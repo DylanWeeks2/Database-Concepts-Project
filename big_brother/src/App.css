@@ -35,3 +35,12 @@
   z-index: 1000;
   opacity: .5, !important;
 }
+
+.card-title {
+  display: block;
+}
+
+.card-title p {
+  display: block;
+}
+
