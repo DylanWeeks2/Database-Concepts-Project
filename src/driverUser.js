@@ -7,7 +7,7 @@ exports.setupDriver = (req, res) => {
       res.status(400);
     }
   });
-  query = "CREATE TABLE driverUser (id INT NOT NULL AUTO_INCREMENT, name VARCHAR(50) NOT NULL, bio VARCHAR(200) NOT NULL, cellPhone VARCHAR(10) NOT NULL, fingerprint TINYINT(1) NOT NULL, reported TINYINT(1) NOT NULL, PRIMARY KEY (`id`), UNIQUE INDEX id_UNIQUE (`id` ASC)); ";
+  query = "CREATE TABLE driverUser` (`id` INT NOT NULL AUTO_INCREMENT, `name` VARCHAR(50) NOT NULL, `bio` VARCHAR(200) NOT NULL, `cellPhone` VARCHAR(10) NOT NULL, `fingerprint` TINYINT(1) NOT NULL, `reported` TINYINT(1) NOT NULL, PRIMARY KEY (`id`), UNIQUE INDEX `id_UNIQUE` (`id` ASC)); ";
   db.query(query, (err, result) => {
     if(err) {
       logger.error("failed creating driver user table");
@@ -30,23 +30,43 @@ exports.addDriver = (req, res) => {
     else{
       res.status(200).send("added the driver user");
     }
-
-  })
-}
-
-//post /updateDriverPassword
-exports.changeDriverPassword = (req, res) => {
-  let query = "update driverUser set password ='" + req.body.password + "'where id = '" + req.body.id + "'";
-  db.query(query, (err, result) => {
-    if(err) {
-      logger.error("failed updatingdriver password");
+  });
+  var currID;
+  query = "select * from driverUser where name = '" + req.body.name + "' limit one;"
+  db.query(query, (err,rows,fields) => {
+    if(err){
+      logger.error("couldnt find the user we just added");
       res.status(400);
     }
     else{
-      res.status(200).send('updated the driver user password');
+      currID = rows[0].id;
+      res.status(200).send('got the userID back');
     }
-  })
+  });
+  query = "insert into accounts values (NULL,'" + req.body.username +"','" + req.body.password +"','" + currID +"');";
+  db.query(query, (err,result) => {
+    if(err){
+      logger.error("couldnt add new account into the accounts table");
+      res.status(400);
+    }else{
+      res.status(200).send("completed adding new user to accounts table");
+    }
+  });
 }
+
+//post /updateDriverPassword
+//exports.changeDriverPassword = (req, res) => {
+  //let query = "update driverUser set password ='" + req.body.password + "'where id = '" + req.body.id + "'";
+  //db.query(query, (err, result) => {
+    //if(err) {
+      //logger.error("failed updatingdriver password");
+      //res.status(400);
+    //}
+    //else{
+      //res.status(200).send('updated the driver user password');
+    //}
+  //})
+//}
 
 //GET /getDriver
 exports.getDriver = (req, res) => {

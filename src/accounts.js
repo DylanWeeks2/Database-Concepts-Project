@@ -40,3 +40,16 @@ exports.login = (req, res) => {
       }
     })
   }
+
+  exports.changePassword = (req, res) => {
+//userID, oldPass, newPass, username
+    let query = "update accounts set password = '" + req.body.newPassword + "' where userID = '" + req.body.userID + "' AND username = '" + req.body.username + "';"
+    db.query(query, (err,result) => {
+      if(err){
+        logger.error("couldnt change password");
+        res.status(400);
+      }else{
+        res.status(200).send("successful change of password");
+      }
+    });
+  }
