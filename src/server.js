@@ -8,6 +8,7 @@ const driverUser = require('./driverUser');
 const car        = require('./car');
 const driverSchedule = require('./driverSchedule');
 const rideSchedule = require('./rideSchedule');
+const reviews    = require('./reviews');
 //create main objects
 
 const express = require('express');
@@ -158,6 +159,11 @@ app.post('/addRideSchedule', rideSchedule.addRideSchedule);
 app.post('/deleteRideSchedule', rideSchedule.deleteRideSchedule);
 app.post('/updateRideSchedule', rideSchedule.updateRideSchedule);
 app.get('/getRideSchedule', rideSchedule.viewRideSchedule);
+
+//reivews
+app.post('/setupReviews', reviews.setupReviews);
+app.post('/addReview', reviews.addReview);
+app.get('/getReviews', reviews.getReviews);
 
 //connecting the express object to listen on a particular port as defined in the config object. 
 app.listen(config.port, config.host, (e) => {
