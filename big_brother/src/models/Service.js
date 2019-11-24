@@ -1,5 +1,6 @@
 export class Service {
-    constructor(date, type, descr) {
+    constructor(driverId, date, type, descr) {
+        this.driverId = driverId;
         this.date = date;
         this.type = type;
         this.descr = descr;

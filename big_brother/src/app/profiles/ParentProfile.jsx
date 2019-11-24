@@ -1,14 +1,42 @@
 import React, { Component } from 'react';
-import { Child } from '../../models'
+import { Child, ParentUser } from '../../models'
+import UpdateChild from './models/UpdateChild';
+import NewChild from './models/NewChild';
+import UpdateParent from './models/UpdateParent';
 
 export class ParentProfile extends React.Component {
     state = {
-        name: "Rando Name",
-        email: "rando@rando.com",
-        phoneNumber: "9995554444",
-        homeAddress: "5 Street Rd Dallas, Tx",
-        workAddress: "6 Road St Dallas, Tx",
-        children: [new Child("Test", "5", "Test Elementary", "Peanut Allergy", "XxTESTxX")]
+        profile: new ParentUser(0, "rando@rando.com", "9995554444","5 Street Rd Dallas, Tx","6 Road St Dallas, Tx", "Rando Name",[new Child("Test", "5", "Test Elementary", "Peanut Allergy", "XxTESTxX")])
+    }
+
+    updateChild(name, grade, school, health, id){
+        this.setState(prevState => {
+            const index = prevState.children.findIndex(x => x.id === id);
+            prevState.children[index].name = name;
+            prevState.children[index].grade = grade;
+            prevState.children[index].school = school;
+            prevState.children[index].health = health;
+            return prevState;
+        });
+    }
+
+    updateParent(email, phone, homeAddr, workAddr, name) {
+        this.setState(prevState => {
+            prevState.profile.email = email;
+            prevState.profile.phone = phone;
+            prevState.profile.homeAddr = homeAddr;
+            prevState.profile.workAddr = workAddr;
+            prevState.profile.name = name;
+            return prevState;
+          });
+    }
+
+    addChild(name, username, grade, school, health) {
+        this.setState(prevState => {
+            const child = new Child(name, grade, school, health, username, username, Math.random());
+            prevState.children.push(child);
+            return prevState;
+        })
     }
 
     render() {
@@ -20,23 +48,23 @@ export class ParentProfile extends React.Component {
             <ul className="list-group">
             <div style={{margin: "1% 30%"}}>
             <li className="list-group-item glyphicon glyphicon-user p-3 text-white text-center bg-info"> Name</li>
-            <li className="list-group-item p-3 text-black text-center"> {this.state.name}</li>
+            <li className="list-group-item p-3 text-black text-center"> {this.state.profile.name}</li>
             </div>
             <div style={{margin: "1% 30%"}}>
             <li className="list-group-item glyphicon glyphicon-envelope p-3 text-white text-center bg-secondary"> Email</li>
-            <li className="list-group-item p-3 text-black text-center"> {this.state.email}</li>
+            <li className="list-group-item p-3 text-black text-center"> {this.state.profile.email}</li>
             </div>
             <div style={{margin: "1% 30%"}}>
             <li className="list-group-item glyphicon glyphicon-phone p-3 text-white text-center bg-info"> Phone Number</li>
-            <li className="list-group-item p-3 text-black text-center"> {this.state.phoneNumber}</li>
+            <li className="list-group-item p-3 text-black text-center"> {this.state.profile.phone}</li>
             </div>
             <div style={{margin: "1% 30%"}}>
             <li className="list-group-item glyphicon glyphicon-home p-3 text-white text-center bg-secondary"> Home Address</li>
-            <li className="list-group-item p-3 text-black text-center"> {this.state.homeAddress}</li>
+            <li className="list-group-item p-3 text-black text-center"> {this.state.profile.homeAddr}</li>
             </div>
             <div style={{margin: "1% 30%"}}>
             <li className="list-group-item glyphicon glyphicon-briefcase p-3 text-white text-center bg-info"> Work</li>
-            <li className="list-group-item p-3 text-black text-center"> {this.state.workAddress}</li>
+            <li className="list-group-item p-3 text-black text-center"> {this.state.profile.workAddr}</li>
             </div>
             </ul>
             <div className="p-3 bg-secondary text-white text-center" style={{margin: "1% 15%"}}> Children
@@ -53,14 +81,14 @@ export class ParentProfile extends React.Component {
                     </thead>
                     <tbody className="text-center">
                         {
-                            this.state.children.map((child, i) =>
+                            this.state.profile.children.map((child, i) =>
                                 <tr className="table-dark">
                                     <td className="text-center">{child.name}</td>
                                     <td className="text-center">{child.grade}</td>
                                     <td className="text-center">{child.school}</td>
                                     <td className="text-center">{child.health}</td>
                                     <td className="text-center">{child.username}</td>
-                                    <td className="text-center"><button className="btn btn-info p-2" style={{margin: "1%"}}>Update Child Information</button></td>
+                                    <td className="text-center"><UpdateChild child={child} updateChild={(name, grade, school, health) => this.updateChild(name, grade, school, health, child.id)} /></td>
                                 </tr>
                             )
                         }
@@ -69,11 +97,11 @@ export class ParentProfile extends React.Component {
             </div>
 
             <div className="d-flex flex-row-reverse">
-                <button className="btn btn-primary p-2" style={{margin: "1% 15% 1% 1%"}}>Add Child</button>
+                <NewChild addChild={(name, username, grade, school, health) => this.addChild(name, username, grade, school, health)} />
             </div>
 
             <div className="d-flex flex-row-reverse">
-            <button className="btn btn-info p-2" style={{margin: "1% 15% 1% 1%"}}>Update My Information</button>
+                <UpdateParent parent={this.state.profile} updateParent={(email, phone, homeAddr, workAddr, name) => this.updateParent(email, phone, homeAddr, workAddr, name)}/>
             </div>
         
             <div className="col col-mg-8 resetPassword">
