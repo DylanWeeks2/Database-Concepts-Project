@@ -1,5 +1,6 @@
 export class Accident {
-    constructor(date, severity, type, descr) {
+    constructor(driverId, date, severity, type, descr) {
+        this.driverId = driverId;
         this.date = date;
         this.severity = severity;
         this.type = type;
