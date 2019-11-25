@@ -9,6 +9,7 @@ const car        = require('./car');
 const driverSchedule = require('./driverSchedule');
 const rideSchedule = require('./rideSchedule');
 const reviews    = require('./reviews');
+const accounts = require('./accounts');
 //create main objects
 
 const express = require('express');
