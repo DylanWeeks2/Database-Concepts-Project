@@ -19,8 +19,7 @@ export class ParentDashboard extends React.Component {
     }
 
     addRide(time, children, driver, address, notes) {
-        console.log(this.state.account.children);
-        const rides =  new Ride(0, new Date(), new Date(), 
+        const rides =  new Ride(Math.random(), time, new Date(), 
             this.state.account.children.find(y => y.id == children).id, this.state.account.children.find(y => y.id == children).name,
             this.state.account.children.find(y => y.id == children).health,
             address,
@@ -34,7 +33,7 @@ export class ParentDashboard extends React.Component {
     }
     state = {
         modalVisible: false,
-        account: new ParentUser(1, "Joe Mama",
+        account: new ParentUser(1, "test@test.gmail", "1234567890", "1234 test rd", "45567 test rd", "Joe Mama",
         [
             (new Child("Ben Dover", 2, "Good School", "Water Allergy", "xXx_BENDOVER69", 0)),
             (new Child("Mike Hawk", 3, "BEst School", "Pain Allergy", "MIKE", 1))

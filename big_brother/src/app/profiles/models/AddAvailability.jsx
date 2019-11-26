@@ -24,7 +24,7 @@ function AddAvailiability(props) {
             alert("Time is not in the correct format! Ex: '12:00 PM'");
             return;
         }
-        debugger;
+        handleClose();
         props.submitAvailability(driverId, date, new Date(String(date) + " " + String(start)), new Date(String(date) + " " + String(end)));
     };
     return (
