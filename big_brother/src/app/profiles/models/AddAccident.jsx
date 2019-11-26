@@ -20,6 +20,7 @@ function AddAccident(props) {
             type = form.elements.other.value;
         }
         const description = form.elements.description.value;
+        handleClose();
         props.submitAccident(driverId, date, severity, type, description);
     };
     return (

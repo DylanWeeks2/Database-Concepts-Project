@@ -28,7 +28,7 @@ export class RideItem extends React.Component {
         <Card className="boot-card">
 
         <Card.Body className="clearfix">
-            <Card.Title className="card-title">{this.props.ride.date.toLocaleString('default', { month: 'long' }) }  {this.props.ride.date.getDate()}, {this.props.ride.date.getFullYear()} 
+            <Card.Title className="card-title">{this.props.ride.pickup_time.toLocaleString('default', { month: 'long' }) }  {this.props.ride.pickup_time.getDate()}, {this.props.ride.pickup_time.getFullYear()} 
             <span className="float-right">Driver: {this.props.ride.driverName}</span> <br></br>
             <span>Child: {this.props.ride.childName}</span>
             </Card.Title>
