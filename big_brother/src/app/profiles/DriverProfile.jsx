@@ -6,6 +6,7 @@ import { Accident, Service, Availability, Car } from '../../models';
 import AddAccident  from './models/AddAccident';
 import AddService from './models/AddService';
 import AddAvailability from './models/AddAvailability';
+import UpdateDriver from './models/UpdateDriver';
 
 
 //TODO: Make this a className instead of a function because it has to handle adding accidents and changing profile information
@@ -42,6 +43,25 @@ export class DriverProfile extends React.Component {
         let availability = new Availability(driverId, date, start.toString(), end.toString());
         this.setState(prevState => {
             prevState.availability.push(availability);
+            return prevState;
+        })
+    }
+
+    UpdateDriver(name, gender, bio, email, phone, make, model, year, color, license, numSeats, condition, ammenities) {
+        this.setState(prevState => {
+            prevState.name = name;
+            prevState.gender = gender;
+            prevState.bio = bio;
+            prevState.email = email;
+            prevState.phone = phone;
+            prevState.car.make = make;
+            prevState.car.model = model;
+            prevState.car.year = year;
+            prevState.car.color = color;
+            prevState.car.license = license;
+            prevState.car.numSeats = numSeats;
+            prevState.car.condition = condition;
+            prevState.car.ammenities = ammenities;
             return prevState;
         })
     }
@@ -174,7 +194,7 @@ export class DriverProfile extends React.Component {
             </div>
 
             <div className="d-flex flex-row-reverse">
-            <button className="btn btn-info p-2" style={{margin: "1% 15% 1% 1%"}}>Update My Information</button>
+            <UpdateDriver driver={this.state} updateDriver={(name, gender, bio, email, phone, make, model, year, color, license, numSeats, condition, amenities) => this.UpdateDriver(name, gender, bio, email, phone, make, model, year, color, license, numSeats, condition, amenities)}/>
             </div>
 
             <div className="col col-mg-8 resetPassword">
