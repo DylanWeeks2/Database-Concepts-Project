@@ -1,13 +1,13 @@
 
 exports.setupDriver = (req, res) => {
-  let query = "drop table if exists driverUser";
-  db.query(query, (err, result) => {
-    if(err){
-      res.redirect('/');
-      res.status(400);
-    }
-  });
-  query = "CREATE TABLE `db`.`driverUser` (`id` INT NOT NULL AUTO_INCREMENT, `name` VARCHAR(50) NOT NULL, `bio` VARCHAR(200) NOT NULL, `cellPhone` VARCHAR(10) NOT NULL, `fingerprint` TINYINT(1) NOT NULL, `reported` TINYINT(1) NOT NULL, `password` VARCHAR(50) NOT NULL, PRIMARY KEY (`id`), UNIQUE INDEX `id_UNIQUE` (`id` ASC)); ";
+  // let query = "drop table if exists driverUser";
+  // db.query(query, (err, result) => {
+  //   if(err){
+  //     res.redirect('/');
+  //     res.status(400);
+  //   }
+  // });
+  query = "CREATE TABLE `db`.`driverUser` (`id` INT NOT NULL AUTO_INCREMENT, `name` VARCHAR(50) NOT NULL, `bio` VARCHAR(200) NOT NULL, `cellPhone` VARCHAR(10) NOT NULL, `fingerprint` TINYINT(1) NOT NULL, `reported` TINYINT(1) NOT NULL, `password` VARCHAR(50) NOT NULL, PRIMARY KEY (`id`), UNIQUE INDEX `id_UNIQUE` (`id` ASC))";
   db.query(query, (err, result) => {
     if(err) {
       logger.error("failed creating driver user table");
