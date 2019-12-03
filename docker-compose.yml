@@ -24,21 +24,32 @@ services:
     networks:
       - backend
 
-
+#old style
+  # api:
+  #   image: node:11
+  #   volumes:
+  #     - ./src:/usr/src/app
+  #     - /usr/src/app/node_modules
+  #   working_dir: /usr/src/app
+  #   depends_on:
+  #     - db
+  #   command: bash -c "npm install && npm run dev"
+  #   ports: 
+  #     - 3000:3000
+  #   networks:
+  #     - backend
+#docker-compose style
   api:
-    image: node:11
+    build:
+      dockerfile: Dockerfile
+      context: ./src
     volumes:
       - ./src:/usr/src/app
       - /usr/src/app/node_modules
-    working_dir: /usr/src/app
     depends_on:
       - db
-    command: bash -c "npm install && npm run dev"
-    ports: 
-      - 3000:3000
     networks:
       - backend
-
 # we are using a network to connect these 
 # two containers. They will be part of the same virtual network
 # called 'backend'. 
@@ -49,53 +60,3 @@ volumes:
   db_vol: 
 
 
-version: "3.3"
-services:
-  # frontend:
-  #   build: 
-  #     dockerfile: Dockerfile.development
-  #     context: ./services/frontend
-  #   stdin_open: true
-  #   tty: true
-  #   ports:
-  #     - "8002:80"  
-  api:
-    build: 
-      dockerfile: Dockerfile
-      context: ./src
-    stdin_open: true
-    tty: true
-    links:
-      - mysql
-      - mysql:mysql.cloud66.local
-      - rabbitmq
-      - rabbitmq:rabbitmq.cloud66.local
-    environment:
-      - RACK_ENV=development
-      - MYSQL_USERNAME=root
-      - MYSQL_PASSWORD=root
-    ports:
-      - "8000:80"  
-  worker:
-    build: 
-      dockerfile: Dockerfile
-      context: ./services/worker
-    stdin_open: true
-    tty: true
-    links:
-      - rabbitmq
-      - rabbitmq:rabbitmq.cloud66.local
-      - api
-      - api:api.cloud66.local
-
-  rabbitmq:
-    image: rabbitmq:3-management
-    ports:
-      - "8080:15672"
-
-  mysql:
-    image: mysql:5.7
-    ports:
-      - "3306:3306"
-    environment:
-      - MYSQL_ROOT_PASSWORD=root
