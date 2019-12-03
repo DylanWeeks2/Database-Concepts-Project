@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import { Phone, Ride } from '../../models'
 import { DriveList } from './DriveList'
+import { Repo } from '../../api/repo';
 export class DriverDashboard extends React.Component {
+    repo = new Repo;
     state = {
         activeRides: [
             new Ride(0, 1, "3:53PM", 0, "Charlie", "123 Wall st.", "456 dest ln.", "nothing special", 0, "Todd"),
