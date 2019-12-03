@@ -111,7 +111,7 @@ export class ParentProfile extends React.Component {
                         <input type="password" className="form-control" id="newPassword" />
                     </div>
                     <div className="input-group-append">
-                        <button className="resetButton" className="btn btn-danger">Reset</button>
+                        <button className="resetButton btn btn-danger">Reset</button>
                     </div>
                 </form>
             </div>

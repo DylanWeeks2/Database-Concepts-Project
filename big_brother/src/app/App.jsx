@@ -34,14 +34,14 @@ class App extends Component {
           <>
                 <div className="container-fluid p-0">
                     <Router>
-                    <Header isAuthenticated={ this.state.isAuthenticated } isAdmin={ this.state.isAdmin } setAuthState={ (auth, userId) => this.setAuthState(auth, userId) } />
+                    <Header isAuthenticated={ this.state.isAuthenticated } setAuthState={ (auth, userId) => this.setAuthState(auth, userId) } />
                         <Switch>
                             { ROUTES.map(({path, component: C, getAuthStatus}, i) => (
                                 <Route
                                     key={i}
                                     path={path}
                                     render={ (props) => <C {...props} userInfo={ {isAuthenticated: true, currentUserId: 6, userZipCode: 99 } }
-                                                                         setAuthState={(auth, userId, isAdmin) => this.setAuthState(auth, userId, isAdmin) } setZipCode={zip => this.setZipCode(zip)} /> } />
+                                                                         setAuthState={(auth, userId) => this.setAuthState(auth, userId) } setZipCode={zip => this.setZipCode(zip)} /> } />
                             ))}
                         </Switch>
                     </Router>
