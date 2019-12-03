@@ -122,7 +122,7 @@
     background:#282726;
     box-shadow: 0 5px 8px 0 rgba(0, 0, 0, 0.2), 0 9px 26px 0 rgba(0, 0, 0, 0.19);
 }
-.parent h3{
+.parent h2{
     text-align: center;
     margin-bottom:12%;
     color:#fff;
@@ -132,7 +132,7 @@
     background: #f05837;
     box-shadow: 0 5px 8px 0 rgba(0, 0, 0, 0.2), 0 9px 26px 0 rgba(0, 0, 0, 0.19);
 }
-.driver h3{
+.driver h2{
     text-align: center;
     margin-bottom:12%;
     color: #fff;
@@ -154,4 +154,13 @@
 .btnForgetPwd:hover{
     text-decoration:none;
     color:#fff;
+}
+
+#label,
+.dontWorry {
+  color: white;
+}
+
+.dontWorry {
+  padding-top: 0.5em;
 }
