@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import { Phone, Ride, Child } from '../../models'
 import { DriveList } from './DriveList'
+import { Repo } from '../../api/repo';
 export class DriverDashboard extends React.Component {
+
     toggleModal = () => {
         this.state.modalVisible
           ? this.setState({
@@ -9,6 +11,9 @@ export class DriverDashboard extends React.Component {
           })
           : this.setState({ modalVisible: true });
       };
+
+
+    repo = new Repo;
 
     state = {
         activeRides: [
