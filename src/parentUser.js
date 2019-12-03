@@ -1,17 +1,25 @@
 //post /setup_parent
 exports.setupParent = (req, res) => {
   let query = "drop table if exists parentUser";
+  console.log("trying to create parent");
   db.query(query, (err, result) => {
-    if(err) { res.redirect('/'); }
+
+    if(err) { 
+      console.log(err);
+      res.redirect('/'); }
   });
-  query = "CREATE TABLE 'parentUser` (`id` INT NOT NULL AUTO_INCREMENT, `name` VARCHAR(50) NOT NULL, PRIMARY KEY (`id`), UNIQUE INDEX `id_UNIQUE` (`id` ASC));";
+  console.log("CREATE TABLE `parentUser` (`id` INT AUTO_INCREMENT,`email` VARCHAR(100), `phone` VARCHAR(100), `homeAddr` VARCHAR(200), `workAddr` VARCHAR(100),  `name` VARCHAR(50) NOT NULL, `password` VARCHAR(100), `username` VARCHAR(100), PRIMARY KEY (`id`), UNIQUE INDEX `id_UNIQUE` (`id` ASC));");
+  query = "CREATE TABLE `parentUser` (`id` INT AUTO_INCREMENT,`email` VARCHAR(100), `phone` VARCHAR(100), `homeAddr` VARCHAR(200), `workAddr` VARCHAR(100),  `name` VARCHAR(50) NOT NULL, `password` VARCHAR(100), `username` VARCHAR(100), PRIMARY KEY (`id`), UNIQUE INDEX `id_UNIQUE` (`id` ASC));";
   db.query(query, (err, result) => {
-    if(err) { res.redirect('/'); }
-    res.status(200).send('created the parent table');
+    if(err) { 
+      console.log(err);
+      res.redirect('/'); }
   })
   query = "alter table parentUser auto_increment = 100000";
   db.query(query, (err, result) => {
-    if(err) { res.status(400);}
+    if(err) { 
+      console.log(err);
+      res.status(400);}
   })
 }
 
@@ -30,36 +38,46 @@ exports.changeParentPassword = (req, res) => {
 }
 
 exports.addParent = (req,res) => {
-  let query = "insert into parentUser values(NULL,'" + req.body.name + "')";
+  console.log("insert into parentUser (id, email, phone, homeAddr, workAddr, name, password, username) values(" + ` NULL, '${req.body.email}', '${req.body.phone}', '${req.body.homeAddr}', '${req.body.workAddr}', '${req.body.name}', '${req.body.password}', '${req.body.username}'`+ ")");
+  let query = "insert into parentUser (id, email, phone, homeAddr, workAddr, name, password, username) values(" + ` NULL, '${req.body.email}', '${req.body.phone}', '${req.body.homeAddr}', '${req.body.workAddr}', '${req.body.name}', '${req.body.password}', '${req.body.username}'`+ ")";
   console.log(req.body);
   db.query(query, (err, result) => {
     if(err) {
+      console.log(err);
       logger.error("failed adding a parent");
       res.status(400);
     }
-    else{
-      res.status(200).send('added the parent User');
-    }
   })
-  var currID;
-  query = "select * from parentUser where name = '" + req.body.name + "' limit one;"
+  let currID = 0;
+  let user = null;
+  db.query("select * from parentUser", (err,rows,fields) => {console.log("rows:", rows);});
+  query = "select * from parentUser where name = '" + req.body.name + "' limit 1;"
   db.query(query, (err,rows,fields) => {
     if(err){
-      logger.error("couldnt find the user we just added");
+      console.log(err);
+      console.log("couldnt find the user we just added");
       res.status(400);
     }
-    else{
+    else {
+      console.log(req.body.name);
+      console.log(rows[0].id);
+      console.log("Found User");
+      user = rows[0];
       currID = rows[0].id;
-      res.status(200).send('got the userID back');
-    }
-  });
-  query = "insert into accounts values (NULL,'" + req.body.username +"','" + req.body.password +"','" + currID +"');";
-  db.query(query, (err,result) => {
-    if(err){
-      logger.error("couldnt add new account into the accounts table");
-      res.status(400);
-    }else{
-      res.status(200).send("completed adding new user to accounts table");
+      console.log("insert into accounts values (NULL,'" + req.body.username +"','" + req.body.password +"'," + currID +");");
+      query = "insert into accounts values (NULL,'" + req.body.username +"','" + req.body.password +"'," + currID +");";
+      db.query(query, (err,rows, result) => {
+        if(err){
+          console.log(err);
+          console.log("couldnt add new account into the accounts table");
+          res.status(400);
+        }
+        else{
+          res.status(200).json({
+            "user": user
+          });
+        }
+      });
     }
   });
 }

@@ -78,11 +78,6 @@ app.get('/', (req, res) => {
   res.status(200).send('Go to localhost:3000/setupdb first. Then Go to localhost:3000/checkdb');
 });
  
-// login
-app.get('/login', (req, res) => {
-  sess = req.session;
-  res.status(200).send('You logged in');
-});
 
 app.get('/login_driver', (req, res) => {
 
@@ -99,9 +94,12 @@ var auth = function(req, res, next) {
 
 //GET /setupdb
 app.get('/setupdb', (req, res) => {
-  app.get('/setupDriver');
-  app.get('/setup_parent');
+  console.log("setting up db");
+  driverUser.setupDriver(req,res);
+  accounts.setupAccounts(req, res);
+  parentUser.setupParent(req, res);
   app.get('/setup_cc');
+
   app.get('/setupCar');
   res.status(200).send('created the driver, parent, credit card, and car tables');
 });

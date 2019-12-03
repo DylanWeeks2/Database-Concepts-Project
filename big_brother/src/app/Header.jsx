@@ -5,36 +5,56 @@ TODO:: What will the profile button do for children
 import React from 'react';
 import {Link} from 'react-router-dom';
 
-import { NavLink } from 'react-router-dom';
+import { NavLink, Redirect } from 'react-router-dom';
 import "./authentication/Register.css"
+import { Repo } from '../api/repo';
 export class Header extends React.Component {
 
+  repo = new Repo();
   state = {
     userName: "",
+    userId: parseInt(localStorage.getItem("userId")),
     pass: "",
+    isLoggedIn: localStorage.getItem("isLoggedIn"),
+    redirect: false
   }
 
   onLogin() {
     //axios call with userName and pass, store userid
     //this.props.setAuthState();
+    console.log("LOGGING IN", this);
+    this.repo.login(this.state.userName, this.state.pass).then(user => {
+      console.log("new USER, ", user.data);
+      localStorage.setItem("isLoggedIn", true);
+      localStorage.setItem("userId", user.data.userID);
+      this.setState({isLoggedIn: true});
+      
+    });
+
   }
 
-  onLogut() {
+  onLogOut() {
     localStorage.clear();
-    //route to home
+    this.setState({redirect: true});
   }
 
 	render() {
     let profileLink;
+    if (this.state.redirect) {
+      this.setState({redirect: false});
+      return <Redirect to='/register'/>;
+    }
+    console.log("Logged in? ", this.state.isLoggedIn);
     if(this.state.isLoggedIn) {
-      if(this.state.userId < 200000) {
+      if(this.state.userId < 200000  && this.state.userId >= 100000) {
         profileLink = '/parent/profile';
-      } else if(this.state.userId < 300000) {
+      } else if(this.state.userId < 100000) {
         profileLink = '/driver/profile';
       } else if(this.state.userId >= 300000) {
         profileLink = '';
       }
     }
+    console.log(profileLink);
 
 		return (
 			<>
@@ -81,15 +101,12 @@ export class Header extends React.Component {
                   </div>
 
                   <div className="button-group ml-2">
-                    <button type="button" className="btn btn-secondary">Log In</button>
+                    <button type="button" className="btn btn-secondary" onClick={() => this.onLogin() }>Log In</button>
                   </div>
                 </div>
               </div>
 
               <div className="btn-group navbar-right" style={ {"display": localStorage.getItem("isLoggedIn") ? 'block' : 'none'} }>
-                <button type="button"
-                        className="btn btn-secondary"
-                        onClick={ () => this.onLogin() }>Profile</button>
 
                 <Link to={profileLink} className="btn btn-secondary" params={{id: this.state.userId}}>Profile</Link>
 

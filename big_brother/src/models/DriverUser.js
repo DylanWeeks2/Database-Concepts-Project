@@ -1,5 +1,5 @@
 export class DriverUser {
-    constructor(id, name, gender, bio, email, phone, make, model, year, color, liscense, numSeats, condition, ammenities) {
+    constructor(id, name, gender, bio, email, phone, make, model, year, color, liscense, numSeats, condition, ammenities, username, password) {
         this.id = id;
         this.name = name;
         this.gender = gender;
@@ -14,5 +14,7 @@ export class DriverUser {
         this.numSeats = numSeats;
         this.condition = condition;
         this.ammenities = ammenities;
+        this.username = username;
+        this.password = password;
     }
 }
