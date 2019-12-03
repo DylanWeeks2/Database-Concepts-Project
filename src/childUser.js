@@ -10,7 +10,7 @@ exports.setupChild = (req, res) => {
           res.status(200);
       }
   });
-  query = "CREATE TABLE `childUser` (`id` INT NOT NULL AUTO_INCREMENT, `name` VARCHAR(50) NOT NULL, `bio` VARCHAR(200) NOT NULL, `healthConditions` VARCHAR(200) NOT NULL, `emergencyContactName` VARCHAR(50) NOT NULL, `emergencyContactNumber` VARCHAR(50) NOT NULL, `rating` DECIMAL(19,4) NOT NULL, `parentID` INT NULL, PRIMARY KEY (`id`), UNIQUE INDEX `id_UNIQUE` (`id` ASC), INDEX `parentID_idx` (`parentID` ASC), CONSTRAINT `parentID` FOREIGN KEY (`parentID`) REFERENCES `db`.`parentUser` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION);";
+  query = "CREATE TABLE `childUser` (`id` INT NOT NULL AUTO_INCREMENT, `name` VARCHAR(50) NOT NULL, `username` VARCHAR(50) NOT NULL, `password` VARCHAR(50) NOT NULL, `grade` INT NOT NULL, `bio` VARCHAR(200) NOT NULL, `healthConditions` VARCHAR(200) NOT NULL, `emergencyContactName` VARCHAR(50) NOT NULL, `emergencyContactNumber` VARCHAR(50) NOT NULL, `rating` DECIMAL(19,4) NOT NULL, `parentID` INT NULL, PRIMARY KEY (`id`), UNIQUE INDEX `id_UNIQUE` (`id` ASC), INDEX `parentID_idx` (`parentID` ASC), CONSTRAINT `parentID` FOREIGN KEY (`parentID`) REFERENCES `db`.`parentUser` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION);";
   db.query(query, (err, result) => {
       if(err) { res.redirect('/'); }
       else{
@@ -18,7 +18,7 @@ exports.setupChild = (req, res) => {
       }
   })
 
-query = "alter table childUser autoIncrement = 100000"
+query = "alter table childUser autoIncrement = 200000"
   db.query(query, (err, result) => {
       if(err) { res.redirect('/'); }
       else{
@@ -31,7 +31,7 @@ query = "alter table childUser autoIncrement = 100000"
 //post /addChild
 exports.addChild = (req, res) => {
   console.log(req.body);
-  let query = "INSERT into childUser values(NULL,'" + req.body.name + "','" + req.body.bio + "','" + req.body.healthConditions + "','" + req.body.emergencyContactName + "','" + req.body.emergencyContactNumber + "','" + req.body.rating + "','" + req.body.parentID + "')"; 
+  let query = "INSERT into childUser values(NULL,'" + req.body.name + "','" + req.body.username + "','" + req.body.password + "','"  + req.body.grade + "','" + req.body.bio + "','" + req.body.healthConditions + "','" + req.body.emergencyContactName + "','" + req.body.emergencyContactNumber + "','" + req.body.rating + "','" + req.body.parentID + "')"; 
   db.query(query, (err, result) => {
       if(err) {
           logger.error("failed too add child");
@@ -86,7 +86,7 @@ exports.getChild = (req, res) => {
 //post /updateChild
 exports.updateChild = (req, res) => {
   console.log(req.body);
-  let query = "update childUser set name = '" + req.body.name + "', bio = '" + req.body.bio + "', healthConditions = '" + req.body.healthConditions + "', emergencyContactName = '" + req.body.emergencyContactName + "', emergencyContactNumber = '" + req.body.emergencyContactNumber + "', rating = '" + req.body.rating + "' where id = '" + req.body.id + "'";
+  let query = "update childUser set name = '" + req.body.name + "', bio = '" + req.body.bio + "', username = '" + req.body.username + "', password = '" + req.body.password + "', grade = '" + req.body.grade + "', healthConditions = '" + req.body.healthConditions + "', emergencyContactName = '" + req.body.emergencyContactName + "', emergencyContactNumber = '" + req.body.emergencyContactNumber + "', rating = '" + req.body.rating + "' where id = '" + req.body.id + "'";
   db.query(query, (err, result) => {
       if(err) {
           logger.error("failed too update child");

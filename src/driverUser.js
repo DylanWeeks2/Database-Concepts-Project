@@ -14,6 +14,12 @@ exports.setupDriver = (req, res) => {
       res.status(400)
     }
   })
+  query = "alter table parentUser auto_increment = 300000";
+  db.query(query, (err, result) => {
+    if(err) { 
+      console.log(err);
+      res.status(400);}
+  })
 };
 
 // post /addDriver
