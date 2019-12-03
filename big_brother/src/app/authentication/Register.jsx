@@ -4,6 +4,16 @@ import { Link, Redirect } from 'react-router-dom';
 import './Register.css'
 
 export class Register extends Component {
+
+  state = {
+    email: "",
+    phone: "",
+    homeAddr: "",
+    workAddr: "",
+    name: "",
+    children: ""
+  }
+
   //this is the page that holds the register
   Login() {
     alert("login route here");
@@ -61,30 +71,46 @@ export class Register extends Component {
           <div className="container signup-container">
             <div className="row">
               <div className="col parent">
-                <h3>Parent Signup</h3>
-
-                <div className="form-group">
-                  <input type="text" class="form-control" placeholder="Your Email" value="" />
-                </div>
-                <div className="form-group">
-                  <input type="password" class="form-control" placeholder="Your Password" value="" />
-                </div>
-                <div className="form-group">
-                  <input type="button" class="btnSubmit" value="Login" />
-                </div>
+                <h2>Parent Signup</h2>
+                <form>
+                  <div className="form-group">
+                    <label htmlFor="name" id="label">Your Name:</label>
+                    <input required type="text" className="form-control" placeholder="Name" value={this.state.name} onChange={e => this.setState({ name: e.target.value })} />
+                    <label htmlFor="email" id="label">Your Email:</label>
+                    <input required type="text" className="form-control" placeholder="Email" value={this.state.email} onChange={e => this.setState({ email: e.target.value })} />
+                    <label htmlFor="phone" id="label">Your Phone Number (no spaces):</label>
+                    <input required type="text" className="form-control" placeholder="XXXXXXXXXX" value={this.state.phone} onChange={e => this.setState({ phone: e.target.value })} />
+                    <label htmlFor="homeadr" id="label">Your Home Address:</label>
+                    <input required type="text" className="form-control" placeholder="Home Address" value={this.state.homeAddr} onChange={e => this.setState({ homeAddr: e.target.value })} />
+                    <label htmlFor="workadr" id="label">Your Work Address (optional):</label>
+                    <input required type="text" className="form-control" placeholder="Work Address (optional)" value={this.state.workAddr} onChange={e => this.setState({ workAddr: e.target.value })} />
+                    <h5 className="dontWorry">Don't worry, you will add your children in the next step. Thanks!</h5>
+                  </div>
+                  <div className="form-group">
+                    <center><button type="button" className="btnSubmit" onClick={() => this.onSubmit()}>Join!</button></center>
+                  </div>
+                </form>
               </div>
 
               <div className="col driver">
-                <h3>Driver Signup</h3>
-                <div className="form-group">
-                  <input type="text" class="form-control" placeholder="Your Email" value="" />
-                </div>
-                <div className="form-group">
-                  <input type="password" class="form-control" placeholder="Your Password" value="" />
-                </div>
-                <div className="form-group">
-                  <input type="button" class="btnSubmit" value="Login" />
-                </div>
+                <h2>Driver Signup</h2>
+                <form>
+                  <div className="form-group">
+                    <label htmlFor="name" id="label">Your Name:</label>
+                    <input required type="text" className="form-control" placeholder="Name" value={this.state.name} onChange={e => this.setState({ name: e.target.value })} />
+                    <label htmlFor="email" id="label">Your Email:</label>
+                    <input required type="text" className="form-control" placeholder="Email" value={this.state.email} onChange={e => this.setState({ email: e.target.value })} />
+                    <label htmlFor="phone" id="label">Your Phone Number (no spaces):</label>
+                    <input required type="text" className="form-control" placeholder="XXXXXXXXXX" value={this.state.phone} onChange={e => this.setState({ phone: e.target.value })} />
+                    <label htmlFor="homeadr" id="label">Your Home Address:</label>
+                    <input required type="text" className="form-control" placeholder="Home Address" value={this.state.homeAddr} onChange={e => this.setState({ homeAddr: e.target.value })} />
+                    <label htmlFor="workadr" id="label">Your Work Address (optional):</label>
+                    <input required type="text" className="form-control" placeholder="Work Address (optional)" value={this.state.workAddr} onChange={e => this.setState({ workAddr: e.target.value })} />
+                  </div>
+                  <div className="form-group">
+                    <center><button type="button" className="btnSubmit" onClick={() => this.onSubmit()}>Join!</button></center>
+                  </div>
+                </form>
               </div>
             </div>
           </div>
