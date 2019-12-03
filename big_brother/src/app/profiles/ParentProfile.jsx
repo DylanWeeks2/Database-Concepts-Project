@@ -9,13 +9,15 @@ export class ParentProfile extends React.Component {
         profile: new ParentUser(0, "rando@rando.com", "9995554444","5 Street Rd Dallas, Tx","6 Road St Dallas, Tx", "Rando Name",[new Child("Test", "5", "Test Elementary", "Peanut Allergy", "XxTESTxX")])
     }
 
-    updateChild(name, grade, school, health, id){
+    updateChild(name, grade, school, health, username, password, id){
         this.setState(prevState => {
             const index = prevState.children.findIndex(x => x.id === id);
             prevState.children[index].name = name;
             prevState.children[index].grade = grade;
             prevState.children[index].school = school;
             prevState.children[index].health = health;
+            prevState.children[index].username = username;
+            prevState.children[index].password = password;
             return prevState;
         });
     }
@@ -31,9 +33,9 @@ export class ParentProfile extends React.Component {
           });
     }
 
-    addChild(name, username, grade, school, health) {
+    addChild(name, username, grade, school, health, password) {
         this.setState(prevState => {
-            const child = new Child(name, grade, school, health, username, username, Math.random());
+            const child = new Child(name, grade, school, health, username, password, Math.random());
             prevState.children.push(child);
             return prevState;
         })
@@ -88,7 +90,7 @@ export class ParentProfile extends React.Component {
                                     <td className="text-center">{child.school}</td>
                                     <td className="text-center">{child.health}</td>
                                     <td className="text-center">{child.username}</td>
-                                    <td className="text-center"><UpdateChild child={child} updateChild={(name, grade, school, health) => this.updateChild(name, grade, school, health, child.id)} /></td>
+                                    <td className="text-center"><UpdateChild child={child} updateChild={(name, grade, school, health, username, password) => this.updateChild(name, grade, school, health, username, password, child.id)} /></td>
                                 </tr>
                             )
                         }
@@ -97,7 +99,7 @@ export class ParentProfile extends React.Component {
             </div>
 
             <div className="d-flex flex-row-reverse">
-                <NewChild addChild={(name, username, grade, school, health) => this.addChild(name, username, grade, school, health)} />
+                <NewChild addChild={(name, username, grade, school, health, password) => this.addChild(name, username, grade, school, health, password)} />
             </div>
 
             <div className="d-flex flex-row-reverse">
@@ -111,7 +113,7 @@ export class ParentProfile extends React.Component {
                         <input type="password" className="form-control" id="newPassword" />
                     </div>
                     <div className="input-group-append">
-                        <button className="resetButton" className="btn btn-danger">Reset</button>
+                        <button className="resetButton btn btn-danger">Reset</button>
                     </div>
                 </form>
             </div>

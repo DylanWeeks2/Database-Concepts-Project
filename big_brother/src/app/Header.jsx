@@ -68,7 +68,7 @@ export class Header extends React.Component {
           <nav className="navbar bg-dark navbar-inverse">
             <div className="container-fluid">
               <div className="navbar-header">   
-                <a className="navbar-brand text-white" href="#">Big Brother</a>
+                <a className="navbar-brand text-white" href="/">Big Brother</a>
               </div>
               <div className="navbar-form navbar-right" style={ {"display": localStorage.getItem("isLoggedIn") ? 'none' : 'block'} }>
                 <div className="btn-toolbar">

@@ -32,7 +32,7 @@ render () {
                     <Card className="boot-card">
 
                     <Card.Body className="clearfix">
-                        <Card.Title>{ride.date.toLocaleString('default', { month: 'long' }) } {ride.date.getDate()}, {ride.date.getFullYear()} 
+                        <Card.Title>{ride.pickup_time.toLocaleString('default', { month: 'long' }) } {ride.pickup_time.getDate()}, {ride.pickup_time.getFullYear()} 
                         <span className="float-right">
                          Driver: {ride.driverName}
                         </span> 

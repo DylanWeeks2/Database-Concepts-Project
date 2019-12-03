@@ -9,11 +9,11 @@ import { ParentProfile } from './app/profiles/ParentProfile';
 import { ChildProfile } from "./app/profiles/ChildProfile";
 
 export const ROUTES = [
-    { path: '/register', component: Register, authRequired: false, adminRequired: false },
-    { path: '/parent/profile', component: ParentProfile, authRequired: false, adminRequired: false },
-    { path: '/parent', component: ParentDashboard, authRequired: false, adminRequired: false },
-    { path: '/driver/profile', component: DriverProfile, authRequired: false, adminRequired: false },
-    { path: '/driver', component: DriverDashboard, authRequired: false, adminRequired: false },
-    { path: '/child', component: ChildProfile, authRequired: false, adminRequired: false}
+    { path: '/register', component: Register, authRequired: false },
+    { path: '/parent/profile', component: ParentProfile, authRequired: false },
+    { path: '/parent', component: ParentDashboard, authRequired: false },
+    { path: '/driver/profile', component: DriverProfile, authRequired: false },
+    { path: '/driver', component: DriverDashboard, authRequired: false },
+    { path: '/child', component: ChildProfile, authRequired: false }
 ];
 export default ROUTES;
