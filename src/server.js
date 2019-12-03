@@ -96,11 +96,9 @@ var auth = function(req, res, next) {
 app.get('/setupdb', (req, res) => {
   console.log("setting up db");
   driverUser.setupDriver(req,res);
+  childUser.setupChild(req, res);
   accounts.setupAccounts(req, res);
   parentUser.setupParent(req, res);
-  app.get('/setup_cc');
-
-  app.get('/setupCar');
   res.status(200).send('created the driver, parent, credit card, and car tables');
 });
 
