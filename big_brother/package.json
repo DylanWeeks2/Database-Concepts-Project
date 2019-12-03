@@ -8,6 +8,7 @@
     "axios": "^0.18.0",
     "base64-img": "^1.0.4",
     "bootstrap": "^4.3.1",
+    "crypto": "^1.0.1",
     "font-awesome": "^4.7.0",
     "globalize": "^1.4.2",
     "jquery": "^3.4.0",
@@ -16,6 +17,7 @@
     "react": "^16.12.0",
     "react-big-calendar": "^0.22.1",
     "react-bootstrap": "^1.0.0-beta.15",
+    "react-bootstrap-datetimepicker": "0.0.22",
     "react-color": "^2.17.3",
     "react-datetime": "^2.16.3",
     "react-dom": "^16.8.5",
@@ -24,6 +26,7 @@
     "react-router-dom": "^5.0.0",
     "react-scripts": "2.1.8",
     "react-tackle-box": "^2.1.0",
+    "react-widgets": "^4.4.11",
     "redux": "^4.0.1",
     "require": "^2.4.20",
     "zipcodes": "^8.0.0"

@@ -7,51 +7,70 @@ exports.setupDriver = (req, res) => {
       res.status(400);
     }
   });
-  query = "CREATE TABLE driverUser` (`id` INT NOT NULL AUTO_INCREMENT, `name` VARCHAR(50) NOT NULL, `bio` VARCHAR(200) NOT NULL, `cellPhone` VARCHAR(10) NOT NULL, `fingerprint` TINYINT(1) NOT NULL, `reported` TINYINT(1) NOT NULL, PRIMARY KEY (`id`), UNIQUE INDEX `id_UNIQUE` (`id` ASC)); ";
+  query = "CREATE TABLE `driverUser` (`id` INT AUTO_INCREMENT, `name` VARCHAR(50) NOT NULL, `gender` VARCHAR(50),  `bio` VARCHAR(200), `email` VARCHAR(100),  `phone` VARCHAR(10) NOT NULL, `make` VARCHAR(50), `model` VARCHAR(50), `year` VARCHAR(50), `color` VARCHAR(50), `liscense` VARCHAR(50), `numSeats` VARCHAR(10), `condition` VARCHAR(200), `ammenities` VARCHAR(500),`username` VARCHAR(100) NOT NULL, `password` VARCHAR(100) NOT NULL, PRIMARY KEY (`id`), UNIQUE INDEX `id_UNIQUE` (`id` ASC)); ";
   db.query(query, (err, result) => {
     if(err) {
       logger.error("failed creating driver user table");
       res.status(400)
-    }
-    else {
-      res.status(200).send('added the driver user');
     }
   })
 };
 
 // post /addDriver
 exports.addDriver = (req, res) => {
-  let query = "insert into driverUser values(NULL,'"+ req.body.name + "','" + req.body.bio + "','" + req.body.cellPhone + "','" + req.body.fingerprint + "','" + req.body.reported + "','" + req.body.password + "')";
+  let query = "insert into driverUser values(NULL,'"+ `${req.body.name}', '${req.body.gender}` + "',NULL"  + `,'${req.body.email}','` + req.body.phone + `', NULL, NULL, NULL, NULL,NULL, NULL, NULL, NULL,'${req.body.username}','` + req.body.password + "')";
   db.query(query, (err, result) => {
     if(err) {
+      console.log(err);
       logger.error("failed adding a driver user");
       res.status(400);
     }
-    else{
-      res.status(200).send("added the driver user");
-    }
   });
   var currID;
-  query = "select * from driverUser where name = '" + req.body.name + "' limit one;"
+  let user = null;
+  db.query("SELECT * FROM driverUser", (err, rows) => console.log("all rows", rows));
+  query = "select * from driverUser where name = '" + req.body.name + "' limit 1;"
   db.query(query, (err,rows,fields) => {
     if(err){
-      logger.error("couldnt find the user we just added");
+      console.log(err);
+      console.log("couldnt find the user we just added");
       res.status(400);
     }
-    else{
+    else {
+      console.log("rows", rows);
+      console.log(rows[0].id);
+      console.log("Found User");
+      user = rows[0];
       currID = rows[0].id;
-      res.status(200).send('got the userID back');
+      console.log("insert into accounts values (NULL,'" + req.body.username +"','" + req.body.password +"'," + currID +");");
+      query = "insert into accounts values (NULL,'" + req.body.username +"','" + req.body.password +"'," + currID +");";
+      db.query(query, (err,rows, result) => {
+        if(err){
+          console.log(err);
+          console.log("couldnt add new account into the accounts table");
+          res.status(400);
+        }
+        else{
+          res.status(200).json({
+            "user": user
+          });
+        }
+      });
     }
   });
-  query = "insert into accounts values (NULL,'" + req.body.username +"','" + req.body.password +"','" + currID +"');";
-  db.query(query, (err,result) => {
-    if(err){
-      logger.error("couldnt add new account into the accounts table");
-      res.status(400);
-    }else{
-      res.status(200).send("completed adding new user to accounts table");
-    }
-  });
+  // query = "insert into accounts values (NULL,'" + req.body.username +"','" + req.body.password +"','" + currID +"');";
+  // db.query(query, (err,result) => {
+  //   if(err){
+  //     logger.error("couldnt add new account into the accounts table");
+  //     res.status(400);
+  //   }
+  //   else{
+  //     console.log("result,", result);
+  //     res.status(200).json({
+  //       "user": result
+  //     });
+  //   }
+  // });
 }
 
 //post /updateDriverPassword
