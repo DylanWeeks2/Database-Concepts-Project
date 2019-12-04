@@ -1,6 +1,6 @@
 //post /setup_parent
 exports.setupParent = (req, res) => {
-  let query = "drop table if exists parentUser";
+  let query = "DROP TABLE if exists parentUser cascade;";
   console.log("trying to create parent");
   db.query(query, (err, result) => 
   {

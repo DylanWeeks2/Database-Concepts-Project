@@ -6,13 +6,14 @@ exports.setupChild = (req, res) => {
   let query = "drop table if exists childUser";
   db.query(query, (err, result) => {
       if(err) {
-          res.redirect('/');
           res.status(200);
       }
   });
   query = "CREATE TABLE `childUser` (`id` INT NOT NULL AUTO_INCREMENT, `name` VARCHAR(50) NOT NULL, `username` VARCHAR(50) NOT NULL, `password` VARCHAR(50) NOT NULL, `grade` INT NOT NULL, `bio` VARCHAR(200) NOT NULL, `healthConditions` VARCHAR(200) NOT NULL, `emergencyContactName` VARCHAR(50) NOT NULL, `emergencyContactNumber` VARCHAR(50) NOT NULL, `rating` DECIMAL(19,4) NOT NULL, `parentID` INT NULL, PRIMARY KEY (`id`), UNIQUE INDEX `id_UNIQUE` (`id` ASC), INDEX `parentID_idx` (`parentID` ASC), CONSTRAINT `parentID` FOREIGN KEY (`parentID`) REFERENCES `db`.`parentUser` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION); ";
   db.query(query, (err, result) => {
-      if(err) { res.redirect('/'); }
+      if(err) {
+        console.log(err);
+      }
       else{
         console.log("Child Table Created");
       }
@@ -20,7 +21,7 @@ exports.setupChild = (req, res) => {
 
   query = "ALTER TABLE `childUser` AUTO_INCREMENT = 200000"
   db.query(query, (err, result) => {
-      if(err) { res.redirect('/'); }
+      if(err) {}
       else{
       }
   })
