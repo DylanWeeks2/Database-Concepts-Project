@@ -27,6 +27,7 @@ export class Header extends React.Component {
       console.log("new USER, ", user.data);
       localStorage.setItem("isLoggedIn", true);
       localStorage.setItem("userId", user.data.userID);
+      this.setState({userId: parseInt(user.data.userID)});
       this.setState({isLoggedIn: true});
       
     });

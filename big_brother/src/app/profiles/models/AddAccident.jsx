@@ -50,7 +50,7 @@ function AddAccident(props) {
                             <Form.Label>Severity</Form.Label>
                             <Form.Control as="select">
                                 {
-                                    [[0, "Scratch"], [1, "Fenderbender"], [2, "Totaled"]].map(x => <option key={x[0]} value={x[0]}>{x[1]}</option>)
+                                    [[0, "Scratch"], [1, "Fenderbender"], [2, "Totaled"]].map(x => <option key={x[0]} value={x[1]}>{x[1]}</option>)
                                 }
                             </Form.Control>
                         </Form.Group>
