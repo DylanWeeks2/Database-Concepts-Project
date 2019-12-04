@@ -88,8 +88,9 @@ export class Repo {
                         kids.push(new Child(child["name"], child["grade"], child["school"],
                         child["healthConditions"], child["username"], child["id"], child["password"]));
                     });
-                    return new ParentUser(parent["id"], parent["email"], parent["phone"], parent["homeAddr"],
+                    let ret = new ParentUser(parent["id"], parent["email"], parent["phone"], parent["homeAddr"],
                     parent["workAddr"], parent["name"], kids, parent["password"], parent["username"]);
+                    resolve(ret);
                 });
         })
     }
@@ -235,7 +236,8 @@ export class Repo {
                             ride["notes"], ride["driver"], ride["driverName"], new Child(null)));
                         }
                     });
-                    return { activeRides: activeRides, pastRides: pastRides };
+                    let ret = { activeRides: activeRides, pastRides: pastRides };
+                    resolve(ret);
                 });
          });
      }
@@ -258,7 +260,7 @@ export class Repo {
                         ride["pick_up_location"], ride["drop_off_location"], "", ride["driver"], "", 
                         new Child(ride["name"], ride["grade"], ride["school"], ride["health"], ride["username"], ride["id"], ride["password"])));
                     });
-                    return ret;
+                    resolve(ret);
                 })
          });
      }
@@ -273,7 +275,7 @@ export class Repo {
                         ride["pick_up_location"], ride["drop_off_location"], "", ride["driver"], "", 
                         new Child(ride["name"], ride["grade"], ride["school"], ride["health"], ride["username"], ride["id"], ride["password"])));
                     });
-                    return ret;
+                    resolve(ret);
                 });
          });
      }

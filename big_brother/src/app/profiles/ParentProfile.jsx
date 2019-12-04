@@ -57,6 +57,7 @@ export class ParentProfile extends React.Component {
                                 new Child(child["name"], child["grade"], child["school"], child["healthConditions"], child["userName"], child["password"], child["id"])
                             );
                         });
+                        this.setState({profile: parent});
                     });
             })
             .catch();
