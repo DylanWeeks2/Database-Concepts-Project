@@ -34,7 +34,7 @@ exports.setupDriver = (req, res) => {
       res.status(400);
     }
   });
-  query = "CREATE TABLE `driverUser` (`id` INT AUTO_INCREMENT, `name` VARCHAR(50) NOT NULL, `gender` VARCHAR(50),  `bio` VARCHAR(200), `email` VARCHAR(100),  `phone` VARCHAR(10) NOT NULL, `make` VARCHAR(50), `model` VARCHAR(50), `year` VARCHAR(50), `color` VARCHAR(50), `liscense` VARCHAR(50), `numSeats` VARCHAR(100), `condition` VARCHAR(200), `ammenities` VARCHAR(500),`username` VARCHAR(100) NOT NULL, `password` VARCHAR(100) NOT NULL, PRIMARY KEY (`id`), UNIQUE INDEX `id_UNIQUE` (`id` ASC)); ";
+  query = "CREATE TABLE `driverUser` (`id` INT AUTO_INCREMENT, `name` VARCHAR(50) NOT NULL, `gender` VARCHAR(50),  `bio` VARCHAR(200), `email` VARCHAR(100),  `phone` VARCHAR(10) NOT NULL, `make` VARCHAR(50), `model` VARCHAR(50), `year` VARCHAR(50), `color` VARCHAR(50), `liscense` VARCHAR(50), `numSeats` VARCHAR(100), `condition` VARCHAR(200), `ammenities` VARCHAR(500),`username` VARCHAR(100) NOT NULL, `password` VARCHAR(500) NOT NULL, PRIMARY KEY (`id`), UNIQUE INDEX `id_UNIQUE` (`id` ASC)); ";
   db.query(query, (err, result) => {
 
     if(err) {
