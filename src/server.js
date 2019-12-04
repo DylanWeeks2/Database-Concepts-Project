@@ -95,10 +95,100 @@ var auth = function(req, res, next) {
 //GET /setupdb
 app.get('/setupdb', (req, res) => {
   console.log("setting up db");
+  let query = "DROP TABLE if exists childUser";
+  db.query(query, (err, result) => 
+  {
+    if(err) {
+      console.log("NO DELETION");
+    }
+    else{
+        console.log("deleted table Childuser")
+      }
+  });
+  query = "DROP TABLE if exists rideSchedule";
+  db.query(query, (err, result) => 
+  {
+    if(err) {
+      console.log("NO DELETION");
+    }
+    else{
+        console.log("deleted table rideSchedule")
+      }
+  });
+  query = "DROP TABLE if exists rideSchedule";
+  db.query(query, (err, result) => 
+  {
+    if(err) {
+      console.log("NO DELETION");
+    }
+    else{
+        console.log("deleted table rideSchedule")
+      }
+  });
+  query = "DROP TABLE if exists driverSchedule";
+  db.query(query, (err, result) => 
+  {
+    if(err) {
+      console.log("NO DELETION");
+    }
+    else{
+        console.log("deleted table driverSchedule")
+      }
+  });
+  query = "DROP TABLE if exists review";
+  db.query(query, (err, result) => 
+  {
+    if(err) {
+      console.log("NO DELETION");
+    }
+    else{
+        console.log("deleted table review")
+      }
+  });
+  query = "DROP TABLE if exists accounts";
+  db.query(query, (err, result) => 
+  {
+    if(err) {
+      console.log("NO DELETION");
+    }
+    else{
+        console.log("deleted table accounts")
+      }
+  });
+  query = "DROP TABLE if exists creditCard";
+  db.query(query, (err, result) => 
+  {
+    if(err) {
+      console.log("NO DELETION");
+    }
+    else{
+        console.log("deleted table creditCard")
+      }
+  });
+  query = "DROP TABLE if exists parentUser";
+  db.query(query, (err, result) => 
+  {
+    if(err) {
+      console.log("NO DELETION");
+    }
+    else{
+        console.log("deleted table parentUser")
+      }
+  });
+  query = "DROP TABLE if exists driverUser";
+  db.query(query, (err, result) => 
+  {
+    if(err) {
+      console.log("NO DELETION");
+    }
+    else{
+        console.log("deleted table driverUser")
+      }
+  });
   driverUser.setupDriver(req,res);
-  childUser.setupChild(req, res);
   accounts.setupAccounts(req, res);
   parentUser.setupParent(req, res);
+  childUser.setupChild(req, res);
   res.status(200).send('created the driver, parent, credit card, and car tables');
 });
 

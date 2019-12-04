@@ -1,12 +1,12 @@
 
 exports.setupDriver = (req, res) => {
-  let query = "drop table if exists `driverUser`";
+  let query = "DROP TABLE if exists driverUser";
   db.query(query, (err, result) => {
     if(err){
-      res.status(400);
+      console.log(err);
     }
     else{
-      res.status(200).send('Dropped driver table');
+      console.log("Dropped driver table");
   }
   });
   query = "CREATE TABLE `driverUser` (`id` INT AUTO_INCREMENT, `name` VARCHAR(50) NOT NULL, `gender` VARCHAR(50) NOT NULL,  `bio` VARCHAR(200) NOT NULL, `email` VARCHAR(100) NOT NULL,  `phone` VARCHAR(10) NOT NULL, `make` VARCHAR(50) NOT NULL, `model` VARCHAR(50) NOT NULL, `year` VARCHAR(50) NOT NULL, `color` VARCHAR(50) NOT NULL, `liscense` VARCHAR(50) NOT NULL, `numSeats` VARCHAR(10) NOT NULL, `condition` VARCHAR(200) NOT NULL, `ammenities` VARCHAR(500) NOT NULL,`username` VARCHAR(100) NOT NULL, `password` VARCHAR(100) NOT NULL, PRIMARY KEY (`id`), UNIQUE INDEX `id_UNIQUE` (`id` ASC)); ";
