@@ -244,7 +244,6 @@ export class DriverProfile extends React.Component {
             }
 
         componentDidMount() {
-            debugger;
             let userId = parseInt(localStorage.getItem("userId"));
             this.repo.getDriver(userId).then(user => {
                 let user_ = user.data[0];
@@ -296,7 +295,6 @@ export class DriverProfile extends React.Component {
                     service_list.push(new Availability(availability.driverId, new Date(availability.date), new Date(availability.start), new Date(availability.end)));
                 });
                 prevState.availabilities = prevState.availabilities.concat(service_list);
-                debugger;
                 return prevState;
             });
     });
