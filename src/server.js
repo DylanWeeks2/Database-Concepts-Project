@@ -95,17 +95,7 @@ var auth = function(req, res, next) {
 //GET /setupdb
 app.get('/setupdb', (req, res) => {
   console.log("setting up db");
-  let query = "DROP TABLE if exists childUser";
-  db.query(query, (err, result) => 
-  {
-    if(err) {
-      console.log("NO DELETION");
-    }
-    else{
-        console.log("deleted table Childuser")
-      }
-  });
-  query = "DROP TABLE if exists rideSchedule";
+  let query = "DROP TABLE if exists rideSchedule";
   db.query(query, (err, result) => 
   {
     if(err) {
@@ -165,14 +155,14 @@ app.get('/setupdb', (req, res) => {
         console.log("deleted table creditCard")
       }
   });
-  query = "DROP TABLE if exists parentUser";
+  query = "DROP TABLE if exists childUser";
   db.query(query, (err, result) => 
   {
     if(err) {
-      console.log("NO DELETION");
+      console.log(err);
     }
     else{
-        console.log("deleted table parentUser")
+        console.log("deleted table Childuser")
       }
   });
   query = "DROP TABLE if exists driverUser";
@@ -185,10 +175,24 @@ app.get('/setupdb', (req, res) => {
         console.log("deleted table driverUser")
       }
   });
-  driverUser.setupDriver(req,res);
-  accounts.setupAccounts(req, res);
+  query = "DROP TABLE if exists parentUser";
+  db.query(query, (err, result) => 
+  {
+    if(err) {
+      console.log(err);
+    }
+    else{
+        console.log("deleted table parentUser")
+      }
+  });
   parentUser.setupParent(req, res);
+  driverUser.setupDriver(req,res);
   childUser.setupChild(req, res);
+  accounts.setupAccounts(req, res);
+  reviews.setupReviews(req, res);
+  driverSchedule.setupDriverSchedule(req, res);
+  rideSchedule.setupRideSchedule(req, res);
+  creditCard.setupCreditCard(req, res);
   res.status(200).send('created the driver, parent, credit card, and car tables');
 });
 
