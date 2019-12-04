@@ -13,7 +13,7 @@ export class DriverDashboard extends React.Component {
       };
 
 
-    repo = new Repo;
+    repo = new Repo();
 
     state = {
         activeRides: [
