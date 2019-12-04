@@ -18,17 +18,22 @@ export class ParentDashboard extends React.Component {
         //changels for things here
         console.log(id);
         console.log(this.state.rides);
+        //to do: call to DB
         this.setState({ rides: this.state.rides.filter(x => { return x.id !== id }) });
     }
 
     addRide(time, children, driver, address, notes) {
+        let kid = this.state.account.children.find(y => y.id == children);
+        let driver1 = this.state.drivers.find(y => y.id == driver);
         const rides =  new Ride(localStorage.getItem("userId"), time, new Date(), 
-            this.state.account.children.find(y => y.id == children).id, this.state.account.children.find(y => y.id == children).name,
-            this.state.account.children.find(y => y.id == children).health,
+            kid.id, kid.name,
+            kid.health,
             address,
             notes,
-            this.state.drivers.find(y => y.id == driver).id,
-            this.state.drivers.find(y => y.id == driver).name);
+            driver1.id,
+            driver1.name);
+        
+        //to do : call to DB
         this.setState(prevState => {
             prevState.rides.push(rides);
             return prevState;
@@ -38,9 +43,9 @@ export class ParentDashboard extends React.Component {
         modalVisible: false,
         account: new ParentUser(1, "test@test.gmail", "1234567890", "1234 test rd", "45567 test rd", "Joe Mama",
             [
-                (new Child("Ben Dover", 2, "Good School", "Water Allergy", "xXx_BENDOVER69", 0)),
-                (new Child("Mike Hawk", 3, "BEst School", "Pain Allergy", "MIKE", 1))
-            ]
+                (new Child("Ben Dover", 2, "Good School", "Water Allergy", "xXx_BENDOVER69", "pass", 0)),
+                (new Child("Mike Hawk", 3, "BEst School", "Pain Allergy", "MIKE", "pass", 1))
+            ], "pass", "user"
         ),
         rides: [
             new Ride(0, new Date(), new Date(), 0, "Ben Dover", "5555 St.", "4444 Rd.", "This kid is fucking dope", 0, "Sofa King")
@@ -49,7 +54,7 @@ export class ParentDashboard extends React.Component {
             new Ride(1, new Date(), new Date(), 0, "Ben DICK", "55few55 St.", "4444few Rd.", "This kidfew is fucking dope", 0, "Sofafew King")
         ],
         drivers: [
-            new DriverUser(1, "Buck", "Chevy", 2009)
+            new DriverUser(1, "Buck", "M", "I am cool", "buck@yahoo.com", 2145556666, "Chevy", "equinox", 2009, "silver", "BiteMe", 3, "decent", "cupholder", "bucky", "pass")
         ]
     }
     toggleModel() {
@@ -59,13 +64,14 @@ export class ParentDashboard extends React.Component {
             })
             : this.setState({ modalVisible: true });
     };
-//FINISHSLDJLFSJLFKSJDFLJD FLKSJ DLKFSDJ FKL SDJLFKSJD FLSDFKLSDFKLSJFLKDF LSD F
-    componentDidMount() {
+
+    //waiting for call from DB
+    /*componentDidMount() {
         this.repo.getParentWithChildren(localStorage.getItem("userId"))
             .then(parent => this.setState({account: parent}));
         this.repo.getRidesForParent(localStorage.getItem("userId")) //TODO:: handle current rides vs. Past rides-
             .then(rides => this.setState({ activeRides: rides.activeRides, pastRides: rides.pastRides }));
-    }
+    }*/
 
     render() {
         return (
