@@ -16,7 +16,9 @@ function UpdateChild(props) {
         const grade = form.elements.grade.value;
         const school = form.elements.school.value;
         const health = form.elements.health.value;
-        props.updateChild(name, grade, school, health);
+        const username = form.elements.username.value;
+        const password = form.elements.password.value;
+        props.updateChild(name, grade, school, health, username, password);
         handleClose();
     };
     return (
@@ -57,6 +59,14 @@ function UpdateChild(props) {
                         <Form.Group controlId="health">
                             <Form.Label>Health</Form.Label>
                             <Form.Control type="text" defaultValue={props.child.health} />
+                        </Form.Group>
+                        <Form.Group controlId="username">
+                            <Form.Label>Username</Form.Label>
+                            <Form.Control type="text" defaultValue={props.child.username} />
+                        </Form.Group>
+                        <Form.Group controlId="password">
+                            <Form.Label>Password</Form.Label>
+                            <Form.Control type="password" defaultValue={props.child.password} />
                         </Form.Group>
                         <Button variant="success" type="submit" > Submit</Button>
                     </Form>

@@ -1,21 +1,25 @@
 //post /setup_parent
 exports.setupParent = (req, res) => {
-  let query = "drop table if exists parentUser";
+  let query = "DROP TABLE if exists parentUser";
   console.log("trying to create parent");
-  db.query(query, (err, result) => {
-
-    if(err) { 
+  db.query(query, (err, result) => 
+  {
+    if(err) {
       console.log(err);
-      res.redirect('/'); }
+    }
+    else{
+      }
   });
   console.log("CREATE TABLE `parentUser` (`id` INT AUTO_INCREMENT,`email` VARCHAR(100), `phone` VARCHAR(100), `homeAddr` VARCHAR(200), `workAddr` VARCHAR(100),  `name` VARCHAR(50) NOT NULL, `password` VARCHAR(100), `username` VARCHAR(100), PRIMARY KEY (`id`), UNIQUE INDEX `id_UNIQUE` (`id` ASC));");
-  query = "CREATE TABLE `parentUser` (`id` INT AUTO_INCREMENT,`email` VARCHAR(100), `phone` VARCHAR(100), `homeAddr` VARCHAR(200), `workAddr` VARCHAR(100),  `name` VARCHAR(50) NOT NULL, `password` VARCHAR(100), `username` VARCHAR(100), PRIMARY KEY (`id`), UNIQUE INDEX `id_UNIQUE` (`id` ASC));";
+  query = "CREATE TABLE `parentUser` (`id` INT NOT NULL AUTO_INCREMENT,`email` VARCHAR(100), `phone` VARCHAR(100), `homeAddr` VARCHAR(200), `workAddr` VARCHAR(100),  `name` VARCHAR(50) NOT NULL, `password` VARCHAR(100), `username` VARCHAR(100), PRIMARY KEY (`id`), UNIQUE INDEX `id_UNIQUE` (`id` ASC)); ";
   db.query(query, (err, result) => {
     if(err) { 
-      console.log(err);
-      res.redirect('/'); }
+      console.log(err); }
+      else{
+        console.log("Parent Table Created");
+      }
   })
-  query = "alter table parentUser auto_increment = 100000";
+  query = "ALTER TABLE parentUser AUTO_INCREMENT = 100000";
   db.query(query, (err, result) => {
     if(err) { 
       console.log(err);

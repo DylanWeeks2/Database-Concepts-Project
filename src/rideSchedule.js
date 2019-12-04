@@ -6,15 +6,17 @@ exports.setupRideSchedule = (req,res) => {
   let query = "drop table if exists rideSchedule";
   db.query(query, (err,result) => {
     if(err){
-      res.redirect('/');
+      console.log(err);
     }
   });
   query = "CREATE TABLE `rideSchedule` ( `id` INT NOT NULL AUTO_INCREMENT, `pick_up_location` VARCHAR(45) NOT NULL, `drop_off_location` VARCHAR(45) NOT NULL, `pick_up_time` DATETIME(6) NOT NULL, `drop_off_time` DATETIME(6) NOT NULL, `active` TINYINT(1) NOT NULL, `parent` INT NOT NULL, `child` INT NOT NULL, `driver` INT NOT NULL, PRIMARY KEY (`id`), INDEX `driverID_idx` (`driver` ASC), INDEX `parentID_idx` (`parent` ASC), INDEX `childID_idx` (`child` ASC), UNIQUE INDEX `id_UNIQUE` (`id` ASC), CONSTRAINT `driver_ID`  FOREIGN KEY (`driver`) REFERENCES `db`.`driverUser` (`id`) ON DELETE NO ACTION  ON UPDATE NO ACTION, CONSTRAINT `parent_ID` FOREIGN KEY (`parent`) REFERENCES `db`.`parentUser` (`id`) ON DELETE NO ACTION  ON UPDATE NO ACTION, CONSTRAINT `child_ID`  FOREIGN KEY (`child`) REFERENCES `db`.`childUser` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION);";
   db.query(query, (err, result) => {
     if(err) {
-       res.redirect('/');
+       console.log(err);
        }
-    res.status(200).send('created the ride schedule table'); 
+    else{
+      console.log("rideSchedule Created")
+    }
   });
 };
 

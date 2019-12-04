@@ -17,7 +17,8 @@ function NewChild(props) {
         const grade = form.elements.grade.value;
         const school = form.elements.school.value;
         const health = form.elements.health.value;
-        props.addChild(name, username, grade, school, health);
+        const password = form.elements.password.value;
+        props.addChild(name, username, grade, school, health, password);
         handleClose();
     };
     return (
@@ -43,10 +44,6 @@ function NewChild(props) {
                             <Form.Label>Name</Form.Label>
                             <Form.Control type="text"  />
                         </Form.Group>
-                        <Form.Group controlId="username" >
-                            <Form.Label>Username:</Form.Label>
-                            <Form.Control type="text" />
-                        </Form.Group>
                         <Form.Group controlId="grade">
                             <Form.Label>Grade</Form.Label>
                             <Form.Control as="select" >
@@ -62,6 +59,14 @@ function NewChild(props) {
                         <Form.Group controlId="health">
                             <Form.Label>Health</Form.Label>
                             <Form.Control type="text"  />
+                        </Form.Group>
+                        <Form.Group controlId="username">
+                            <Form.Label>Username</Form.Label>
+                            <Form.Control type="text"  />
+                        </Form.Group>
+                        <Form.Group controlId="password">
+                            <Form.Label>Password</Form.Label>
+                            <Form.Control type="password"  />
                         </Form.Group>
                         <Button variant="success" type="submit" > Submit</Button>
                     </Form>

@@ -6,15 +6,17 @@ exports.setupDriverSchedule = (req, res) => {
   let query = "drop table if exists driverSchedule";
   db.query(query, (err,result) => {
     if(err){
-      res.redirect('/');
+      console.log(err);
     }
   });
   query = "CREATE TABLE `driverSchedule` (`id` INT NOT NULL AUTO_INCREMENT,`start` DATETIME(6) NULL,`end` DATETIME(6) NULL,`active` TINYINT(1) NULL,`driverID` INT NULL,PRIMARY KEY (`id`),INDEX `driver_idx` (`driverID` ASC),  CONSTRAINT `driver` FOREIGN KEY (`driverID`) REFERENCES `db`.`driverUser` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION);";
   db.query(query, (err, result) => {
     if(err) {
-       res.redirect('/');
+       console.log(err);
        }
-    res.status(200).send('created the driver schedule table');
+       else{
+         console.log("driverSchedule Created")
+       }
 });
 };
 

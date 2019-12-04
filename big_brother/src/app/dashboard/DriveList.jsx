@@ -1,5 +1,6 @@
 import React from "react"
 import { Ride } from "../../models/Ride"
+import InfoChild from './modals/InfoChild'
 
 var days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 
@@ -29,7 +30,7 @@ export const DriveList = (props) => (
                     </div>
                     </ul>
                     <div>
-                        <button className="btn btn-info p-2">{ride.childName} ˅</button>                      
+                        <InfoChild child = {ride.child} />                   
                     </div>
                 </span>
                 </div>

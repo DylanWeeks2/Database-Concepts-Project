@@ -8,11 +8,12 @@ import { RideItem } from './RideItem';
 import { Rating } from './rating';
 import 'bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { Repo } from '../../api/repo';
 //const globalizeLocalizer = localizer(globalize)
 
 
 export class ParentDashboard extends React.Component {
-
+    repo = new Repo();
     cancelRide(id) {
         //changels for things here
         console.log(id);
@@ -21,7 +22,7 @@ export class ParentDashboard extends React.Component {
     }
 
     addRide(time, children, driver, address, notes) {
-        const rides =  new Ride(Math.random(), time, new Date(), 
+        const rides =  new Ride(localStorage.getItem("userId"), time, new Date(), 
             this.state.account.children.find(y => y.id == children).id, this.state.account.children.find(y => y.id == children).name,
             this.state.account.children.find(y => y.id == children).health,
             address,
