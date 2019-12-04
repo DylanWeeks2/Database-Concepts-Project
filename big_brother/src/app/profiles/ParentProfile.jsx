@@ -12,14 +12,15 @@ export class ParentProfile extends React.Component {
     }
 
     updateChild(name, grade, school, health, username, password, id){
+        //to-do: db call send
         this.setState(prevState => {
-            const index = prevState.children.findIndex(x => x.id === id);
-            prevState.children[index].name = name;
-            prevState.children[index].grade = grade;
-            prevState.children[index].school = school;
-            prevState.children[index].health = health;
-            prevState.children[index].username = username;
-            prevState.children[index].password = password;
+            const index = prevState.profile.children.findIndex(x => x.id === id);
+            prevState.profile.children[index].name = name;
+            prevState.profile.children[index].grade = grade;
+            prevState.profile.children[index].school = school;
+            prevState.profile.children[index].health = health;
+            prevState.profile.children[index].username = username;
+            prevState.profile.children[index].password = password;
             return prevState;
         });
     }
@@ -36,13 +37,16 @@ export class ParentProfile extends React.Component {
     }
 
     addChild(name, username, grade, school, health, password) {
+        //to-do: db call
         this.setState(prevState => {
             const child = new Child(name, grade, school, health, username, password, Math.random());
-            prevState.children.push(child);
+            prevState.profile.children.push(child);
             return prevState;
         })
     }
 
+    //to-do: db call
+    /*
     componentDidMount() {
         this.repo.getParent(localStorage.getItem("userId"))
             .then((parent) => {
@@ -56,7 +60,7 @@ export class ParentProfile extends React.Component {
                     });
             })
             .catch();
-    }
+    }*/
 
     render() {
         return (

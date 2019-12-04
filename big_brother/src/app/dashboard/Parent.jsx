@@ -14,10 +14,27 @@ import { Repo } from '../../api/repo';
 
 export class ParentDashboard extends React.Component {
     repo = new Repo();
+
+    state = {
+        modalVisible: false,
+        account: new ParentUser(1, "test@test.gmail", "1234567890", "1234 test rd", "45567 test rd", "Joe Mama",
+            [
+                (new Child("Ben Dover", 2, "Good School", "Water Allergy", "xXx_BENDOVER69", "pass", 0)),
+                (new Child("Mike Hawk", 3, "BEst School", "Pain Allergy", "MIKE", "pass", 1))
+            ], "pass", "user"
+        ),
+        rides: [
+            new Ride(0, new Date(), new Date(), 0, "Ben Dover", "5555 St.", "4444 Rd.", "This kid is fucking dope", 0, "Sofa King")
+        ],
+        pastRides: [
+            new Ride(1, new Date(), new Date(), 0, "Ben DICK", "55few55 St.", "4444few Rd.", "This kidfew is fucking dope", 0, "Sofafew King")
+        ],
+        drivers: [
+            new DriverUser(1, "Buck", "M", "I am cool", "buck@yahoo.com", 2145556666, "Chevy", "equinox", 2009, "silver", "BiteMe", 3, "decent", "cupholder", "bucky", "pass")
+        ]
+    }
+
     cancelRide(id) {
-        //changels for things here
-        console.log(id);
-        console.log(this.state.rides);
         //to do: call to DB
         this.setState({ rides: this.state.rides.filter(x => { return x.id !== id }) });
     }
@@ -39,24 +56,7 @@ export class ParentDashboard extends React.Component {
             return prevState;
         })
     }
-    state = {
-        modalVisible: false,
-        account: new ParentUser(1, "test@test.gmail", "1234567890", "1234 test rd", "45567 test rd", "Joe Mama",
-            [
-                (new Child("Ben Dover", 2, "Good School", "Water Allergy", "xXx_BENDOVER69", "pass", 0)),
-                (new Child("Mike Hawk", 3, "BEst School", "Pain Allergy", "MIKE", "pass", 1))
-            ], "pass", "user"
-        ),
-        rides: [
-            new Ride(0, new Date(), new Date(), 0, "Ben Dover", "5555 St.", "4444 Rd.", "This kid is fucking dope", 0, "Sofa King")
-        ],
-        pastRides: [
-            new Ride(1, new Date(), new Date(), 0, "Ben DICK", "55few55 St.", "4444few Rd.", "This kidfew is fucking dope", 0, "Sofafew King")
-        ],
-        drivers: [
-            new DriverUser(1, "Buck", "M", "I am cool", "buck@yahoo.com", 2145556666, "Chevy", "equinox", 2009, "silver", "BiteMe", 3, "decent", "cupholder", "bucky", "pass")
-        ]
-    }
+    
     toggleModel() {
         this.state.modalVisible
             ? this.setState({
