@@ -13,13 +13,13 @@ Car services and Accidents should be adds, not updates
 import axios from 'axios';
 import { createHash } from 'crypto';
 import { StorageManager } from './../app/StorageManager';
-import { ParentUser, DriverUser } from '../models';
+import { ParentUser, DriverUser, Ride, Child } from '../models';
 import { Link } from 'react-router-dom';
 
 export class Repo {
     storage = new StorageManager();
 
-    url = "http://18.222.183.117:3000"
+    url = "http://192.168.99.100:3000"
     config = {
         headers: {
             Authorization: "hdonofrio"
@@ -74,6 +74,21 @@ export class Repo {
             })
             .catch(resp => console.log(resp));
         });
+    }
+
+    getParentWithChildren(parentId) {
+        return new Promise((resolve, reject) => {
+            axios.get(`${this.url}/getParentChildren`, parentId, this.config)
+                .then(parent => {
+                    let kids = [];
+                    parent.children.forEach(child => {
+                        kids.push(new Child(child["name"], child["grade"], child["school"],
+                        child["healthConditions"], child["username"], child["id"], child["password"]));
+                    });
+                    return new ParentUser(parent["id"], parent["email"], parent["phone"], parent["homeAddr"],
+                    parent["workAddr"], parent["name"], kids, parent["password"], parent["username"]);
+                });
+        })
     }
 
     // changeParentPassword(parentId, newPassword) {
@@ -201,8 +216,52 @@ export class Repo {
      getRides(parentId) {
          return new Promise((resolve, reject) => {
              axios.get(`${this.url}/getRideSchedule`, parentId, this.config)
-             //.then(resp => resolve(resp.data) /*handle successful get*/)
-             //.catch(resp => /*handle failure */);
+                .then(rides => {
+                    let activeRides = [];
+                    let pastRides = [];
+                    rides.forEach(ride => {
+                        if (ride["active"] == 0) {
+                            pastRides.push(new Ride(ride["id"], ride["pick_up_time"], ride["drop_off_time"], 
+                            ride["child"], ride["childName"], ride["pick_up_location"], ride["drop_off_location"],
+                            ride["notes"], ride["driver"], ride["driverName"], new Child(null)));
+                        } else {
+                            activeRides.push(new Ride(ride["id"], ride["pick_up_time"], ride["drop_off_time"], 
+                            ride["child"], ride["childName"], ride["pick_up_location"], ride["drop_off_location"],
+                            ride["notes"], ride["driver"], ride["driverName"], new Child(null)));
+                        }
+                    });
+                    return { activeRides: activeRides, pastRides: pastRides };
+                });
+         });
+     }
+
+     getRidesDriver(driverId) {
+         return new Promise((resolve, reject) => {
+             axios.get(`${this.url}/getDriverSchedule`, driverId, this.config)
+                .then(rides => {
+                    let ret = [];
+                    rides.forEach(ride => {
+                        ret.push(new Ride(ride["id"], ride["pick_up_time"], ride["drop_off_time"], ride["childId"], ride["childName"],
+                        ride["pick_up_location"], ride["drop_off_location"], "", ride["driver"], "", 
+                        new Child(ride["name"], ride["grade"], ride["school"], ride["health"], ride["username"], ride["id"], ride["password"])));
+                    });
+                    return ret;
+                })
+         });
+     }
+
+     getRidesChild(childId) {
+         return new Promise((resolve, reject) => {
+             axios.get(`${this.url}/getChildSchedule`, childId, this.config)
+                .then(rides => {
+                    let ret = [];
+                    rides.forEach(ride => {
+                        ret.push(new Ride(ride["id"], ride["pick_up_time"], ride["drop_off_time"], ride["childId"], ride["childName"],
+                        ride["pick_up_location"], ride["drop_off_location"], "", ride["driver"], "", 
+                        new Child(ride["name"], ride["grade"], ride["school"], ride["health"], ride["username"], ride["id"], ride["password"])));
+                    });
+                    return ret;
+                });
          });
      }
 

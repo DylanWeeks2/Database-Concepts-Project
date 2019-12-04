@@ -9,6 +9,7 @@ import { NavLink, Redirect } from 'react-router-dom';
 import "./authentication/Register.css"
 import { Repo } from '../api/repo';
 export class Header extends React.Component {
+  dashboardLink = "/";
 
   repo = new Repo();
   state = {
@@ -16,7 +17,8 @@ export class Header extends React.Component {
     userId: parseInt(localStorage.getItem("userId")),
     pass: "",
     isLoggedIn: localStorage.getItem("isLoggedIn"),
-    redirect: false
+    redirect: false,
+    redirectDash: false
   }
 
   onLogin() {
@@ -28,8 +30,7 @@ export class Header extends React.Component {
       localStorage.setItem("isLoggedIn", true);
       localStorage.setItem("userId", user.data.userID);
       this.setState({userId: parseInt(user.data.userID)});
-      this.setState({isLoggedIn: true});
-      
+      this.setState({isLoggedIn: true, redirectDash: true});
     });
 
   }
@@ -40,20 +41,27 @@ export class Header extends React.Component {
   }
 
 	render() {
-    let profileLink;
+    let profileLink = "/";
     if (this.state.redirect) {
       this.setState({redirect: false});
-      return <Redirect to='/register'/>;
+      return <Redirect to='/'/>;
+    }
+    if (this.state.redirectDash) {
+      this.setState({redirectDash: false});
+      return <Redirect to={this.dashboardLink} />
     }
     console.log("Logged in? ", this.state.isLoggedIn);
     if(this.state.isLoggedIn) {
       if(this.state.userId < 200000  && this.state.userId >= 100000) {
         profileLink = '/parent/profile';
+        this.dashboardLink = '/parent';
       } else if(this.state.userId >= 300000) {
         profileLink = '/driver/profile';
+        this.dashboardLink = '/driver';
       }
       else {
         profileLink = '/';
+        this.dashboardLink = '/child';
       }
     }
     console.log(profileLink);
@@ -70,7 +78,7 @@ export class Header extends React.Component {
           <nav className="navbar bg-dark navbar-inverse">
             <div className="container-fluid">
               <div className="navbar-header">   
-                <a className="navbar-brand text-white" href="/">Big Brother</a>
+                <a className="navbar-brand text-white" href={this.dashboardLink}>Big Brother</a>
               </div>
               <div className="navbar-form navbar-right" style={ {"display": localStorage.getItem("isLoggedIn") ? 'none' : 'block'} }>
                 <div className="btn-toolbar">

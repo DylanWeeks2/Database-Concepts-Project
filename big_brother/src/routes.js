@@ -10,10 +10,10 @@ import { ChildProfile } from "./app/profiles/ChildProfile";
 
 export const ROUTES = [
     { path: '/register', component: Register, authRequired: false },
-    { path: '/parent/profile', component: ParentProfile, authRequired: false },
-    { path: '/parent', component: ParentDashboard, authRequired: false },
-    { path: '/driver/profile', component: DriverProfile, authRequired: false },
-    { path: '/driver', component: DriverDashboard, authRequired: false },
-    { path: '/child', component: ChildProfile, authRequired: false }
+    { path: '/parent/profile', component: ParentProfile, authRequired: true },
+    { path: '/parent', component: ParentDashboard, authRequired: true },
+    { path: '/driver/profile', component: DriverProfile, authRequired: true },
+    { path: '/driver', component: DriverDashboard, authRequired: true },
+    { path: '/child', component: ChildProfile, authRequired: true }
 ];
 export default ROUTES;
