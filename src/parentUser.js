@@ -87,7 +87,7 @@ exports.addParent = (req,res) => {
 }
 
 exports.getParent = (req, res) => {
-  let query = "select * from parentUser where id = '" + req.body.id + "';";
+  let query = "select * from parentUser where id = '" + req.query.id + "';";
   db.query(query, function(err, rows, fields) {
     if(err){
       logger.error("couldn't get parent user");

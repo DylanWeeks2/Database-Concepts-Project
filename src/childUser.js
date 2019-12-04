@@ -65,7 +65,7 @@ exports.addChild = (req, res) => {
 
 //GET /getChild
 exports.getChild = (req, res) => {
-  let query = "select * from childUser where id = '" + req.body.id + "'";
+  let query = "select * from childUser where id = '" + req.query.id + "'";
   db.query(query, function(err,rows, fields) {
     if(err){
         logger.error("couldn't get child info");

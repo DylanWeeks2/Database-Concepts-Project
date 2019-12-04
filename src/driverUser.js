@@ -100,7 +100,7 @@ exports.addDriver = (req, res) => {
 
 //GET /getDriver
 exports.getDriver = (req, res) => {
-  let query = "select * from driverUser where id = '" + req.body.id + "'";
+  let query = "select * from driverUser where id = '" + req.query.id + "'";
   db.query(query, function(err,rows, fields) {
       if(err){
           logger.error("couldn't get driver user");
