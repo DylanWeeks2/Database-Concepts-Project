@@ -59,6 +59,34 @@ export class ParentDashboard extends React.Component {
             })
             : this.setState({ modalVisible: true });
     };
+//FINISHSLDJLFSJLFKSJDFLJD FLKSJ DLKFSDJ FKL SDJLFKSJD FLSDFKLSDFKLSJFLKDF LSD F
+    componentDidMount() {
+        this.repo.getParent(localStorage.getItem("userId"))
+            .then(parent => { //in the repo create the ParentUser object and then update that object using the children gotten below
+                this.repo.getChildren(localStorage.getItem("userId"))
+                    .then(children => { //Child table in database is missing a grade & a userName attribute
+                        children.forEach(child => {
+                            parent.children.push(new Child(child["name"], child["grade"], child["school"], 
+                                child["healthConditions"], child["userName"], child["id"]));
+                        });
+                        this.setState({ account: parent });
+                    })
+            })
+        this.repo.getRidesForParent(localStorage.getItem("userId")) //TODO:: handle current rides vs. Past rides-
+            .then(rides => {
+                let activeRides = [];
+                let pastRides = [];
+                rides.forEach(ride => {
+                    //Child objects right now have both the id and the name (and a Child object on Taylor's branch. This all needs to change)
+                    let obj = new Ride(ride.id, ride.pick_up_time, ride.drop_off_time, ride.child, )
+                    if(parseInt(ride["active"]) == 0) {
+                        pastRides.push();
+                    } else {
+                        activeRides.push();
+                    }
+                })
+            })
+    }
 
     render() {
         return (

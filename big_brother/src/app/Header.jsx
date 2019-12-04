@@ -48,9 +48,9 @@ export class Header extends React.Component {
     if(this.state.isLoggedIn) {
       if(this.state.userId < 200000  && this.state.userId >= 100000) {
         profileLink = '/parent/profile';
-      } else if(this.state.userId < 100000) {
-        profileLink = '/driver/profile';
       } else if(this.state.userId >= 300000) {
+        profileLink = '/driver/profile';
+      } else if(this.state.userId >= 200000 && this.state.userId < 300000) {
         profileLink = '';
       }
     }
