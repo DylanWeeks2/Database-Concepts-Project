@@ -28,7 +28,7 @@ export class DriverDashboard extends React.Component {
         car: new Car("Ford", "F-150", 2019, "grey", "H33", 4, "Like new", "Aux port, Cup holders"),
         activeRides: [
             new Ride(0, 1, "3:53PM", 0, "Charlie", "123 Wall st.", "456 dest ln.", "nothing special", 0, "Todd", new Child("Charlie", 3, "Vial Elementary", "n/a", "toddrox", "asjkdn", 1)),
-            new Ride(0, 2, "3:53PM", 0, "Natalie", "123 Wall st.", "456 dest ln.", "nothing special", 0, "Todd", new Child("Natalie", 1, "Brandenburg", "peanut allergy", "nattat", "password", 2)),
+            new Ride(1, 2, "3:53PM", 0, "Natalie", "123 Wall st.", "456 dest ln.", "nothing special", 0, "Todd", new Child("Natalie", 1, "Brandenburg", "peanut allergy", "nattat", "password", 2)),
         ],
         pastRides: [
             new Ride(2, 4, "3:55PM", 0, "Charfelie", "123 Wfeall st.", "456 defest ln.", "notfehing special", 0, "Tofedd", new Child("Charlie", 3, "Vial Elementary", "toddrox", "asjkdn", 1))

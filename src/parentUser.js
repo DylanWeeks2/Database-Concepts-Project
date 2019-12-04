@@ -10,19 +10,17 @@ exports.setupParent = (req, res) => {
     else{
       }
   });
-  console.log("CREATE TABLE `parentUser` (`id` INT AUTO_INCREMENT,`email` VARCHAR(100), `phone` VARCHAR(100), `homeAddr` VARCHAR(200), `workAddr` VARCHAR(100),  `name` VARCHAR(50) NOT NULL, `password` VARCHAR(100), `username` VARCHAR(100), PRIMARY KEY (`id`), UNIQUE INDEX `id_UNIQUE` (`id` ASC));");
-  query = "CREATE TABLE `parentUser` (`id` INT NOT NULL AUTO_INCREMENT,`email` VARCHAR(100), `phone` VARCHAR(100), `homeAddr` VARCHAR(200), `workAddr` VARCHAR(100),  `name` VARCHAR(50) NOT NULL, `password` VARCHAR(100), `username` VARCHAR(100), PRIMARY KEY (`id`), UNIQUE INDEX `id_UNIQUE` (`id` ASC)); ";
+  console.log("CREATE TABLE `parentUser` (`id` INT AUTO_INCREMENT,`email` VARCHAR(100), `phone` VARCHAR(100), `homeAddr` VARCHAR(200), `workAddr` VARCHAR(100),  `name` VARCHAR(50), `password` VARCHAR(500), `username` VARCHAR(100), PRIMARY KEY (`id`), UNIQUE INDEX `id_UNIQUE` (`id` ASC));");
+  query = "CREATE TABLE `parentUser` (`id` INT NOT NULL AUTO_INCREMENT,`email` VARCHAR(100), `phone` VARCHAR(100), `homeAddr` VARCHAR(200), `workAddr` VARCHAR(100),  `name` VARCHAR(50), `password` VARCHAR(500), `username` VARCHAR(100), PRIMARY KEY (`id`), UNIQUE INDEX `id_UNIQUE` (`id` ASC)); ";
   db.query(query, (err, result) => {
     if(err) { 
-      console.log(err); }
-      else{
-        console.log("Parent Table Created");
-      }
+      console.log("Errpr creaing parent user", err);
+      res.redirect('/'); }
   })
   query = "ALTER TABLE parentUser AUTO_INCREMENT = 100000";
   db.query(query, (err, result) => {
     if(err) { 
-      console.log(err);
+      console.log("Error altering parentuser", err);
       res.status(400);}
   })
 }
@@ -87,7 +85,7 @@ exports.addParent = (req,res) => {
 }
 
 exports.getParent = (req, res) => {
-  let query = "select * from parentUser where id = '" + req.body.id + "';";
+  let query = "select * from parentUser where id = '" + req.query.id + "';";
   db.query(query, function(err, rows, fields) {
     if(err){
       logger.error("couldn't get parent user");

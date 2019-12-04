@@ -1,16 +1,44 @@
 
 exports.setupDriver = (req, res) => {
-  let query = "DROP TABLE if exists driverUser";
+  let query = "drop table if exists accidents;";
   db.query(query, (err, result) => {
     if(err){
-      console.log(err);
+      console.log("failed dropping accidents", err);
+      res.redirect('/');
+      res.status(400);
     }
     else{
   }
   });
-  query = "CREATE TABLE `driverUser` (`id` INT AUTO_INCREMENT, `name` VARCHAR(50) NOT NULL, `gender` VARCHAR(50) NOT NULL,  `bio` VARCHAR(200) NOT NULL, `email` VARCHAR(100) NOT NULL,  `phone` VARCHAR(10) NOT NULL, `make` VARCHAR(50) NOT NULL, `model` VARCHAR(50) NOT NULL, `year` VARCHAR(50) NOT NULL, `color` VARCHAR(50) NOT NULL, `liscense` VARCHAR(50) NOT NULL, `numSeats` VARCHAR(10) NOT NULL, `condition` VARCHAR(200) NOT NULL, `ammenities` VARCHAR(500) NOT NULL,`username` VARCHAR(100) NOT NULL, `password` VARCHAR(100) NOT NULL, PRIMARY KEY (`id`), UNIQUE INDEX `id_UNIQUE` (`id` ASC)); ";
+ query = "drop table if exists availabilities;";
   db.query(query, (err, result) => {
+    if(err){
+      console.log("failed dropping availabilities", err);
+      res.redirect('/');
+      res.status(400);
+    }
+  });
+  query = "drop table if exists services;";
+  db.query(query, (err, result) => {
+    if(err){
+      console.log("failed dropping services", err);
+      res.redirect('/');
+      res.status(400);
+    }
+  });
+  query = "drop table if exists driverUser;";
+  db.query(query, (err, result) => {
+    if(err){
+      console.log("failed dropping driverUser", err);
+      res.redirect('/');
+      res.status(400);
+    }
+  });
+  query = "CREATE TABLE `driverUser` (`id` INT AUTO_INCREMENT, `name` VARCHAR(50) NOT NULL, `gender` VARCHAR(50),  `bio` VARCHAR(200), `email` VARCHAR(100),  `phone` VARCHAR(10) NOT NULL, `make` VARCHAR(50), `model` VARCHAR(50), `year` VARCHAR(50), `color` VARCHAR(50), `liscense` VARCHAR(50), `numSeats` VARCHAR(100), `condition` VARCHAR(200), `ammenities` VARCHAR(500),`username` VARCHAR(100) NOT NULL, `password` VARCHAR(500) NOT NULL, PRIMARY KEY (`id`), UNIQUE INDEX `id_UNIQUE` (`id` ASC)); ";
+  db.query(query, (err, result) => {
+
     if(err) {
+      console.log("error creaing driver user table", err);
       logger.error("failed creating driver user table");
       console.log(err);
       res.status(400)
@@ -100,10 +128,14 @@ exports.addDriver = (req, res) => {
 
 //GET /getDriver
 exports.getDriver = (req, res) => {
-  let query = "select * from driverUser where id = '" + req.body.id + "'";
+  db.query("SELECT * FROM driverUser", (err, rows) => console.log("all rows", rows));
+  let query = "select * from driverUser d LEFT JOIN services s ON d.id = s.driverId where d.id = " + req.query.id + ";";
+
+  console.log(query);
+  db.query("SELECT * FROM SERVICES", function(err, rows, fields) {console.log("services", rows)});
   db.query(query, function(err,rows, fields) {
       if(err){
-          logger.error("couldn't get driver user");
+          logger.error("couldn't get driver user", err);
           res.status(400).json({
             "data": [],
             "error": "MySQL error"
@@ -115,6 +147,27 @@ exports.getDriver = (req, res) => {
           });
         }
   })
+}
+
+exports.updateDriver = (req, res) => {
+  let query = `UPDATE  driverUser SET \`condition\` = '${req.body.condition}', name = '${req.body.name}', gender = '${req.body.gender}', bio = '${req.body.bio}', email = '${req.body.email}', phone = '${req.body.phone}', make = '${req.body.make}', model = '${req.body.model}', year = '${req.body.year}', color = '${req.body.color}', liscense = '${req.body.liscense}', numSeats = '${req.body.numSeats || ""}', ammenities = '${req.body.ammenities}' WHERE id = ${req.body.id};`;
+  //let query = `UPDATE driverUser SET name = '', gender ='male' where id = 1`;
+  console.log(query);
+  db.query(query, function(err,rows, fields) {
+    if(err){
+      console.log("Cant find user", err);
+        logger.error("couldn't get driver user ", err);
+        res.status(400).json({
+          "data": [],
+          "error": "MySQL error"
+        });
+      }
+      else{
+        res.status(200).json({
+          "data": rows
+        });
+      }
+})
 }
 
 exports.login = (req, res) => {

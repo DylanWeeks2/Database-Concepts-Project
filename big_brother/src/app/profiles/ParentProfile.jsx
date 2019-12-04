@@ -4,8 +4,10 @@ import UpdateChild from './models/UpdateChild';
 import NewChild from './models/NewChild';
 import UpdateParent from './models/UpdateParent';
 import { Link } from 'react-router-dom';
+import { Repo } from '../../api/repo';
 
 export class ParentProfile extends React.Component {
+    repo = new Repo();
     state = {
         profile: new ParentUser(0, "rando@rando.com", "9995554444", "5 Street Rd Dallas, Tx", "6 Road St Dallas, Tx", "Rando Name", [new Child("Test", "5", "Test Elementary", "Peanut Allergy", "XxTESTxX")])
     }
@@ -40,6 +42,21 @@ export class ParentProfile extends React.Component {
             prevState.children.push(child);
             return prevState;
         })
+    }
+
+    componentDidMount() {
+        this.repo.getParent(localStorage.getItem("userId"))
+            .then((parent) => {
+                this.repo.getChildren(localStorage.getItem("userId"))
+                    .then(children => {
+                        children.forEach(child => {
+                            parent.children.push(
+                                new Child(child["name"], child["grade"], child["school"], child["healthConditions"], child["userName"], child["password"], child["id"])
+                            );
+                        });
+                    });
+            })
+            .catch();
     }
 
     render() {

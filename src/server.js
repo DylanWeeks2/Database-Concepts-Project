@@ -10,6 +10,9 @@ const driverSchedule = require('./driverSchedule');
 const rideSchedule = require('./rideSchedule');
 const reviews    = require('./reviews');
 const accounts = require('./accounts');
+const services = require('./service');
+const accidents = require('./accident');
+const availabilities = require('./availability');
 //create main objects
 
 const express = require('express');
@@ -165,6 +168,36 @@ app.get('/setupdb', (req, res) => {
         console.log("deleted table Childuser")
       }
   });
+  query = "DROP TABLE if exists accidents";
+  db.query(query, (err, result) => 
+  {
+    if(err) {
+      console.log("NO DELETION");
+    }
+    else{
+        console.log("deleted table accidents")
+      }
+  });
+  query = "DROP TABLE if exists services";
+  db.query(query, (err, result) => 
+  {
+    if(err) {
+      console.log("NO DELETION");
+    }
+    else{
+        console.log("deleted table services")
+      }
+  });
+  query = "DROP TABLE if exists availabilities";
+  db.query(query, (err, result) => 
+  {
+    if(err) {
+      console.log("NO DELETION");
+    }
+    else{
+        console.log("deleted table availabilities")
+      }
+  });
   query = "DROP TABLE if exists driverUser";
   db.query(query, (err, result) => 
   {
@@ -193,6 +226,10 @@ app.get('/setupdb', (req, res) => {
   driverSchedule.setupDriverSchedule(req, res);
   rideSchedule.setupRideSchedule(req, res);
   creditCard.setupCreditCard(req, res);
+  services.setupService(req, res);
+  accidents.setupAccident(req, res);
+  availabilities.setupAvailiability(req, res);
+
   res.status(200).send('created the driver, parent, credit card, and car tables');
 });
 
@@ -214,8 +251,19 @@ app.get('/getParent', parentUser.getParent);
 app.post('/setupDriver', driverUser.setupDriver);
 //app.put('/changeDriverPassword', driverUser.changeDriverPassword);
 app.post('/addDriver', driverUser.addDriver);
-app.post('/getDriver', driverUser.getDriver);
+app.put('/updateDriver', driverUser.updateDriver);
+app.get('/getDriver', driverUser.getDriver);
 //childUser
+//accidents
+app.post('/addAccident', accidents.addAccident);
+app.get('/getAccidents', accidents.getAccidents);
+//availabilities
+app.post('/addAvailability', availabilities.addAvailability);
+app.get('/getAvailabilities', availabilities.getAvailabilities);
+//services
+app.post('/addService', services.addService);
+app.get('/getServices', services.getServices);
+
 app.post('/setupChild', childUser.setupChild);
 app.post('/addChild', childUser.addChild);
 app.post('/updateChild', childUser.updateChild);
