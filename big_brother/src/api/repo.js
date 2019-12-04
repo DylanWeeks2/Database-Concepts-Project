@@ -49,6 +49,7 @@ export class Repo {
             .catch(resp => alert(resp));
         });
     }
+
     addParent(parent) {
         // const ps = createHash('sha256');
         // ps.update(parent.password);
@@ -57,7 +58,8 @@ export class Repo {
             axios.post(`${this.url}/addParent`, parent, this.config)
             .then(resp => {
                 console.log("data", resp.data);
-                parent = new ParentUser(resp.data.user.id, resp.data.user.email, resp.data.user.phone, resp.data.user.homeAddr, resp.data.user.workAddr, resp.data.user.name, null, resp.data.user.password, resp.data.user.username);
+                let parent = new ParentUser(resp.data.user.id, resp.data.user.email, resp.data.user.phone, resp.data.user.homeAddr, 
+                    resp.data.user.workAddr, resp.data.user.name, null, resp.data.user.password, resp.data.user.username);
                 resolve(parent);
             })
             .catch(resp => alert(resp));
@@ -69,7 +71,8 @@ export class Repo {
             axios.get(`${this.url}/getParent`, parentId, this.config)
             .then(resp => {
                 console.log("data", resp.data);
-                let parent = new ParentUser(resp.data.user.id, resp.data.user.email, resp.data.user.phone, resp.data.user.homeAddr, resp.data.user.workAddr, resp.data.user.name, null, resp.data.user.password, resp.data.user.username);
+                let parent = new ParentUser(resp.data.user.id, resp.data.user.email, resp.data.user.phone, resp.data.user.homeAddr, 
+                    resp.data.user.workAddr, resp.data.user.name, null, resp.data.user.password, resp.data.user.username);
                 resolve(parent);
             })
             .catch(resp => console.log(resp));
@@ -81,7 +84,7 @@ export class Repo {
             axios.get(`${this.url}/getParentChildren`, parentId, this.config)
                 .then(parent => {
                     let kids = [];
-                    parent.children.forEach(child => {
+                    parent.data.user.children.forEach(child => {
                         kids.push(new Child(child["name"], child["grade"], child["school"],
                         child["healthConditions"], child["username"], child["id"], child["password"]));
                     });
@@ -174,7 +177,7 @@ export class Repo {
     //     return new Promise((resolve, reject) => {
     //         axios.post(`${this.url}/addChild`, child, this.config)
     //         .then(resp => resolve(resp.data) /*handle successful add*/)
-    //         .catch(resp => /*handle failure */);
+    //         .catch(resp => alert(resp));
     //     });
     // }
 
@@ -182,7 +185,7 @@ export class Repo {
     //     return new Promise((resolve, reject) => {
     //         axios.get(`${this.url}/getChild`, childId, this.config)
     //         .then(resp => resolve(resp.data) /*handle successful get*/)
-    //         .catch(resp => /*handle failure */);
+    //         .catch(resp => alert(resp));
     //     });
     // }
 
@@ -190,7 +193,7 @@ export class Repo {
     //     return new Promise((resolve, reject) => {
     //         axios.put(`${this.url}/updateChild`, childId, child, this.config)
     //         .then(resp => resolve(resp.data) /*handle successful update*/)
-    //         .catch(resp => /*handle failure */);
+    //         .catch(resp => alert(resp));
     //     });
     // }
 
@@ -200,7 +203,7 @@ export class Repo {
         return new Promise((resolve, reject) => {
             axios.get(`${this.url}/something`, dateTime, this.config)
             //.then(resp => )
-            //.catch(resp => )
+            //.catch(resp => alert(resp))
         });
     }
 
@@ -208,7 +211,7 @@ export class Repo {
          return new Promise((resolve, reject) => {
              axios.post(`${this.url}/addRideSchedule`, ride, this.config)
              //.then(resp => resolve() /*handle successful post*/)
-             //.catch(resp => /*handle failure */);
+             //.catch(resp => alert(resp));
          });
      }
 
@@ -269,7 +272,7 @@ export class Repo {
     //     return new Promise((resolve, reject) => {
     //         axios.delete(`${this.url}/deleteRideSchedule`, rideId, this.config)
     //         .then(re sp => resolve(resp.data) /*handle successful delete*/)
-    //         .catch(resp => /*handle failure */);
+    //         .catch(resp => alert(resp));
     //     });
     // }
 
@@ -277,7 +280,7 @@ export class Repo {
     //     return new Promise((resolve, reject) => {
     //         axios.post(`${this.url}/addCar`, driverId, car, this.config)
     //         .then(resp => resolve(resp.data) /*handle successful get*/)
-    //         .catch(resp => /*handle failure */);
+    //         .catch(resp => alert(resp));
     //     });
     // }
 
@@ -285,7 +288,7 @@ export class Repo {
     //     return new Promise((resolve, reject) => {
     //         axios.get(`${this.url}/getCar`, carId, this.config)
     //         .then(resp => resolve(resp.data) /*handle successful get*/)
-    //         .catch(resp => /*handle failure */);
+    //         .catch(resp => alert(resp));
     //     });
     // }
 
@@ -293,7 +296,7 @@ export class Repo {
     //     return new Promise((resolve, reject) => {
     //         axios.put(`${this.url}/updateCar`, carId, car, this.config)
     //         .then(resp => resolve(resp.data) /*handle successful get*/)
-    //         .catch(resp => /*handle failure */);
+    //         .catch(resp => alert(resp));
     //     });
     // }
 
@@ -301,7 +304,7 @@ export class Repo {
     //     return new Promise((resolve, reject) => {
     //         axios.post(`${this.url}/addCarService`, carId, newService, this.config)
     //         .then(resp => resolve(resp.data) /*handle successful addition*/)
-    //         .catch(resp => /*handle failure */);
+    //         .catch(resp => alert(resp));
     //     });
     // }
 
@@ -309,7 +312,7 @@ export class Repo {
     //     return new Promise((resolve, reject) => {
     //         axios.put(`${this.url}/addCarAccident`, carId, newAccident, this.config)
     //         .then(resp => resolve(resp.data) /*handle successful addition*/)
-    //         .catch(resp => /*handle failure */);
+    //         .catch(resp => alert(resp));
     //     });
     // }
 
@@ -318,7 +321,7 @@ export class Repo {
     //     return new Promise((resolve, reject) => {
     //         axios.post(`${this.url}/saveCreditCard`, userId, creditCard, this.config)
     //         .then(resp => resolve(resp.data)/*handle successful add*/)
-    //         .catch(resp => /*handle failed cc add*/);
+    //         .catch(resp => alert(resp));
     //     });
     // }
 }
