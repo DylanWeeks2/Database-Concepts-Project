@@ -132,7 +132,7 @@ export class Register extends Component {
                     <input required type="text" className="form-control" placeholder="XXXXXXXXXX" value={this.state.parent_phone} onChange={e => this.setState({ parent_phone: e.target.value })} />
                     <label htmlFor="homeadr" id="label">Your Home Address:</label>
                     <input required type="text" className="form-control" placeholder="Home Address" value={this.state.parent_homeAddr} onChange={e => this.setState({ parent_homeAddr: e.target.value })} />
-                    <label htmlFor="workadr" id="label">Your Work Address (optional):</label>
+                    <label htmlFor="workadr" id="label">Your Work Address:</label>
                     <input required type="text" className="form-control" placeholder="Work Address (optional)" value={this.state.parent_workAddr} onChange={e => this.setState({ parent_workAddr: e.target.value })} />
                     <h5 className="dontWorry">Don't worry, you will add your children in the next step. Thanks!</h5>
                   </div>
