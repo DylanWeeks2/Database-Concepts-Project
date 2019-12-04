@@ -53,7 +53,7 @@ export class DriverProfile extends React.Component {
         console.log("new availability", availability);
         this.repo.addAvailability(availability);
         this.setState(prevState => {
-            prevState.availability.push(availability);
+            prevState.availabilities.push(availability);
             return prevState;
         })
     }
