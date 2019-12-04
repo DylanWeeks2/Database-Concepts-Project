@@ -214,7 +214,7 @@ app.get('/getParent', parentUser.getParent);
 app.post('/setupDriver', driverUser.setupDriver);
 //app.put('/changeDriverPassword', driverUser.changeDriverPassword);
 app.post('/addDriver', driverUser.addDriver);
-app.post('/getDriver', driverUser.getDriver);
+app.get('/getDriver', driverUser.getDriver);
 //childUser
 app.post('/setupChild', childUser.setupChild);
 app.post('/addChild', childUser.addChild);
