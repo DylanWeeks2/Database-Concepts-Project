@@ -1,7 +1,7 @@
 import React from 'react';
 import { Ride, Child, ParentUser, DriverUser } from "../../models";
 //import { Child } from "../../models/Child";
-import  AddRide from "./AddRide";
+import AddRide from "./AddRide";
 import "./table.css"
 //import { ParentUser } from '../../models/ParentUser';
 import { RideItem } from './RideItem';
@@ -37,10 +37,10 @@ export class ParentDashboard extends React.Component {
     state = {
         modalVisible: false,
         account: new ParentUser(1, "test@test.gmail", "1234567890", "1234 test rd", "45567 test rd", "Joe Mama",
-        [
-            (new Child("Ben Dover", 2, "Good School", "Water Allergy", "xXx_BENDOVER69", 0)),
-            (new Child("Mike Hawk", 3, "BEst School", "Pain Allergy", "MIKE", 1))
-        ]
+            [
+                (new Child("Ben Dover", 2, "Good School", "Water Allergy", "xXx_BENDOVER69", 0)),
+                (new Child("Mike Hawk", 3, "BEst School", "Pain Allergy", "MIKE", 1))
+            ]
         ),
         rides: [
             new Ride(0, new Date(), new Date(), 0, "Ben Dover", "5555 St.", "4444 Rd.", "This kid is fucking dope", 0, "Sofa King")
@@ -91,13 +91,31 @@ export class ParentDashboard extends React.Component {
                                     <div className="card">
                                         <div className="card-header" id="displayHeader">
                                             <span value={x.driverName}> </span>
-                                        </div>
-                                        <div className="card-body" id="reviewCard">
                                             <span className="displayUser">{x.childName}</span>
                                             <span className='displayDate float-right'>{x.pickupAddr}</span>
                                             <br />
                                             <span className="displayComment">{x.destAddr}</span>
                                             <span className="displayDriver">{x.notes}</span>
+                                        </div>
+                                        <div className="card-body" id="reviewCard">
+                                            <label htmlFor="rating">Rating</label>
+                                            <select
+                                                name="rating"
+                                                id="rating"
+                                                className="form-control"
+                                                value={this.state.rating}
+                                                onChange={e => this.setState({ rating: e.target.value })}>
+                                                <option></option>
+                                                <option value="1">1 star</option>
+                                                <option value="2">2 stars</option>
+                                                <option value="3">3 stars</option>
+                                                <option value="4">4 stars</option>
+                                                <option value="5">5 stars</option>
+                                            </select>
+                                        </div>
+                                        <div className="col-2">
+                                            <br />
+                                            <Rating value={this.state.rating} />
                                         </div>
                                     </div>
                                 </li>)
