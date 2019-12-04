@@ -12,13 +12,13 @@ exports.setupParent = (req, res) => {
   query = "CREATE TABLE `parentUser` (`id` INT AUTO_INCREMENT,`email` VARCHAR(100), `phone` VARCHAR(100), `homeAddr` VARCHAR(200), `workAddr` VARCHAR(100),  `name` VARCHAR(50) NOT NULL, `password` VARCHAR(100), `username` VARCHAR(100), PRIMARY KEY (`id`), UNIQUE INDEX `id_UNIQUE` (`id` ASC));";
   db.query(query, (err, result) => {
     if(err) { 
-      console.log(err);
+      console.log("Errpr creaing parent user", err);
       res.redirect('/'); }
   })
   query = "alter table parentUser auto_increment = 100000";
   db.query(query, (err, result) => {
     if(err) { 
-      console.log(err);
+      console.log("Error altering parentuser", err);
       res.status(400);}
   })
 }

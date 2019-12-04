@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Accident, Service, Availability, Car } from '../../models';
+import { Accident, Service, Availability, Car, DriverUser } from '../../models';
 //import { Service } from '../../models/Service';
 //import { Availability } from "../../models/Availability";
 //import { Car } from '../../models/Car';
@@ -7,11 +7,15 @@ import AddAccident from './models/AddAccident';
 import AddService from './models/AddService';
 import AddAvailability from './models/AddAvailability';
 import UpdateDriver from './models/UpdateDriver';
+import { Repo } from '../../api/repo';
 
 
 //TODO: Make this a className instead of a function because it has to handle adding accidents and changing profile information
 export class DriverProfile extends React.Component {
+
+    repo = new Repo();
     state = {
+        id: 0,
         name: "",
         gender: "",
         bio: "",
@@ -20,11 +24,13 @@ export class DriverProfile extends React.Component {
         car: new Car("Ford", "F-150", 2019, "grey", "H33", 4, "Like new", "Aux port, Cup holders"),
         accidents: [],
         services: [],
-        availability: []
+        availabilities: []
     }
 
     AddAccident(driverId, date, severity, type, description) {
-        var accident = new Accident(driverId, date, severity, type, description);
+        var accident = new Accident(parseInt(localStorage.getItem("userId")), date, severity, type, description);
+        console.log("new accident", accident);
+        this.repo.addAccident(accident);
         this.setState(prevState => {
             prevState.accidents.push(accident);
             return prevState;
@@ -32,15 +38,20 @@ export class DriverProfile extends React.Component {
     }
 
     AddService(driverId, date, type, description) {
-        var accident = new Service(driverId, date, type, description);
+        var service = new Service(parseInt(localStorage.getItem("userId")), date, type, description);
+        console.log("new service", service);
+        this.repo.addService(service);
         this.setState(prevState => {
-            prevState.services.push(accident);
+            prevState.services.push(service);
             return prevState;
         })
     }
 
     AddAvailability(driverId, date, start, end) {
-        let availability = new Availability(driverId, date, start.toString(), end.toString());
+        let availability = new Availability(parseInt(localStorage.getItem("userId")), date, start, end);
+
+        console.log("new availability", availability);
+        this.repo.addAvailability(availability);
         this.setState(prevState => {
             prevState.availability.push(availability);
             return prevState;
@@ -48,6 +59,8 @@ export class DriverProfile extends React.Component {
     }
 
     UpdateDriver(name, gender, bio, email, phone, make, model, year, color, license, numSeats, condition, ammenities) {
+        let user = new DriverUser(this.state.id, name, gender, bio, email, phone, make, model, year, color, license, numSeats, condition, ammenities);
+        this.repo.updateDriver(user);
         this.setState(prevState => {
             prevState.name = name;
             prevState.gender = gender;
@@ -63,7 +76,7 @@ export class DriverProfile extends React.Component {
             prevState.car.condition = condition;
             prevState.car.ammenities = ammenities;
             return prevState;
-        })
+        });
     }
 
     render() {
@@ -125,8 +138,8 @@ export class DriverProfile extends React.Component {
                             <tbody>
                                 {
                                     this.state.accidents.map((accident, i) =>
-                                        <tr className="table-dark">
-                                            <td className="text-center">{accident.date}</td>
+                                        <tr key={i}className="table-dark">
+                                            <td className="text-center">{new Date((accident.date)).toISOString().slice(0,10).replace(/-/g,"/")}</td>
                                             <td className="text-center">{accident.severity}</td>
                                             <td className="text-center">{accident.type}</td>
                                             <td className="text-center">{accident.descr}</td>
@@ -151,11 +164,12 @@ export class DriverProfile extends React.Component {
                             </thead>
                             <tbody>
                                 {
+                                    
                                     this.state.services.map((service, i) =>
-                                        <tr className="table-dark">
-                                            <td className="text-center">{service.date}</td>
-                                            <td className="text-center">{service.type}</td>
-                                            <td className="text-center">{service.descr}}</td>
+                                        <tr key={i} className="table-dark">
+                                            <td className="text-center">{`${new Date((service.date)).toISOString().slice(0,10).replace(/-/g,"/")}`}</td>
+                                            <td className="text-center">{`${service.type}`}</td>
+                                            <td className="text-center">{`${service.descr}`}</td>
                                         </tr>
                                     )
                                 }
@@ -178,11 +192,11 @@ export class DriverProfile extends React.Component {
                             </thead>
                             <tbody>
                                 {
-                                    this.state.availability.map((avail, i) =>
-                                        <tr className="table-dark">
-                                            <td className="text-center">{avail.date}</td>
-                                            <td className="text-center">{new Date(avail.start).toLocaleTimeString()}</td>
-                                            <td className="text-center">{new Date(avail.end).toLocaleTimeString()}</td>
+                                    this.state.availabilities.map((avail, i) =>
+                                        <tr key={i} className="table-dark">
+                                            <td className="text-center">{new Date((avail.date)).toISOString().slice(0,10).replace(/-/g,"/")}</td>
+                                            <td className="text-center">{new Date(avail.start.toString()).toLocaleTimeString()}</td>
+                                            <td className="text-center">{new Date(avail.end.toString()).toLocaleTimeString()}</td>
                                         </tr>
                                     )
                                 }
@@ -212,4 +226,64 @@ export class DriverProfile extends React.Component {
             </>
                 );
             }
+
+        componentDidMount() {
+            debugger;
+            let userId = parseInt(localStorage.getItem("userId"));
+            this.repo.getDriver(userId).then(user => {
+                let user_ = user.data[0];
+                this.setState(prevState => {
+                    prevState.id = userId;
+                    prevState.name = user_.name;
+                    prevState.gender = user_.gender;
+                    prevState.bio = user_.bio;
+                    prevState.email = user_.email;
+                    prevState.phone = user_.phone;
+                    prevState.car.make = user_.make;
+                    prevState.car.model = user_.model;
+                    prevState.car.year = user_.year;
+                    prevState.car.color = user_.color;
+                    prevState.car.license = user_.license;
+                    prevState.car.numSeats = user_.numSeats;
+                    prevState.car.condition = user_.condition;
+                    prevState.car.ammenities = user_.ammenities;
+                    return prevState;
+                })
+            });
+            this.repo.getServices(userId).then(services => {
+                    this.setState(prevState => {
+                        prevState.services = [];
+                        let service_list = [];
+                        services.data.map(service => {
+                            service_list.push(new Service(service.driverId, new Date(service.date), service.type, service.descr));
+                        });
+                        prevState.services = prevState.services.concat(service_list);
+                        return prevState;
+                    });
+            });
+            this.repo.getAccidents(userId).then(accidents => {
+                this.setState(prevState => {
+                    prevState.accidents = [];
+                    let service_list = [];
+                    accidents.data.map(accident => {
+                        service_list.push(new Accident(accident.driverId, new Date(accident.date), accident.severity, accident.type, accident.descr));
+                    });
+                    prevState.accidents = prevState.accidents.concat(service_list);
+                    return prevState;
+                });
+        });
+        this.repo.getAvailabilities(userId).then(availabilities => {
+            this.setState(prevState => {
+                prevState.availabilities = [];
+                let service_list = [];
+                availabilities.data.map(availability => {
+                    service_list.push(new Availability(availability.driverId, new Date(availability.date), new Date(availability.start), new Date(availability.end)));
+                });
+                prevState.availabilities = prevState.availabilities.concat(service_list);
+                debugger;
+                return prevState;
+            });
+    });
+
+        }
 }
