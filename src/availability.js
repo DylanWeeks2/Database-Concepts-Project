@@ -7,7 +7,7 @@ exports.setupAvailiability = (req, res) => {
         res.status(400);
       }
     });
-    query = "CREATE TABLE availabilities (driverId INT, `date` Date , `start` VARCHAR(100), `end` VARCHAR(100), FOREIGN KEY (driverId) REFERENCES driverUser(id))"
+    query = "CREATE TABLE availabilities (driverId INT, `date` Date , `start` DATETIME, `end` DATETIME, FOREIGN KEY (driverId) REFERENCES driverUser(id))"
     db.query(query, (err, result) => {
       if(err) {
         console.log("error creating availabilities", err);
