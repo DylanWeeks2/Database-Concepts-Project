@@ -27,6 +27,7 @@ export class Header extends React.Component {
       console.log("new USER, ", user.data);
       localStorage.setItem("isLoggedIn", true);
       localStorage.setItem("userId", user.data.userID);
+      this.setState({userId: parseInt(user.data.userID)});
       this.setState({isLoggedIn: true});
       
     });
@@ -50,8 +51,9 @@ export class Header extends React.Component {
         profileLink = '/parent/profile';
       } else if(this.state.userId >= 300000) {
         profileLink = '/driver/profile';
-      } else if(this.state.userId >= 200000 && this.state.userId < 300000) {
-        profileLink = '';
+      }
+      else {
+        profileLink = '/';
       }
     }
     console.log(profileLink);
