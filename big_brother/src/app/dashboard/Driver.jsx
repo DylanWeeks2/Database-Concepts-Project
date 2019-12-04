@@ -49,7 +49,7 @@ export class DriverDashboard extends React.Component {
                 <div className="row header-box">
                     <nav aria-label="breadcrumb">
                         <ol className="breadcrumb">
-                            <li className="breadcrumb-item"><Link to={`/driver/profile`} id="driverProfile">{}</Link></li>
+                            <li className="breadcrumb-item"><Link to={`/driver/profile`} id="driverProfile">{this.state.name}</Link></li>
                             <li className="breadcrumb-item active" aria-current="page">{`${this.state.name}'s Rides`}</li>
                         </ol>
                     </nav>

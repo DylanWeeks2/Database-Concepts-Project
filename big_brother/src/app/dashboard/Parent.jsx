@@ -73,7 +73,7 @@ export class ParentDashboard extends React.Component {
                         this.setState({ account: parent });
                     })
             })
-        this.repo.getRidesForParent(localStorage.getItem("userId")) //TODO:: handle current rides vs. Past rides-
+        this.repo.getRides(localStorage.getItem("userId")) //TODO:: handle current rides vs. Past rides-
             .then(rides => {
                 let activeRides = [];
                 let pastRides = [];
