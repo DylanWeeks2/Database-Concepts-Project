@@ -10,8 +10,8 @@ exports.setupParent = (req, res) => {
     else{
       }
   });
-  console.log("CREATE TABLE `parentUser` (`id` INT AUTO_INCREMENT,`email` VARCHAR(100), `phone` VARCHAR(100), `homeAddr` VARCHAR(200), `workAddr` VARCHAR(100),  `name` VARCHAR(50) NOT NULL, `password` VARCHAR(100), `username` VARCHAR(100), PRIMARY KEY (`id`), UNIQUE INDEX `id_UNIQUE` (`id` ASC));");
-  query = "CREATE TABLE `parentUser` (`id` INT NOT NULL AUTO_INCREMENT,`email` VARCHAR(100), `phone` VARCHAR(100), `homeAddr` VARCHAR(200), `workAddr` VARCHAR(100),  `name` VARCHAR(50) NOT NULL, `password` VARCHAR(100), `username` VARCHAR(100), PRIMARY KEY (`id`), UNIQUE INDEX `id_UNIQUE` (`id` ASC)); ";
+  console.log("CREATE TABLE `parentUser` (`id` INT AUTO_INCREMENT,`email` VARCHAR(100), `phone` VARCHAR(100), `homeAddr` VARCHAR(200), `workAddr` VARCHAR(100),  `name` VARCHAR(50), `password` VARCHAR(100), `username` VARCHAR(100), PRIMARY KEY (`id`), UNIQUE INDEX `id_UNIQUE` (`id` ASC));");
+  query = "CREATE TABLE `parentUser` (`id` INT NOT NULL AUTO_INCREMENT,`email` VARCHAR(100), `phone` VARCHAR(100), `homeAddr` VARCHAR(200), `workAddr` VARCHAR(100),  `name` VARCHAR(50), `password` VARCHAR(100), `username` VARCHAR(100), PRIMARY KEY (`id`), UNIQUE INDEX `id_UNIQUE` (`id` ASC)); ";
   db.query(query, (err, result) => {
     if(err) { 
       console.log(err); }
