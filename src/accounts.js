@@ -16,6 +16,7 @@ exports.setupAccounts = (req, res) => {
           res.status(400)
         }
         else {
+          console.log("Accounts Table Created");
         }
       })
 }

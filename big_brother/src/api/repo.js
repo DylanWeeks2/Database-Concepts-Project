@@ -67,8 +67,9 @@ export class Repo {
         return new Promise((resolve, reject) => {
             axios.get(`${this.url}/getParent`, parentId, this.config)
             .then(resp => {
-                
-                resolve(resp.data);
+                console.log("data", resp.data);
+                let parent = new ParentUser(resp.data.user.id, resp.data.user.email, resp.data.user.phone, resp.data.user.homeAddr, resp.data.user.workAddr, resp.data.user.name, null, resp.data.user.password, resp.data.user.username);
+                resolve(parent);
             })
             .catch(resp => console.log(resp));
         });
@@ -125,21 +126,32 @@ export class Repo {
     //     });
     // }
 
-    // addRideSchedule(ride) {
-    //     return new Promise((resolve, reject) => {
-    //         axios.post(`${this.url}/addRideSchedule`, ride, this.config)
-    //         .then(resp => resolve(resp.data) /*handle successful post*/)
-    //         .catch(resp => /*handle failure */);
-    //     });
-    // }
 
-    // getRideSchedule(childId) {
-    //     return new Promise((resolve, reject) => {
-    //         axios.get(`${this.url}/getRideSchedule`, childId, this.config)
-    //         .then(resp => resolve(resp.data) /*handle successful get*/)
-    //         .catch(resp => /*handle failure */);
-    //     });
-    // }
+    //This needs to be changed when we kknow what the actual route for getting drivers is
+    getAvailableDrivers(dateTime) {
+        return new Promise((resolve, reject) => {
+            axios.get(`${this.url}/something`, dateTime, this.config)
+            .then(resp => )
+            .catch(resp => )
+        });
+    }
+
+     addRide(ride) {
+         return new Promise((resolve, reject) => {
+             axios.post(`${this.url}/addRideSchedule`, ride, this.config)
+             .then(resp => resolve() /*handle successful post*/)
+             .catch(resp => /*handle failure */);
+         });
+     }
+
+     //Get the rides a parent has ordered FINISH THIS
+     getRides(parentId) {
+         return new Promise((resolve, reject) => {
+             axios.get(`${this.url}/getRideSchedule`, parentId, this.config)
+             .then(resp => resolve(resp.data) /*handle successful get*/)
+             .catch(resp => /*handle failure */);
+         });
+     }
 
     // deleteRideSchedule(rideId) {
     //     return new Promise((resolve, reject) => {
