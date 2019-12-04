@@ -19,7 +19,7 @@ import { Link } from 'react-router-dom';
 export class Repo {
     storage = new StorageManager();
 
-    url = "http://localhost:3000"
+    url = "http://192.168.99.100:3000"
     config = {
         headers: {
             Authorization: "hdonofrio"
@@ -36,7 +36,6 @@ export class Repo {
     }
     
     login(username, password) {
-
         let obj = {
             username: username,
             password: password

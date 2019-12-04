@@ -59,6 +59,7 @@ export class Register extends Component {
   }
 
   addDriver() {
+    debugger
     let driver = new DriverUser(null, this.state.driver_name, this.state.gender, null, this.state.driver_email, this.state.driver_phone, null,null, null, null, null, null, null, null,this.state.driver_username, this.state.driver_password);
     this.repo.addDriver(driver).then(user => {
       console.log("new USER, ", user.id);
