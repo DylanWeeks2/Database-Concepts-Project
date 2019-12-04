@@ -36,6 +36,7 @@ export class ParentDashboard extends React.Component {
 
     cancelRide(id) {
         //to do: call to DB
+        /*this.repo.cancelParentRide(id);*/
         this.setState({ rides: this.state.rides.filter(x => { return x.id !== id }) });
     }
 
@@ -51,6 +52,7 @@ export class ParentDashboard extends React.Component {
             driver1.name);
         
         //to do : call to DB
+        /*this.repo.addRide(rides);*/
         this.setState(prevState => {
             prevState.rides.push(rides);
             return prevState;

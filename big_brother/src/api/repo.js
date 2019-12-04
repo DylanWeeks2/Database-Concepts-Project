@@ -209,13 +209,15 @@ export class Repo {
 
      addRide(ride) {
          return new Promise((resolve, reject) => {
-             axios.post(`${this.url}/addRideSchedule`, ride, this.config)
-             //.then(resp => resolve() /*handle successful post*/)
-             //.catch(resp => alert(resp));
+             axios.post(`${this.url}/addRideSchedule`, {pick_up_location: ride.pickupAddr, drop_off_location: ride.destAddr, pick_up_time: ride.pickupAddr, drop_off_time: ride.dropoff_time, active: 1, child: ride.childId, driver: ride.driverId}, this.config)
+             .then(resp => {
+                 resolve(resp.data); //returning the id of the ride
+             })
+             .catch(resp => alert(resp));
          });
      }
 
-     //Get the rides a parent has ordered FINISH THIS
+     //Get the rides a parent has ordered
      getRides(parentId) {
          return new Promise((resolve, reject) => {
              axios.get(`${this.url}/getRideSchedule`, parentId, this.config)
@@ -235,6 +237,14 @@ export class Repo {
                     });
                     return { activeRides: activeRides, pastRides: pastRides };
                 });
+         });
+     }
+
+     cancelParentRide(rideId) {
+         return new Promise((resolve, reject) => {
+            axios.delete(`${this.url}/deleteRideSchedule`, rideId, this.config)
+            .then(resp => resolve(resp.data))
+            .catch(resp => alert(resp));
          });
      }
 
