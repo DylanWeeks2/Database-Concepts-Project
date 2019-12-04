@@ -7,6 +7,7 @@ import AddAccident from './models/AddAccident';
 import AddService from './models/AddService';
 import AddAvailability from './models/AddAvailability';
 import UpdateDriver from './models/UpdateDriver';
+import { Link } from 'react-router-dom';
 
 
 //TODO: Make this a className instead of a function because it has to handle adding accidents and changing profile information
@@ -69,7 +70,14 @@ export class DriverProfile extends React.Component {
     render() {
         return (
             <>
-
+                <div className="row header-box">
+                    <nav aria-label="breadcrumb">
+                        <ol className="breadcrumb">
+                            <li className="breadcrumb-item"><Link to={`/driver`} id="driverProfile">{this.state.account.name}</Link></li>
+                            <li className="breadcrumb-item active" aria-current="page">{`${this.state.profile.name}'s Rides`}</li>
+                        </ol>
+                    </nav>
+                </div>
                 <div style={{ margin: "5em" }}>
                     <h1 style={{ margin: "auto", borderradius: "5em" }} className="jumbotron jumbotron-fluid bg-info text-white w-50">Profile Information</h1>
                     <ul className="list-group">
@@ -197,19 +205,19 @@ export class DriverProfile extends React.Component {
                         <UpdateDriver driver={this.state} updateDriver={(name, gender, bio, email, phone, make, model, year, color, license, numSeats, condition, amenities) => this.UpdateDriver(name, gender, bio, email, phone, make, model, year, color, license, numSeats, condition, amenities)} />
                     </div>
 
-                        <div className="col col-mg-8 resetPassword">
-                            <h3>Change Password</h3>
-                            <form>
-                                <div className="form-group">
-                                    <input type="password" className="form-control" id="newPassword" />
-                                </div>
-                                <div className="input-group-append">
-                                    <button className="resetButton btn btn-danger">Reset</button>
-                                </div>
-                            </form>
-                        </div>
+                    <div className="col col-mg-8 resetPassword">
+                        <h3>Change Password</h3>
+                        <form>
+                            <div className="form-group">
+                                <input type="password" className="form-control" id="newPassword" />
+                            </div>
+                            <div className="input-group-append">
+                                <button className="resetButton btn btn-danger">Reset</button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </>
-                );
-            }
+        );
+    }
 }
