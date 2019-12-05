@@ -19,7 +19,7 @@ exports.setupChild = (req, res) => {
       }
   })
 
-  query = "ALTER TABLE `childUser` AUTO_INCREMENT = 200000"
+  query = "ALTER TABLE `childUser` AUTO_INCREMENT = 200000;"
   db.query(query, (err, result) => {
       if(err) {}
       else{

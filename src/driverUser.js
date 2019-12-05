@@ -47,7 +47,7 @@ exports.setupDriver = (req, res) => {
       console.log("Driver Table Created");
     }
   })
-  query = "alter table driverUser auto_increment = 300000";
+  query = "alter table driverUser auto_increment = 300000;";
   db.query(query, (err, result) => {
     if(err) { 
       console.log(err);
