@@ -56,7 +56,7 @@ exports.updateRideSchedule = (req,res) => {
   
 //get /viewRideSchedule
 exports.viewRideSchedule = (req,res) => {
-  let query = "select * from schedule where child_id = '" + req.body.child_id+"';";
+  let query = "select * from schedule where child = '" + req.body.child+"';";
   db.query(query, (err,rows, fields) => {
     if(err){
       logger.error("couldn't get rides");
@@ -73,6 +73,24 @@ exports.viewRideSchedule = (req,res) => {
   });
 }
 
+//get /getRideSchedule
+exports.getRideSchedule = (req,res) => {
+  let query = "select * from schedule where parent = '" + req.body.parent +"';";
+  db.query(query, (err,rows, fields) => {
+    if(err){
+      logger.error("couldn't get rides");
+      res.status(400).json({
+        "data": [],
+        "error": "MySQL error"
+      });
+    }
+    else{
+      res.status(200).json({
+        "data": rows
+      });
+    }
+  });
+}
  
  //get getDriverSchedule
  exports.getDriverSchedule = (req, res) =>{
