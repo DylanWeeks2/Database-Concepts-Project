@@ -25,7 +25,7 @@ export class RideItem extends React.Component {
         modalVisible: false,
         services: [],
         accidents: [],
-        car: new Car()
+        car: null
     }
 
     render () {
