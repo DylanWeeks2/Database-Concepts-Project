@@ -13,13 +13,13 @@ Car services and Accidents should be adds, not updates
 import axios from 'axios';
 import { createHash } from 'crypto';
 import { StorageManager } from './../app/StorageManager';
-import { ParentUser, DriverUser } from '../models';
+import { ParentUser, DriverUser, Ride, Child } from '../models';
 import { Link } from 'react-router-dom';
 
 export class Repo {
     storage = new StorageManager();
 
-    url = "http://18.222.183.117:3000"
+    url = "http://192.168.99.100:3000"
     config = {
         headers: {
             Authorization: "hdonofrio"
@@ -53,6 +53,7 @@ export class Repo {
             .catch(resp => alert(resp));
         });
     }
+
     addParent(parent) {
          const ps = createHash('sha256');
          ps.update(parent.password);
@@ -61,7 +62,8 @@ export class Repo {
             axios.post(`${this.url}/addParent`, parent, this.config)
             .then(resp => {
                 console.log("data", resp.data);
-                parent = new ParentUser(resp.data.user.id, resp.data.user.email, resp.data.user.phone, resp.data.user.homeAddr, resp.data.user.workAddr, resp.data.user.name, null, resp.data.user.password, resp.data.user.username);
+                let parent = new ParentUser(resp.data.user.id, resp.data.user.email, resp.data.user.phone, resp.data.user.homeAddr, 
+                    resp.data.user.workAddr, resp.data.user.name, null, resp.data.user.password, resp.data.user.username);
                 resolve(parent);
             })
             .catch(resp => alert(resp));
@@ -73,11 +75,28 @@ export class Repo {
             axios.get(`${this.url}/getParent`, parentId, this.config)
             .then(resp => {
                 console.log("data", resp.data);
-                let parent = new ParentUser(resp.data.user.id, resp.data.user.email, resp.data.user.phone, resp.data.user.homeAddr, resp.data.user.workAddr, resp.data.user.name, null, resp.data.user.password, resp.data.user.username);
+                let parent = new ParentUser(resp.data.user.id, resp.data.user.email, resp.data.user.phone, resp.data.user.homeAddr, 
+                    resp.data.user.workAddr, resp.data.user.name, null, resp.data.user.password, resp.data.user.username);
                 resolve(parent);
             })
             .catch(resp => console.log(resp));
         });
+    }
+
+    getParentWithChildren(parentId) {
+        return new Promise((resolve, reject) => {
+            axios.get(`${this.url}/getParentChildren`, parentId, this.config)
+                .then(parent => {
+                    let kids = [];
+                    parent.data.user.children.forEach(child => {
+                        kids.push(new Child(child["name"], child["grade"], child["school"],
+                        child["healthConditions"], child["username"], child["id"], child["password"]));
+                    });
+                    let ret = new ParentUser(parent["id"], parent["email"], parent["phone"], parent["homeAddr"],
+                    parent["workAddr"], parent["name"], kids, parent["password"], parent["username"]);
+                    resolve(ret);
+                });
+        })
     }
 
     // changeParentPassword(parentId, newPassword) {
@@ -166,7 +185,7 @@ export class Repo {
     //     return new Promise((resolve, reject) => {
     //         axios.post(`${this.url}/addChild`, child, this.config)
     //         .then(resp => resolve(resp.data) /*handle successful add*/)
-    //         .catch(resp => /*handle failure */);
+    //         .catch(resp => alert(resp));
     //     });
     // }
 
@@ -174,7 +193,7 @@ export class Repo {
     //     return new Promise((resolve, reject) => {
     //         axios.get(`${this.url}/getChild`, childId, this.config)
     //         .then(resp => resolve(resp.data) /*handle successful get*/)
-    //         .catch(resp => /*handle failure */);
+    //         .catch(resp => alert(resp));
     //     });
     // }
 
@@ -182,7 +201,7 @@ export class Repo {
     //     return new Promise((resolve, reject) => {
     //         axios.put(`${this.url}/updateChild`, childId, child, this.config)
     //         .then(resp => resolve(resp.data) /*handle successful update*/)
-    //         .catch(resp => /*handle failure */);
+    //         .catch(resp => alert(resp));
     //     });
     // }
 
@@ -192,24 +211,79 @@ export class Repo {
         return new Promise((resolve, reject) => {
             axios.get(`${this.url}/something`, dateTime, this.config)
             //.then(resp => )
-            //.catch(resp => )
+            //.catch(resp => alert(resp))
         });
     }
 
      addRide(ride) {
          return new Promise((resolve, reject) => {
-             axios.post(`${this.url}/addRideSchedule`, ride, this.config)
-             //.then(resp => resolve() /*handle successful post*/)
-             //.catch(resp => /*handle failure */);
+             axios.post(`${this.url}/addRideSchedule`, {pick_up_location: ride.pickupAddr, drop_off_location: ride.destAddr, pick_up_time: ride.pickupAddr, drop_off_time: ride.dropoff_time, active: 1, child: ride.childId, driver: ride.driverId}, this.config)
+             .then(resp => {
+                 resolve(resp.data); //returning the id of the ride
+             })
+             .catch(resp => alert(resp));
          });
      }
 
-     //Get the rides a parent has ordered FINISH THIS
+     //Get the rides a parent has ordered
      getRides(parentId) {
          return new Promise((resolve, reject) => {
              axios.get(`${this.url}/getRideSchedule`, parentId, this.config)
-             //.then(resp => resolve(resp.data) /*handle successful get*/)
-             //.catch(resp => /*handle failure */);
+                .then(rides => {
+                    let activeRides = [];
+                    let pastRides = [];
+                    rides.forEach(ride => {
+                        if (ride["active"] == 0) {
+                            pastRides.push(new Ride(ride["id"], ride["pick_up_time"], ride["drop_off_time"], 
+                            ride["child"], ride["childName"], ride["pick_up_location"], ride["drop_off_location"],
+                            ride["notes"], ride["driver"], ride["driverName"], new Child(null)));
+                        } else {
+                            activeRides.push(new Ride(ride["id"], ride["pick_up_time"], ride["drop_off_time"], 
+                            ride["child"], ride["childName"], ride["pick_up_location"], ride["drop_off_location"],
+                            ride["notes"], ride["driver"], ride["driverName"], new Child(null)));
+                        }
+                    });
+                    let ret = { activeRides: activeRides, pastRides: pastRides };
+                    resolve(ret);
+                });
+         });
+     }
+
+     cancelParentRide(rideId) {
+         return new Promise((resolve, reject) => {
+            axios.delete(`${this.url}/deleteRideSchedule`, rideId, this.config)
+            .then(resp => resolve(resp.data))
+            .catch(resp => alert(resp));
+         });
+     }
+
+     getRidesDriver(driverId) {
+         return new Promise((resolve, reject) => {
+             axios.get(`${this.url}/getDriverSchedule`, driverId, this.config)
+                .then(rides => {
+                    let ret = [];
+                    rides.forEach(ride => {
+                        ret.push(new Ride(ride["id"], ride["pick_up_time"], ride["drop_off_time"], ride["childId"], ride["childName"],
+                        ride["pick_up_location"], ride["drop_off_location"], "", ride["driver"], "", 
+                        new Child(ride["name"], ride["grade"], ride["school"], ride["health"], ride["username"], ride["id"], ride["password"])));
+                    });
+                    resolve(ret);
+                })
+         });
+     }
+
+     getRidesChild(childId) {
+         return new Promise((resolve, reject) => {
+             axios.get(`${this.url}/getChildSchedule`, childId, this.config)
+                .then(rides => {
+                    let ret = [];
+                    rides.forEach(ride => {
+                        ret.push(new Ride(ride["id"], ride["pick_up_time"], ride["drop_off_time"], ride["childId"], ride["childName"],
+                        ride["pick_up_location"], ride["drop_off_location"], "", ride["driver"], "", 
+                        new Child(ride["name"], ride["grade"], ride["school"], ride["health"], ride["username"], ride["id"], ride["password"])));
+                    });
+                    resolve(ret);
+                });
          });
      }
 
@@ -217,7 +291,7 @@ export class Repo {
     //     return new Promise((resolve, reject) => {
     //         axios.delete(`${this.url}/deleteRideSchedule`, rideId, this.config)
     //         .then(re sp => resolve(resp.data) /*handle successful delete*/)
-    //         .catch(resp => /*handle failure */);
+    //         .catch(resp => alert(resp));
     //     });
     // }
 
@@ -225,7 +299,7 @@ export class Repo {
     //     return new Promise((resolve, reject) => {
     //         axios.post(`${this.url}/addCar`, driverId, car, this.config)
     //         .then(resp => resolve(resp.data) /*handle successful get*/)
-    //         .catch(resp => /*handle failure */);
+    //         .catch(resp => alert(resp));
     //     });
     // }
 
@@ -233,7 +307,7 @@ export class Repo {
     //     return new Promise((resolve, reject) => {
     //         axios.get(`${this.url}/getCar`, carId, this.config)
     //         .then(resp => resolve(resp.data) /*handle successful get*/)
-    //         .catch(resp => /*handle failure */);
+    //         .catch(resp => alert(resp));
     //     });
     // }
 
@@ -241,7 +315,7 @@ export class Repo {
     //     return new Promise((resolve, reject) => {
     //         axios.put(`${this.url}/updateCar`, carId, car, this.config)
     //         .then(resp => resolve(resp.data) /*handle successful get*/)
-    //         .catch(resp => /*handle failure */);
+    //         .catch(resp => alert(resp));
     //     });
     // }
 
@@ -249,7 +323,7 @@ export class Repo {
     //     return new Promise((resolve, reject) => {
     //         axios.post(`${this.url}/addCarService`, carId, newService, this.config)
     //         .then(resp => resolve(resp.data) /*handle successful addition*/)
-    //         .catch(resp => /*handle failure */);
+    //         .catch(resp => alert(resp));
     //     });
     // }
 
@@ -257,7 +331,7 @@ export class Repo {
     //     return new Promise((resolve, reject) => {
     //         axios.put(`${this.url}/addCarAccident`, carId, newAccident, this.config)
     //         .then(resp => resolve(resp.data) /*handle successful addition*/)
-    //         .catch(resp => /*handle failure */);
+    //         .catch(resp => alert(resp));
     //     });
     // }
 
@@ -266,7 +340,7 @@ export class Repo {
     //     return new Promise((resolve, reject) => {
     //         axios.post(`${this.url}/saveCreditCard`, userId, creditCard, this.config)
     //         .then(resp => resolve(resp.data)/*handle successful add*/)
-    //         .catch(resp => /*handle failed cc add*/);
+    //         .catch(resp => alert(resp));
     //     });
     // }
 }

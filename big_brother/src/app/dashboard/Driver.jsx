@@ -43,6 +43,13 @@ export class DriverDashboard extends React.Component {
         this.setState({ activeRides: this.state.activeRides.filter(x => { return x.id !== id }) });
     }
 
+    componentDidMount() {
+        this.repo.getRidesDriver(localStorage.getItem("userId"))
+            .then(rides => {
+                this.setState({activeRides: rides});
+            });
+    }
+
     render() {
         return (
             <>

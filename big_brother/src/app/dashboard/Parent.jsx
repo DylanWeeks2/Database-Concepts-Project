@@ -15,12 +15,6 @@ import { Link } from 'react-router-dom'
 
 export class ParentDashboard extends React.Component {
     repo = new Repo();
-    cancelRide(id) {
-        //changels for things here
-        console.log(id);
-        console.log(this.state.rides);
-        this.setState({ rides: this.state.rides.filter(x => { return x.id !== id }) });
-    }
 
     addRide(time, children, driver, address, notes) {
         const rides = new Ride(localStorage.getItem("userId"), time, new Date(),
@@ -39,9 +33,9 @@ export class ParentDashboard extends React.Component {
         modalVisible: false,
         account: new ParentUser(1, "test@test.gmail", "1234567890", "1234 test rd", "45567 test rd", "Joe Mama",
             [
-                (new Child("Ben Dover", 2, "Good School", "Water Allergy", "xXx_BENDOVER69", 0)),
-                (new Child("Mike Hawk", 3, "BEst School", "Pain Allergy", "MIKE", 1))
-            ]
+                (new Child("Ben Dover", 2, "Good School", "Water Allergy", "xXx_BENDOVER69", "pass", 0)),
+                (new Child("Mike Hawk", 3, "BEst School", "Pain Allergy", "MIKE", "pass", 1))
+            ], "pass", "user"
         ),
         rides: [
             new Ride(0, new Date(), new Date(), 0, "Ben Dover", "5555 St.", "4444 Rd.", "This kid is fucking dope", 0, "Sofa King")
@@ -50,9 +44,35 @@ export class ParentDashboard extends React.Component {
             new Ride(1, new Date(), new Date(), 0, "Ben DICK", "55few55 St.", "4444few Rd.", "This kidfew is fucking dope", 0, "Sofafew King")
         ],
         drivers: [
-            new DriverUser(1, "Buck", "Chevy", 2009)
+            new DriverUser(1, "Buck", "M", "I am cool", "buck@yahoo.com", 2145556666, "Chevy", "equinox", 2009, "silver", "BiteMe", 3, "decent", "cupholder", "bucky", "pass")
         ]
     }
+
+    cancelRide(id) {
+        //to do: call to DB
+        /*this.repo.cancelParentRide(id);*/
+        this.setState({ rides: this.state.rides.filter(x => { return x.id !== id }) });
+    }
+
+    addRide(time, children, driver, address, notes) {
+        let kid = this.state.account.children.find(y => y.id == children);
+        let driver1 = this.state.drivers.find(y => y.id == driver);
+        const rides =  new Ride(localStorage.getItem("userId"), time, new Date(), 
+            kid.id, kid.name,
+            kid.health,
+            address,
+            notes,
+            driver1.id,
+            driver1.name);
+        
+        //to do : call to DB
+        /*this.repo.addRide(rides);*/
+        this.setState(prevState => {
+            prevState.rides.push(rides);
+            return prevState;
+        })
+    }
+    
     toggleModel() {
         this.state.modalVisible
             ? this.setState({
@@ -60,34 +80,14 @@ export class ParentDashboard extends React.Component {
             })
             : this.setState({ modalVisible: true });
     };
-//FINISHSLDJLFSJLFKSJDFLJD FLKSJ DLKFSDJ FKL SDJLFKSJD FLSDFKLSDFKLSJFLKDF LSD F
-    componentDidMount() {
-        this.repo.getParent(localStorage.getItem("userId"))
-            .then(parent => { //in the repo create the ParentUser object and then update that object using the children gotten below
-                this.repo.getChildren(localStorage.getItem("userId"))
-                    .then(children => { //Child table in database is missing a grade & a userName attribute
-                        children.forEach(child => {
-                            parent.children.push(new Child(child["name"], child["grade"], child["school"], 
-                                child["healthConditions"], child["userName"], child["id"]));
-                        });
-                        this.setState({ account: parent });
-                    })
-            })
-        this.repo.getRides(parseInt(localStorage.getItem("userId"))) //TODO:: handle current rides vs. Past rides-
-            .then(rides => {
-                let activeRides = [];
-                let pastRides = [];
-                rides.forEach(ride => {
-                    //Child objects right now have both the id and the name (and a Child object on Taylor's branch. This all needs to change)
-                    let obj = new Ride(ride.id, ride.pick_up_time, ride.drop_off_time, ride.child, )
-                    if(parseInt(ride["active"]) == 0) {
-                        pastRides.push();
-                    } else {
-                        activeRides.push();
-                    }
-                })
-            })
-    }
+
+    //waiting for call from DB
+    /*componentDidMount() {
+        this.repo.getParentWithChildren(localStorage.getItem("userId"))
+            .then(parent => this.setState({account: parent}));
+        this.repo.getRidesForParent(localStorage.getItem("userId")) //TODO:: handle current rides vs. Past rides-
+            .then(rides => this.setState({ activeRides: rides.activeRides, pastRides: rides.pastRides }));
+    }*/
 
     render() {
         return (
