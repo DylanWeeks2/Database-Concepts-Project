@@ -48,6 +48,7 @@ exports.addChild = (req, res) => {
       res.status(400);
     }
     else{
+      console.log(rows);
       currID = rows[0].id;
     }
   });
