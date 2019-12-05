@@ -19,22 +19,23 @@ export class DriverDashboard extends React.Component {
     repo = new Repo();
 
     state = {
-        id: 0,
-        name: "",
-        gender: "",
-        bio: "",
-        email: "",
-        phone: "",
-        car: new Car("Ford", "F-150", 2019, "grey", "H33", 4, "Like new", "Aux port, Cup holders"),
+        id: 300100,
+        name: "John Delaney",
+        gender: "Male",
+        bio: "I have been driving professionally for over 10 years.",
+        email: "jdelaney@gmail.com",
+        phone: "860-944-7947",
+        car: new Car("Ford", "F-150", 2019, "grey", "66W-H33", 4, "Like new", "Aux port, Cup holders"),
         activeRides: [
-            new Ride(0, 1, "3:53PM", 0, "Charlie", "123 Wall st.", "456 dest ln.", "nothing special", 0, "Todd", new Child("Charlie", 3, "Vial Elementary", "n/a", "toddrox", "asjkdn", 1)),
-            new Ride(1, 2, "3:53PM", 0, "Natalie", "123 Wall st.", "456 dest ln.", "nothing special", 0, "Todd", new Child("Natalie", 1, "Brandenburg", "peanut allergy", "nattat", "password", 2)),
+            new Ride(0, new Date('December 17, 2019 13:24:00'), new Date('December 17, 2019 14:30:00'), 0, "John Elton", "5555 Saint Peters St.", "4444 Johnpaul Rd.", "going to drama practice", 300102, "John Delaney", new Child("John Elton", 6, "Scistercian Middle School", "Water Allergy", "", "pass1234!", 200100)),
+            new Ride(0, 1, "3:20PM", 0, "Charlie", "337 North Steele Rd.", "226 King Philip Rd.", "School Run", 0, "John Delaney", new Child("Charlie", 3, "Vial Elementary", "N/A", "toddrox", "asjkdn", 200101)),
+            new Ride(1, 2, "3:53PM", 0, "Natalie", "5600 SMU Boulevard", "400 Simsbury Road", "Soccer Practice", 0, "John Delaney", new Child("Natalie", 1, "Brandenburg", "Peanut Allergy", "nattat", "password", 200102)),
         ],
         pastRides: [
-            new Ride(2, 4, "3:55PM", 0, "Charfelie", "123 Wfeall st.", "456 defest ln.", "notfehing special", 0, "Tofedd", new Child("Charlie", 3, "Vial Elementary", "toddrox", "asjkdn", 1))
+            new Ride(0, new Date('December 11, 2019 13:24:00'), new Date('December 11, 2019 14:30:00'), 0, "John Elton", "5555 Saint Peters St.", "4444 Johnpaul Rd.", "going to drama practice", 300102, "John Delaney", new Child("John Elton", 6, "Scistercian Middle School", "Water Allergy", "", "pass1234!", 200100)),
         ],
         modalVisible: false
-    }
+    } 
 
     cancelRide(id) {
         //change for things here

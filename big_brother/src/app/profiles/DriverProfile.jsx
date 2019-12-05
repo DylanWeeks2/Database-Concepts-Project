@@ -24,15 +24,15 @@ export class DriverProfile extends React.Component {
 
     repo = new Repo();
     state = {
-        id: 0,
-        name: "",
-        gender: "",
-        bio: "",
-        email: "",
-        phone: "",
-        car: new Car("Ford", "F-150", 2019, "grey", "H33", 4, "Like new", "Aux port, Cup holders"),
-        accidents: [],
-        services: [],
+        id: 300100,
+        name: "John Delaney",
+        gender: "Male",
+        bio: "I have been driving professionally for over 10 years.",
+        email: "jdelaney@gmail.com",
+        phone: "860-944-7947",
+        car: new Car("Ford", "F-150", 2019, "grey", "66W-H33", 4, "Like new", "Aux port, Cup holders"),
+        accidents: [new Accident("300100", new Date(2010, 3, 1), "Fenderbender", "Rear End", "Distracted while driving; no insurance claim")],
+        services: [new Service("300100", new Date(2010, 4, 20), "Part Replacement", "New Bumper after Fenderbender")],
         availabilities: []
     }
 
