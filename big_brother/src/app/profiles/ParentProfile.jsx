@@ -136,7 +136,7 @@ export class ParentProfile extends React.Component {
                             <tbody className="text-center">
                                 {
                                     this.state.profile.children.map((child, i) =>
-                                        <tr className="table-dark">
+                                        <tr className="table-dark" id="childTable">
                                             <td className="text-center">{child.name}</td>
                                             <td className="text-center">{child.grade}</td>
                                             <td className="text-center">{child.school}</td>
@@ -160,15 +160,15 @@ export class ParentProfile extends React.Component {
                         <UpdateParent parent={this.state.profile} updateParent={(email, phone, homeAddr, workAddr, name) => this.updateParent(email, phone, homeAddr, workAddr, name)} />
                     </div>
 
-                    <div className="col col-mg-8 resetPassword">
+                    <div className="col col-mg-8 resetPassword" id="passContainer">
                         <h3>Change Password</h3>
                         <form>
                             <div className="form-group">
-                                <input type="password" className="form-control" id="newPassword" value={this.state.newPassField} 
+                                <input type="password" id="newPassword" className="form-control" id="newPassword" value={this.state.newPassField} 
                                     onChange={ e => this.setState({newPassField: e.target.value})}/>
                             </div>
                             <div className="input-group-append">
-                                <button className="resetButton btn btn-danger" onClick={pass => this.changePassword()}>Reset</button>
+                                <button className="resetButton btn btn-danger" id="passwordButton" onClick={pass => this.changePassword()}>Reset</button>
                             </div>
                         </form>
                     </div>

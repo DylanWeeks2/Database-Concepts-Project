@@ -9,7 +9,6 @@ import AddAvailability from './models/AddAvailability';
 import UpdateDriver from './models/UpdateDriver';
 import { Link } from 'react-router-dom';
 import { Repo } from '../../api/repo';
-
 function twoDigits(d) {
     if(0 <= d && d < 10) return "0" + d.toString();
     if(-10 < d && d < 0) return "-0" + (-1*d).toString();
@@ -154,7 +153,7 @@ export class DriverProfile extends React.Component {
                             <tbody>
                                 {
                                     this.state.accidents.map((accident, i) =>
-                                        <tr key={i}className="table-dark">
+                                        <tr key={i}className="table-dark" id="childTable">
                                             <td className="text-center">{new Date((accident.date)).toISOString().slice(0,10).replace(/-/g,"/")}</td>
                                             <td className="text-center">{accident.severity}</td>
                                             <td className="text-center">{accident.type}</td>
@@ -182,7 +181,7 @@ export class DriverProfile extends React.Component {
                                 {
                                     
                                     this.state.services.map((service, i) =>
-                                        <tr key={i} className="table-dark">
+                                        <tr key={i} className="table-dark" id="childTable">
                                             <td className="text-center">{`${new Date((service.date)).toISOString().slice(0,10).replace(/-/g,"/")}`}</td>
                                             <td className="text-center">{`${service.type}`}</td>
                                             <td className="text-center">{`${service.descr}`}</td>
@@ -209,7 +208,7 @@ export class DriverProfile extends React.Component {
                             <tbody>
                                 {
                                     this.state.availabilities.map((avail, i) =>
-                                        <tr key={i} className="table-dark">
+                                        <tr key={i} className="table-dark" id="childTable">
                                             <td className="text-center">{new Date((avail.date)).toISOString().slice(0,10).replace(/-/g,"/")}</td>
                                             <td className="text-center">{new Date(avail.start.toString()).toLocaleTimeString()}</td>
                                             <td className="text-center">{new Date(avail.end.toString()).toLocaleTimeString()}</td>
@@ -227,14 +226,14 @@ export class DriverProfile extends React.Component {
                         <UpdateDriver driver={this.state} updateDriver={(name, gender, bio, email, phone, make, model, year, color, license, numSeats, condition, amenities) => this.UpdateDriver(name, gender, bio, email, phone, make, model, year, color, license, numSeats, condition, amenities)} />
                     </div>
 
-                    <div className="col col-mg-8 resetPassword">
+                    <div className="col col-mg-8 resetPassword" id="passContainer">
                         <h3>Change Password</h3>
                         <form>
                             <div className="form-group">
                                 <input type="password" className="form-control" id="newPassword" />
                             </div>
                             <div className="input-group-append">
-                                <button className="resetButton btn btn-danger">Reset</button>
+                                <button className="resetButton btn btn-danger" id="passwordButton">Reset</button>
                             </div>
                         </form>
                     </div>
