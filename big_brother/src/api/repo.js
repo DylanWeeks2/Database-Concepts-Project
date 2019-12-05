@@ -322,13 +322,15 @@ export class Repo {
          });
      }
 
-     getRidesChild(childId) {
+     getRidesChild(child) {
          return new Promise((resolve, reject) => {
-             axios.get(`${this.url}/viewRideSchedule`, childId, this.config)
+             axios.get(`${this.url}/viewRideSchedule`, {params: {child: child}}, this.config)
                 .then(rides => {
+                    debugger;
                     let ret = [];
                     if(rides.data.data.length != 0) {
-                        rides.forEach(ride => {
+                        rides.data.data.forEach(ride => {
+                            debugger;
                             ret.push(new Ride(ride["id"], ride["pick_up_time"], ride["drop_off_time"], ride["childId"], ride["childName"],
                             ride["pick_up_location"], ride["drop_off_location"], "", ride["driver"], "", 
                             new Child(ride["name"], ride["grade"], ride["school"], ride["health"], ride["username"], ride["id"], ride["password"])));
