@@ -53,10 +53,12 @@ export class RideItem extends React.Component {
             this.setState(prevState => {
                 prevState.services = [];
                 let service_list = [];
-                services.data.map(service => {
-                    service_list.push(new Service(service.driverId, new Date(service.date), service.type, service.descr));
-                });
-                prevState.services = prevState.services.concat(service_list);
+                if (services && services.length > 0) {
+                    services.data.map(service => {
+                        service_list.push(new Service(service.driverId, new Date(service.date), service.type, service.descr));
+                    });
+                    prevState.services = prevState.services.concat(service_list);
+                }
                 return prevState;
             });
         });
@@ -64,10 +66,12 @@ export class RideItem extends React.Component {
             this.setState(prevState => {
                 prevState.accidents = [];
                 let service_list = [];
-                accidents.data.map(accident => {
-                    service_list.push(new Accident(accident.driverId, new Date(accident.date), accident.severity, accident.type, accident.descr));
-                });
-                prevState.accidents = prevState.accidents.concat(service_list);
+                if (accidents && accidents.length > 0) {
+                    accidents.data.map(accident => {
+                        service_list.push(new Accident(accident.driverId, new Date(accident.date), accident.severity, accident.type, accident.descr));
+                    });
+                    prevState.accidents = prevState.accidents.concat(service_list);
+                }
                 return prevState;
             });
         });
