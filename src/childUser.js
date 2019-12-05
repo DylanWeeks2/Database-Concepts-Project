@@ -33,6 +33,7 @@ exports.addChild = (req, res) => {
   let query = "INSERT into childUser values(NULL,'" + req.body.name + "','" + req.body.username + "','" + req.body.password + "','"  + req.body.grade + "','"+ req.body.school +"', NULL,'" + req.body.healthConditions + "', NULL , NULL , NULL ,'" + req.body.parentID + "');"; 
   db.query(query, (err, result) => {
       if(err) {
+          console.log(err);
           logger.error("failed too add child");
           res.status(400);
       }
