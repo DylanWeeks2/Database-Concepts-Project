@@ -100,7 +100,10 @@ export class DriverDashboard extends React.Component {
         debugger;
          this.repo.getRidesDriver(localStorage.getItem("userId"))
          .then(rides => {
-             this.setState({activeRides: rides});
+             this.setState(prevState => {
+                prevState.activeRides = prevState.activeRides.concat(rides);
+                return prevState;
+                });
          });
 
          this.repo.getDriver(userId).then(user => {
