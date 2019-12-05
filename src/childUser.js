@@ -50,13 +50,14 @@ exports.addChild = (req, res) => {
       currID = rows[0].id;
     }
   });
+  console.log(currID);
   query = "insert into accounts values (NULL,'" + req.body.username +"','" + req.body.password +"','" + currID +"');";
   db.query(query, (err,result) => {
     if(err){
       logger.error("couldnt add new account into the accounts table");
+      console.log(err);
       res.status(400);
     }else{
-      res.status(200).send("completed adding new user to accounts table");
     }
   });
   res.status(200).json({
