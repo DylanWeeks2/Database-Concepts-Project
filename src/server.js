@@ -244,16 +244,17 @@ app.post('/saveCreditCard', creditCard.saveCreditCard);
 app.get('/getCreditCard', creditCard.getCreditCard);
 //parentUser
 app.post('/setupParent', parentUser.setupParent);
+app.get('/getParentAndChildInfo', parentUser.getParentAndChildInfo);
 //app.put('/changeParentPassword', parentUser.changeParentPassword);
 app.post('/addParent', parentUser.addParent);
 app.get('/getParent', parentUser.getParent);
 //driverUser
 app.post('/setupDriver', driverUser.setupDriver);
+app.get('/getDriverSchedule', driverUser.getDriverSchedule);
 //app.put('/changeDriverPassword', driverUser.changeDriverPassword);
 app.post('/addDriver', driverUser.addDriver);
 app.put('/updateDriver', driverUser.updateDriver);
 app.get('/getDriver', driverUser.getDriver);
-//childUser
 //accidents
 app.post('/addAccident', accidents.addAccident);
 app.get('/getAccidents', accidents.getAccidents);
@@ -263,7 +264,7 @@ app.get('/getAvailabilities', availabilities.getAvailabilities);
 //services
 app.post('/addService', services.addService);
 app.get('/getServices', services.getServices);
-
+//childUser
 app.post('/setupChild', childUser.setupChild);
 app.post('/addChild', childUser.addChild);
 app.post('/updateChild', childUser.updateChild);

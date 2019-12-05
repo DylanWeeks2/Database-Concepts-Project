@@ -123,3 +123,21 @@ exports.login = (req, res) => {
     }
   })
 }
+
+exports.getParentAndChildInfo = (req, res) => {
+  let query = "SELECT * FROM parentUser as p LEFT JOIN childUser as c ON p.id = c.parentID WHERE p.id = '" + req.body.id + "';";
+  db.query(query, function(err, rows, fields) {
+    if(err){
+      logger.error("couldn't get parent user");
+      res.status(400).json({
+        "data": [],
+        "error": "MySQL error"
+      });
+    }
+    else{
+      res.status(200).json({
+        "data": rows
+      });
+    }
+  })
+}
