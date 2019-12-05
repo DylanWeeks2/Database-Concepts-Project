@@ -88,15 +88,21 @@ export class Repo {
             axios.get(`${this.url}/getParentAndChildInfo`, {params: {id: parentId}}, this.config)
                 .then(parent => {
                     let kids = [];
-                    if(parent.data.data.length != 0) {
                         parent.data.data.forEach(child => {
-                            kids.push(new Child(child["childName"], child["grade"], child["school"],
-                            child["healthConditions"], child["childUsername"], child["childID"], child["childPass"]));
+                            if(child.bio) {
+                                kids.push(new Child(child["childName"], child["grade"], child["school"],
+                                child["healthConditions"], child["childUsername"], child["childID"], child["childPass"]));    
+                            }
                         });    
+                    if(parent.data.data.length != 0) {
+                        let ret = new ParentUser(parent.data.data[0]["parentID"], parent.data.data[0]["email"], parent.data.data[0]["phone"], parent.data.data[0]["homeAddr"],
+                        parent.data.data[0]["workAddr"], parent.data.data[0]["parentName"], kids, parent.data.data[0]["parentPass"], parent.data.data[0]["parentUsername"]);
+                        resolve(ret);
+                    } else {
+                        let ret = {};
+                        resolve(ret);
                     }
-                    let ret = new ParentUser(parent.data.data[0]["parentID"], parent.data.data[0]["email"], parent.data.data[0]["phone"], parent.data.data[0]["homeAddr"],
-                    parent.data.data[0]["workAddr"], parent.data.data[0]["parentName"], kids, parent.data.data[0]["parentPass"], parent.data.data[0]["parentUsername"]);
-                    resolve(ret);
+                    
                 });
         })
     }

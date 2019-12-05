@@ -85,7 +85,7 @@ function Info(props) {
                   }
                   </>
                   : " "
-                }
+                }*/}
                 </Modal.Body>
                 <Modal.Footer>
                   <Button variant="secondary" onClick={handleClose}>
