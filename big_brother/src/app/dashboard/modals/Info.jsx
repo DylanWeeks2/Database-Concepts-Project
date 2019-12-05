@@ -28,6 +28,45 @@ function Info(props) {
                 <br></br>
                 Pickup at {props.ride.pickupAddr} <span className="float-right">Going to {props.ride.destAddr}</span> <br></br>
                 Notes: {props.ride.notes}
+                {/*<hr></hr>
+                Car Info: 
+                Make: {props.car.make}  <br></br>
+                Model: {props.car.model}<br></br>
+                Year: {props.car.year}<br></br>
+                Color: {props.car.color}<br></br>
+                License #: {props.car.license}<br></br>
+                # of Seats: {props.car.numSeats}<br></br>
+                Condition: {props.car.condition}<br></br>
+                Ammenities: {props.car.ammenities}<br></br>
+                <hr></hr>
+                Driver Services:
+                {
+                  props.services.length > 0 ?
+                  props.services.map((service, i) => 
+                    <>
+                      <center><h5>Service {i+1}</h5></center>
+                      <p>Date: {new Date((service.date)).toISOString().slice(0,10).replace(/-/g,"/")}</p>
+                      <p>Type: {`${service.type}`}</p>
+                      <p>Description: {`${service.descr}`}</p>
+                    </>
+                  )
+                  : " "
+                }
+                <hr></hr>
+                 Driver Accidents:
+                {
+                  props.accidents.length > 0 ?
+                  props.accidents.map((accident, i) => 
+                    <>
+                      <center><h5>Accident {i+1}</h5></center>
+                      <p>Date: {new Date((accident.date)).toISOString().slice(0,10).replace(/-/g,"/")}</p>
+                      <p>Type: {`${accident.severity}`}</p>
+                      <p>Type: {`${accident.type}`}</p>
+                      <p>Description: {`${accident.descr}`}</p>
+                    </>
+                  )
+                  : " "
+                }*/}
                 </Modal.Body>
                 <Modal.Footer>
                   <Button variant="secondary" onClick={handleClose}>
