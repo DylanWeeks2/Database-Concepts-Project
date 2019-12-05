@@ -129,10 +129,10 @@ exports.addDriver = (req, res) => {
 //GET /getDriver
 exports.getDriver = (req, res) => {
   db.query("SELECT * FROM driverUser", (err, rows) => console.log("all rows", rows));
-  let query = "select * from driverUser d LEFT JOIN services s ON d.id = s.driverId where d.id = " + req.query.id + ";";
+  let query = "select * from driverUser d LEFT JOIN services s ON d.id = s.driverId where d.id = " + req.params.id + ";";
 
   console.log(query);
-  db.query("SELECT * FROM SERVICES", function(err, rows, fields) {console.log("services", rows)});
+  //db.query("SELECT * FROM SERVICES", function(err, rows, fields) {console.log("services", rows)});
   db.query(query, function(err,rows, fields) {
       if(err){
           logger.error("couldn't get driver user", err);
