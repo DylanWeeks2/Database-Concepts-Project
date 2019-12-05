@@ -38,29 +38,24 @@ export class DriverDashboard extends React.Component {
 
     cancelRide(id) {
         //change for things here
+        debugger;
+        this.repo.cancelDriverRide(id);
         console.log(id);
         console.log(this.state.rides);
         this.setState({ activeRides: this.state.activeRides.filter(x => { return x.id !== id }) });
     }
 
-    componentDidMount() {
-        this.repo.getRidesDriver(localStorage.getItem("userId"))
-            .then(rides => {
-                this.setState({activeRides: rides});
-            });
-    }
-
     render() {
         return (
             <>
-                <div className="row header-box">
+                {/* <div className="row header-box">
                     <nav aria-label="breadcrumb">
                         <ol className="breadcrumb">
                             <li className="breadcrumb-item"><Link to={`/driver/profile`} id="driverProfile">{}</Link></li>
                             <li className="breadcrumb-item active" aria-current="page">{`${this.state.name}'s Rides`}</li>
                         </ol>
                     </nav>
-                </div>
+                </div> */}
                 <div className="row header-box" style={{ margin: "2% 0%" }}>
                     <h1 id="row-h1">Rides</h1>
                 </div>
@@ -99,28 +94,34 @@ export class DriverDashboard extends React.Component {
         );
     }
 
-    componentDidMount() {
+     componentDidMount() {
+         let userId = parseInt(localStorage.getItem("userId"));
         debugger;
-        let userId = parseInt(localStorage.getItem("userId"));
-        this.repo.getDriver(userId).then(user => {
-            let user_ = user.data[0];
-            this.setState(prevState => {
-                prevState.id = userId;
-                prevState.name = user_.name;
-                prevState.gender = user_.gender;
-                prevState.bio = user_.bio;
-                prevState.email = user_.email;
-                prevState.phone = user_.phone;
-                prevState.car.make = user_.make;
-                prevState.car.model = user_.model;
-                prevState.car.year = user_.year;
-                prevState.car.color = user_.color;
-                prevState.car.license = user_.license;
-                prevState.car.numSeats = user_.numSeats;
-                prevState.car.condition = user_.condition;
-                prevState.car.ammenities = user_.ammenities;
-                return prevState;
-            })
-        });
+         this.repo.getRidesDriver(localStorage.getItem("userId"))
+         .then(rides => {
+             this.setState({activeRides: rides});
+         });
+
+         this.repo.getDriver(userId).then(user => {
+             let user_ = user.data[0];
+
+             this.setState(prevState => {
+                 prevState.id = userId;
+                 prevState.name = user_.name;
+                 prevState.gender = user_.gender;
+                 prevState.bio = user_.bio;
+                 prevState.email = user_.email;
+                 prevState.phone = user_.phone;
+                 prevState.car.make = user_.make;
+                 prevState.car.model = user_.model;
+                 prevState.car.year = user_.year;
+                 prevState.car.color = user_.color;
+                 prevState.car.license = user_.license;
+                 prevState.car.numSeats = user_.numSeats;
+                 prevState.car.condition = user_.condition;
+                 prevState.car.ammenities = user_.ammenities;
+                 return prevState;
+             })
+         });
     }
 }

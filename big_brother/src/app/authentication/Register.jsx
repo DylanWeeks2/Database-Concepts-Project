@@ -172,7 +172,7 @@ export class Register extends Component {
                     <input required type="password" className="form-control"value={this.state.driver_password} onChange={e => this.setState({ driver_password: e.target.value })} />
                     <label htmlFor="email" id="label">Your Email:</label>
                     <input required type="text" className="form-control" placeholder="Email" value={this.state.driver_email} onChange={e => this.setState({ driver_email: e.target.value })} />
-                    <label htmlFor="phone" id="label">Your Phone Number (no spaces):</label>
+                    <label htmlFor="phone" id="label">Your Phone Number (no spaces or dashes):</label>
                     <input required type="text" className="form-control" placeholder="XXXXXXXXXX" value={this.state.driver_phone} onChange={e => this.setState({ driver_phone: e.target.value })} />
                     <label htmlFor="gender" id="label">Gender:</label>
                     <input required type="text" className="form-control" placeholder="Gender" value={this.state.gender} onChange={e => this.setState({ gender: e.target.value })} />
