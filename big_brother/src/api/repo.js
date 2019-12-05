@@ -331,9 +331,9 @@ export class Repo {
                     if(rides.data.data.length != 0) {
                         rides.data.data.forEach(ride => {
                             debugger;
-                            ret.push(new Ride(ride["id"], ride["pick_up_time"], ride["drop_off_time"], ride["childId"], ride["childName"],
-                            ride["pick_up_location"], ride["drop_off_location"], "", ride["driver"], "", 
-                            new Child(ride["name"], ride["grade"], ride["school"], ride["health"], ride["username"], ride["id"], ride["password"])));
+                            ret.push(new Ride(ride["id"], ride["pick_up_time"], ride["drop_off_time"], ride["child"], ride["name"],
+                            ride["pick_up_location"], ride["drop_off_location"], "", ride["driver"], ride["driverName"], 
+                            new Child(ride["name"], ride["grade"], ride["school"], ride["healthConditions"], ride["username"], ride["child"], ride["password"])));
                         });    
                     }
                     resolve(ret);
