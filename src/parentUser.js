@@ -124,7 +124,7 @@ exports.login = (req, res) => {
 }
 
 exports.getParentAndChildInfo = (req, res) => {
-  let query = "SELECT p.id as parentID, p.email, p.phone, p.homeAddr, p.workAddr, p.name as parentName, p.password as parentPass, p.username as parentUsername, c.id as childID, c.name as childName, c.username as childUsername, c.password as childPass, c.grade, c.school, c.bio, c.healthConditions, c.emergencyContactName, c.emergencyContactNumber, c.rating FROM parentUser as p INNER JOIN childUser as c ON p.id = c.parentID WHERE p.id = '"+ req.params.id + "';";
+  let query = "SELECT p.id as parentID, p.email, p.phone, p.homeAddr, p.workAddr, p.name as parentName, p.password as parentPass, p.username as parentUsername, c.id as childID, c.name as childName, c.username as childUsername, c.password as childPass, c.grade, c.school, c.bio, c.healthConditions, c.emergencyContactName, c.emergencyContactNumber, c.rating FROM parentUser as p INNER JOIN childUser as c ON p.id = c.parentID WHERE p.id = '"+ req.query.id + "';";
   db.query(query, function(err, rows, fields) {
     if(err){
       logger.error("couldn't get parent user");
