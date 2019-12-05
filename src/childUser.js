@@ -19,7 +19,7 @@ exports.setupChild = (req, res) => {
       }
   })
 
-  query = "ALTER TABLE `childUser` AUTO_INCREMENT = 200000"
+  query = "ALTER TABLE `childUser` AUTO_INCREMENT = 200000;"
   db.query(query, (err, result) => {
       if(err) {}
       else{
@@ -40,7 +40,7 @@ exports.addChild = (req, res) => {
       }
   });
   var currID;
-  query = "select * from childUser where name = '" + req.body.name + "' limit one;"
+  query = "select * from childUser where name = '" + req.body.name + "' limit 1;"
   db.query(query, (err,rows,fields) => {
     if(err){
       logger.error("couldnt find the user we just added");

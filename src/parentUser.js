@@ -52,7 +52,7 @@ exports.addParent = (req,res) => {
   })
   let currID = 0;
   let user = null;
-  db.query("select * from parentUser", (err,rows,fields) => {console.log("rows:", rows);});
+  //db.query("select * from parentUser", (err,rows,fields) => {console.log("rows:", rows);});
   query = "select * from parentUser where name = '" + req.body.name + "' limit 1;"
   db.query(query, (err,rows,fields) => {
     if(err){
