@@ -28,7 +28,7 @@ function Info(props) {
                 <br></br>
                 Pickup at {props.ride.pickupAddr} <span className="float-right">Going to {props.ride.destAddr}</span> <br></br>
                 Notes: {props.ride.notes}
-                <hr></hr>
+                {/*<hr></hr>
                 Car Info: 
                 Make: {props.car.make}  <br></br>
                 Model: {props.car.model}<br></br>
@@ -66,7 +66,7 @@ function Info(props) {
                     </>
                   )
                   : " "
-                }
+                }*/}
                 </Modal.Body>
                 <Modal.Footer>
                   <Button variant="secondary" onClick={handleClose}>
