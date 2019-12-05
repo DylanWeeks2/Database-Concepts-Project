@@ -194,8 +194,7 @@ exports.login = (req, res) => {
 
 //get getDriverSchedule
 exports.getDriverSchedule = (req, res) =>{
-  db.query("SELECT * FROM driverUser", (err, rows) => console.log("all rows", rows));
-  let query = "SELECT * FROM driverUser as d LEFT JOIN driverSchedule as ds ON d.id = ds.driverID LEFT JOIN rideSchedule as r ON r.driver = d.id LEFT JOIN childUser as c ON r.child = c.id WHERE d.id = '" + req.body.id + "';";
+  let query = "SELECT * FROM driverUser as d LEFT JOIN driverSchedule as ds ON d.id = ds.driverID LEFT JOIN rideSchedule as r ON r.driver = d.id LEFT JOIN childUser as c ON r.child = c.id WHERE d.id = '" + req.query.id + "';";
   db.query(query, (err,rows, fields) => {
     if(err){
       logger.error("couldn't get drivers");

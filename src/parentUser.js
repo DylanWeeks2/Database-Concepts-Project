@@ -125,7 +125,7 @@ exports.login = (req, res) => {
 }
 
 exports.getParentAndChildInfo = (req, res) => {
-  let query = "SELECT * FROM parentUser as p LEFT JOIN childUser as c ON p.id = c.parentID WHERE p.id = '" + req.body.id + "';";
+  let query = "SELECT * FROM parentUser as p LEFT JOIN childUser as c ON p.id = c.parentID WHERE p.id = '" + req.query.id + "';";
   db.query(query, function(err, rows, fields) {
     if(err){
       logger.error("couldn't get parent user");
