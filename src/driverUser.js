@@ -67,7 +67,7 @@ exports.addDriver = (req, res) => {
   });
   var currID;
   let user = null;
-  db.query("SELECT * FROM driverUser", (err, rows) => console.log("all rows", rows));
+  db.query("SELECT * FROM driverUser;", (err, rows) => console.log("all rows", rows));
   query = "select * from driverUser where name = '" + req.body.name + "' limit 1;"
   db.query(query, (err,rows,fields) => {
     if(err){
@@ -173,7 +173,7 @@ exports.updateDriver = (req, res) => {
 exports.login = (req, res) => {
   let username = req.body.username;
   let password = req.body.password;
-  let query = "select * from driverUser where name = '" + req.body.username + "' and password = '" + req.body.password + "' limit 1";
+  let query = "select * from driverUser where name = '" + req.body.username + "' and password = '" + req.body.password + "' limit 1;";
   db.query(query, function(err, rows, field) {
     if(rows == null  ||rows.length == 0){
       res.status(200).json({

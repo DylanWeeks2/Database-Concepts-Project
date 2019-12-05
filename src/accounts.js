@@ -1,6 +1,6 @@
 
 exports.setupAccounts = (req, res) => {
-    let query = "drop table if exists accounts";
+    let query = "drop table if exists accounts;";
     db.query(query, (err, result) => {
       if(err){
         console.log(err);
@@ -8,7 +8,7 @@ exports.setupAccounts = (req, res) => {
         res.status(400);
       }
     });
-    query = "CREATE TABLE `accounts` (`id` INT AUTO_INCREMENT, `username` VARCHAR(50) NOT NULL, `password` VARCHAR(500) NOT NULL, `userID` INT NOT NULL, PRIMARY KEY (`id`), UNIQUE INDEX `userID_UNIQUE` (`userID` ASC),UNIQUE INDEX `username_UNIQUE` (`username` ASC))";
+    query = "CREATE TABLE `accounts` (`id` INT AUTO_INCREMENT, `username` VARCHAR(50) NOT NULL, `password` VARCHAR(500) NOT NULL, `userID` INT NOT NULL, PRIMARY KEY (`id`), UNIQUE INDEX `userID_UNIQUE` (`userID` ASC),UNIQUE INDEX `username_UNIQUE` (`username` ASC));";
     db.query(query, (err, result) => { 
         if(err) {
           console.log(err);
@@ -24,10 +24,10 @@ exports.setupAccounts = (req, res) => {
 exports.login = (req, res) => {
     let username = req.query.username;
     let password = req.query.password;
-    console.log("Login,","select * from accounts where username = '" + username + "' and password = '" + password + "' limit 1");
-    let query = "select * from accounts where username = '" + username + "' and password = '" + password + "' limit 1";
+    console.log("Login,","select * from accounts where username = '" + username + "' and password = '" + password + "' limit 1;");
+    let query = "select * from accounts where username = '" + username + "' and password = '" + password + "' limit 1;";
 
-    db.query("SELECT * FROM accounts", function(err, rows){console.log("Rows", rows);})
+    db.query("SELECT * FROM accounts;", function(err, rows){console.log("Rows", rows);})
     db.query(query, function(err, rows, field) {
       console.log("req", req.query);
       if(rows == null  ||rows.length == 0 || err){
