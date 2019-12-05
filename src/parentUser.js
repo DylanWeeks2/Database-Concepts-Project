@@ -17,7 +17,7 @@ exports.setupParent = (req, res) => {
       console.log("Errpr creaing parent user", err);
       res.redirect('/'); }
   })
-  query = "ALTER TABLE parentUser AUTO_INCREMENT = 100000";
+  query = "ALTER TABLE parentUser AUTO_INCREMENT = 100000;";
   db.query(query, (err, result) => {
     if(err) { 
       console.log("Error altering parentuser", err);
@@ -66,8 +66,8 @@ exports.addParent = (req,res) => {
       console.log("Found User");
       user = rows[0];
       currID = rows[0].id;
-      console.log("insert into accounts values (NULL,'" + req.body.username +"','" + req.body.password +"'," + currID +");");
-      query = "insert into accounts values (NULL,'" + req.body.username +"','" + req.body.password +"'," + currID +");";
+      console.log("insert into accounts values (NULL,'" + req.body.username +"','" + req.body.password +"','" + currID +");");
+      query = "insert into accounts values (NULL,'" + req.body.username +"','" + req.body.password +"','" + currID +");";
       db.query(query, (err,rows, result) => {
         if(err){
           console.log(err);
