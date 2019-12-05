@@ -57,7 +57,7 @@ exports.setupDriver = (req, res) => {
 
 // post /addDriver
 exports.addDriver = (req, res) => {
-  let query = "insert into driverUser values(NULL,'"+ `${req.body.name}', '${req.body.gender}` + "',NULL"  + `,'${req.body.email}','` + req.body.phone + `', NULL, NULL, NULL, NULL,NULL, NULL, NULL, NULL,'${req.body.username}','` + req.body.password + "')";
+  let query = "insert into driverUser values(NULL,'"+ `${req.body.name}', '${req.body.gender}` + "',NULL"  + `,'${req.body.email}','` + req.body.phone + `', NULL, NULL, NULL, NULL,NULL, NULL, NULL, NULL,'${req.body.username}','` + req.body.password + "');";
   db.query(query, (err, result) => {
     if(err) {
       console.log(err);
