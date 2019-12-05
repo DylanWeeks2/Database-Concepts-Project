@@ -22,10 +22,12 @@ exports.setupRideSchedule = (req,res) => {
 
 //post /addRideSchedule
 exports.addRideSchedule = (req, res) => {
-  let query = "insert into rideSchedule values(NULL,'"+ `${req.body.pick_up_location}', '${req.body.drop_off_location} ', ' ${req.body.pick_up_time} ', ' ${req.body.drop_off_time} ', 1, ' ${req.body.parent} ', ' ${req.body.child} ', ' ${req.body.driver} ');`;
+  //let query = "insert into rideSchedule values(NULL,'"+ `${req.body.pick_up_location}', '${req.body.drop_off_location} ', ' ${req.body.pick_up_time} ', ' ${req.body.drop_off_time} ', 1, ' ${req.body.parent} ', ' ${req.body.child} ', ' ${req.body.driver} ');`;
+  let query = "insert into rideSchedule values(NULL,'"+ req.body.pick_up_location + "','" + req.body.drop_off_location + "','" + req.body.pick_up_time + "','" + req.body.drop_off_location + "','" + req.body.paren + "','" + req.body.child + "','" + req.body.driver +"');";
   db.query(query, (err,result) => {
     if(err) {
-      res.status(200).send('ride couldnt be scheduled');
+      logger.error(err);
+      res.status(400).send('ride couldnt be scheduled');
     }else{
       res.status(200).send('ride scheduled');
     }

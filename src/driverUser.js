@@ -57,7 +57,7 @@ exports.setupDriver = (req, res) => {
 
 // post /addDriver
 exports.addDriver = (req, res) => {
-  let query = "insert into driverUser values(NULL,'"+ `${req.body.name}', '${req.body.gender}` + "',NULL"  + `,'${req.body.email}','` + req.body.phone + `', NULL, NULL, NULL, NULL,NULL, NULL, NULL, NULL,'${req.body.username}','` + req.body.password + "')";
+  let query = "insert into driverUser values(NULL,'"+ `${req.body.name}', '${req.body.gender}` + "',NULL"  + `,'${req.body.email}','` + req.body.phone + `', NULL, NULL, NULL, NULL,NULL, NULL, NULL, NULL,'${req.body.username}','` + req.body.password + "');";
   db.query(query, (err, result) => {
     if(err) {
       console.log(err);
@@ -129,10 +129,10 @@ exports.addDriver = (req, res) => {
 //GET /getDriver
 exports.getDriver = (req, res) => {
   db.query("SELECT * FROM driverUser", (err, rows) => console.log("all rows", rows));
-  let query = "select * from driverUser d LEFT JOIN services s ON d.id = s.driverId where d.id = " + req.query.id + ";";
+  let query = "select * from driverUser as d LEFT JOIN services as s ON d.id = s.driverId where d.id = " + req.query.id + ";";
 
   console.log(query);
-  db.query("SELECT * FROM SERVICES", function(err, rows, fields) {console.log("services", rows)});
+  //db.query("SELECT * FROM SERVICES", function(err, rows, fields) {console.log("services", rows)});
   db.query(query, function(err,rows, fields) {
       if(err){
           logger.error("couldn't get driver user", err);
