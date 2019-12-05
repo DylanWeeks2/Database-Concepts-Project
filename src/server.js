@@ -96,7 +96,7 @@ var auth = function(req, res, next) {
 
 
 //GET /setupdb
-app.get('/setupdb', (req, res) => {
+app.post('/setupdb', (req, res) => {
   console.log("setting up db");
   let query = "DROP TABLE if exists rideSchedule";
   db.query(query, (err, result) => 
@@ -266,23 +266,23 @@ app.get('/getServices', services.getServices);
 //childUser
 app.post('/setupChild', childUser.setupChild);
 app.post('/addChild', childUser.addChild);
-app.post('/updateChild', childUser.updateChild);
+app.put('/updateChild', childUser.updateChild);
 app.get('/getChild', childUser.getChild);
 //car
 app.post('/setupCar', car.setupCar);
 app.post('/addCar', car.addCar);
 app.get('/getCar', car.getCar);
-app.post('/updateCar', car.updateCar);
+app.put('/updateCar', car.updateCar);
 //driverSchedule
 app.post('/setupDriverSchedule', driverSchedule.setupDriverSchedule);
 app.post('/addDriverSchedule', driverSchedule.addDriverSchedule);
-app.post('/setDriverScheduleStatus', driverSchedule.setDriverScheduleStatus);
+app.put('/setDriverScheduleStatus', driverSchedule.setDriverScheduleStatus);
 app.get('/getAvailableDrivers', driverSchedule.getAvailableDrivers);
 //rideSchedule
 app.post('/setupRideSchedule', rideSchedule.setupRideSchedule);
 app.post('/addRideSchedule', rideSchedule.addRideSchedule);
 app.post('/deleteRideSchedule', rideSchedule.deleteRideSchedule);
-app.post('/updateRideSchedule', rideSchedule.updateRideSchedule);
+app.put('/updateRideSchedule', rideSchedule.updateRideSchedule);
 app.get('/getRideSchedule', rideSchedule.viewRideSchedule);
 app.get('/getDriverSchedule', rideSchedule.getDriverSchedule);
 //reivews
