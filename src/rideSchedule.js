@@ -46,7 +46,7 @@ exports.deleteRideSchedule = (req,res) => {
   
 //post /updateRideSchedule
 exports.updateRideSchedule = (req,res) => {
-  let query = "update schedule set pick_up_location = '" + req.body.pick_up_location + "', drop_off_location = '" + req.body.drop_off_location + "', pick_up_time = '" + req.body.pick_up_time + "', drop_off_time = '" + req.body.pick_up_time + "' where id = '" + req.body.id +"';";
+  let query = "update rideSchedule set pick_up_location = '" + req.body.pick_up_location + "', drop_off_location = '" + req.body.drop_off_location + "', pick_up_time = '" + req.body.pick_up_time + "', drop_off_time = '" + req.body.pick_up_time + "' where id = '" + req.body.id +"';";
   db.query(query, (err,result) => {
     if(err) {
       logger.error("cant update ride");
@@ -57,7 +57,7 @@ exports.updateRideSchedule = (req,res) => {
   
 //get /viewRideSchedule
 exports.viewRideSchedule = (req,res) => {
-  let query = "select * from schedule where child_id = '" + req.body.child_id+"';";
+  let query = "select * from rideSchedule where child = '" + req.body.child+"';";
   db.query(query, (err,rows, fields) => {
     if(err){
       logger.error("couldn't get rides");

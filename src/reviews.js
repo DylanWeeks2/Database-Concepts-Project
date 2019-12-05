@@ -23,7 +23,7 @@ exports.setupReviews = (req, res) => {
     if(req.body.stars < 0 || req.body.stars > 5){
         logger.error("stars out of bounds");
     }
-    let query = "insert into reviews values(NULL,'"+ req.body.stars + "','" + req.body.text + "','" + req.body.driverId+ "')";
+    let query = "insert into reviews values(NULL,'"+ req.body.stars + "','" + req.body.text + "','" + req.body.driverID+ "')";
     db.query(query, (err, result) => {
       if(err) {
         logger.error("failed adding a review");
@@ -37,7 +37,7 @@ exports.setupReviews = (req, res) => {
 
 //GET /getReviews
 exports.getReviews = (req, res) => {
-  let query = "select * from reviews where driverId = '" + req.body.driverId + "'";
+  let query = "select * from reviews where driverID = '" + req.body.driverID + "'";
   db.query(query, function(err,rows, fields) {
       if(err){
           logger.error("couldn't get driver reviews");

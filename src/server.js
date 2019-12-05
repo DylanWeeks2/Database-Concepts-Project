@@ -245,7 +245,6 @@ app.get('/getCreditCard', creditCard.getCreditCard);
 //parentUser
 app.post('/setupParent', parentUser.setupParent);
 app.get('/getParentAndChildInfo', parentUser.getParentAndChildInfo);
-//app.put('/changeParentPassword', parentUser.changeParentPassword);
 app.post('/addParent', parentUser.addParent);
 app.get('/getParent', parentUser.getParent);
 //driverUser

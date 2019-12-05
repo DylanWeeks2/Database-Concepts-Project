@@ -11,7 +11,7 @@ exports.setupParent = (req, res) => {
       }
   });
   console.log("CREATE TABLE `parentUser` (`id` INT AUTO_INCREMENT,`email` VARCHAR(100), `phone` VARCHAR(100), `homeAddr` VARCHAR(200), `workAddr` VARCHAR(100),  `name` VARCHAR(50), `password` VARCHAR(500), `username` VARCHAR(100), PRIMARY KEY (`id`), UNIQUE INDEX `id_UNIQUE` (`id` ASC));");
-  query = "CREATE TABLE `parentUser` (`id` INT NOT NULL AUTO_INCREMENT,`email` VARCHAR(100), `phone` VARCHAR(100), `homeAddr` VARCHAR(200), `workAddr` VARCHAR(100),  `name` VARCHAR(50), `password` VARCHAR(500), `username` VARCHAR(100), PRIMARY KEY (`id`), UNIQUE INDEX `id_UNIQUE` (`id` ASC)); ";
+  query = "CREATE TABLE `parentUser` (`id` INT AUTO_INCREMENT,`email` VARCHAR(100), `phone` VARCHAR(100), `homeAddr` VARCHAR(200), `workAddr` VARCHAR(100),  `name` VARCHAR(50), `password` VARCHAR(500), `username` VARCHAR(100), PRIMARY KEY (`id`), UNIQUE INDEX `id_UNIQUE` (`id` ASC)); ";
   db.query(query, (err, result) => {
     if(err) { 
       console.log("Errpr creaing parent user", err);
@@ -62,10 +62,10 @@ exports.addParent = (req,res) => {
     }
     else {
       console.log(req.body.name);
-      console.log(rows[0].id);
+      console.log(rows[rows.length - 1].id);
       console.log("Found User");
-      user = rows[0];
-      currID = rows[0].id;
+      user = rows[rows.length-1];
+      currID = rows[rows.length-1].id;
       console.log("insert into accounts values (NULL,'" + req.body.username +"','" + req.body.password +"'," + currID +");");
       query = "insert into accounts values (NULL,'" + req.body.username +"','" + req.body.password +"'," + currID +");";
       db.query(query, (err,rows, result) => {

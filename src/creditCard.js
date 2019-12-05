@@ -19,7 +19,7 @@ exports.setupCreditCard = (req, res) => {
 //POST /save_credit_card
 exports.saveCreditCard = (req, res) => {
     console.log(req.body);
-    let query = "insert into creditCard values(NULL,'" + req.body.expDate + "','" + req.body.ccNumber + "','" + req.body.cvv + "','" + req.body.zipCode + "','" + req.body.parentId + "')"; 
+    let query = "insert into creditCard values(NULL,'" + req.body.expDate + "','" + req.body.ccNumber + "','" + req.body.cvv + "','" + req.body.zipCode + "','" + req.body.parentID + "')"; 
     db.query(query, (err, result) => {
         if(err) {
             logger.error("failed saving new credit card");
@@ -33,7 +33,7 @@ exports.saveCreditCard = (req, res) => {
 
 //GET /getCreditCard
 exports.getCreditCard = (req, res) => {
-    let query = "select * from creditCard where parentId = '" + req.body.parentId + "'";
+    let query = "select * from creditCard where parentId = '" + req.body.parentID + "'";
     db.query(query, function(err,rows, fields) {
         if(err){
             logger.error("couldn't get credit card");
