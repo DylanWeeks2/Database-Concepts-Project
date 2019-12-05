@@ -94,8 +94,8 @@ export class DriverProfile extends React.Component {
                 {/* <div className="row header-box">
                     <nav aria-label="breadcrumb">
                         <ol className="breadcrumb">
-                            <li className="breadcrumb-item"><Link to={`/driver`} id="driverProfile">{this.state.account.name}</Link></li>
-                            <li className="breadcrumb-item active" aria-current="page">{`${this.state.profile.name}'s Rides`}</li>
+                            <li className="breadcrumb-item"><Link to={`/driver`} id="driverProfile">{this.state.name}</Link></li>
+                            <li className="breadcrumb-item active" aria-current="page">{`${this.state.name}'s Rides`}</li>
                         </ol>
                     </nav>
                 </div> */}
