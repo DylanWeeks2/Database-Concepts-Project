@@ -85,7 +85,7 @@ exports.getChild = (req, res) => {
 //post /updateChild
 exports.updateChild = (req, res) => {
   console.log(req.body);
-  let query = "update childUser set name = '" + req.body.name + "', bio = '" + req.body.bio + "', username = '" + req.body.username + "', password = '" + req.body.password + "', grade = '" + req.body.grade + "', healthConditions = '" + req.body.healthConditions + "', emergencyContactName = '" + req.body.emergencyContactName + "', emergencyContactNumber = '" + req.body.emergencyContactNumber + "', rating = '" + req.body.rating + "' where id = '" + req.body.id + "'";
+  let query = "update childUser set name = '" + req.body.name + "', bio = '" + req.body.bio + "', username = '" + req.body.username + "', password = '" + req.body.password + "', grade = '" + req.body.grade + "', healthConditions = '" + req.body.healthConditions + "', emergencyContactName = '" + req.body.emergencyContactName + "', emergencyContactNumber = '" + req.body.emergencyContactNumber + "', rating = '" + req.body.rating + "' school = '" + req.body.school + "' where id = '" + req.body.id + "'";
   db.query(query, (err, result) => {
       if(err) {
           logger.error("failed to update child");
