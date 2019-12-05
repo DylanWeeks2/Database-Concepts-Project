@@ -9,7 +9,11 @@ import { Repo } from '../../api/repo';
 export class ParentProfile extends React.Component {
     repo = new Repo();
     state = {
-        profile: new ParentUser(0, "rando@rando.com", "9995554444", "5 Street Rd Dallas, Tx", "6 Road St Dallas, Tx", "Rando Name", [new Child("Test", "5", "Test Elementary", "Peanut Allergy", "XxTESTxX")]),
+        profile: new ParentUser(100100, "sing.song@yahoo.com", "2145559874", "56322 League lakes blvd.", "45567 coit rd bldg 512", "Billie Joel",
+        [
+            (new Child("John Elton", 6, "Scistercian Middle School", "Water Allergy", "", "pass1234!", 200100)),
+            (new Child("Billy Maze", 3, "Constellar Academy for the musically Gifted", "Peanut Allergy", "MIKEy", "watermelonsNICe44", 200101))
+        ], "dietorock12", "MuSiCMaN"),
         newPassField: ""
     }
 

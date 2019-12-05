@@ -34,20 +34,24 @@ export class ParentDashboard extends React.Component {
     // }
     state = {
         modalVisible: false,
-        account: new ParentUser(1, "test@test.gmail", "1234567890", "1234 test rd", "45567 test rd", "Joe Mama",
+        account: new ParentUser(100100, "sing.song@yahoo.com", "2145559874", "56322 League lakes blvd.", "45567 coit rd bldg 512", "Billie Joel",
             [
-                (new Child("Ben Dover", 2, "Good School", "Water Allergy", "xXx_BENDOVER69", "pass", 0)),
-                (new Child("Mike Hawk", 3, "BEst School", "Pain Allergy", "MIKE", "pass", 1))
-            ], "pass", "user"
+                (new Child("John Elton", 6, "Scistercian Middle School", "Water Allergy", "", "pass1234!", 200100)),
+                (new Child("Billy Maze", 3, "Constellar Academy for the musically Gifted", "Peanut Allergy", "MIKEy", "watermelonsNICe44", 200101))
+            ], "dietorock12", "MuSiCMaN"
         ),
         rides: [
-            new Ride(0, new Date(), new Date(), 0, "Ben Dover", "5555 St.", "4444 Rd.", "This kid is fucking dope", 0, "Sofa King")
+            new Ride(0, new Date('December 17, 2019 13:24:00'), new Date('December 17, 2019 14:30:00'), 0, "John Elton", "5555 saint peters St.", "4444 johnpaul Rd.", "going to drama practice", 300102, "John Delaney"),
+            new Ride(1, new Date('December 17, 2019 16:45:00'), new Date('December 17, 2019 17:00:00'), 0, "John Elton", "4444 johnpaul Rd.", "5555 saint peters St.", "drop him off with his teacher", 300101, "Kingston Khan")
         ],
         pastRides: [
-            new Ride(1, new Date(), new Date(), 0, "Ben DICK", "55few55 St.", "4444few Rd.", "This kidfew is fucking dope", 0, "Sofafew King")
+            new Ride(2, new Date('October 5, 2019 08:00:00'), new Date('October 5, 2019 09:00:00'), 0, "John Elton", "9999 Deep Blue Rd.", "7612 Cornell Ave", "Kid's got a birthday party but I'm working", 300100, "Sylvester Stalone"),
+            new Ride(3, new Date('October 7, 2019 07:00:00'), new Date('October 7, 2019 07:30:00'), 0, "Billy Maze", "55few55 St.", "4444few Rd.", "Get him to school", 300102, "John Delaney")
         ],
         drivers: [
-            new DriverUser(1, "Buck", "M", "I am cool", "buck@yahoo.com", 2145556666, "Chevy", "equinox", 2009, "silver", "BiteMe", 3, "decent", "cupholder", "bucky", "pass")
+            new DriverUser(300101, "Kingston Khan", "M", "I'm driving to help finance my masters in astrophysics'", "KHAAAAN@gmail.com", 2145556666, "Chevy", "equinox", 2009, "silver", "7M5E99", 3, "Slightly Used", "cupholder", "bucky", "pass"),
+            new DriverUser(300100, "Sylvester Stalone", "M", "I LOVE KIDS", "pucnhout344@yahoo.com", 2145896326, "Ford", "fiesta", 2019, "Black", "CKR890", 5, "Like New", "Aux cords to play ur fav. tunes", "bucky", "pass"),
+            new DriverUser(300102, "John Delaney", "M", "I guarantee 0 interaction with my ride-ees", "jd777@gmail.com", 2189856546, "Chevy", "equinox", 2009, "silver", "7M5E99", 4, "Heavily Used", "", "bucky", "pass")
         ]
     }
 
