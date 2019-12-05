@@ -269,7 +269,7 @@ app.post('/setupChild', childUser.setupChild);
 app.post('/addChild', childUser.addChild);
 app.put('/updateChild', childUser.updateChild);
 app.get('/getChild', childUser.getChild);
-app.get('/getChildofParent', childUser.getChildOfParent);
+app.get('/getChildOfParent', childUser.getChildOfParent);
 //car
 app.post('/setupCar', car.setupCar);
 app.post('/addCar', car.addCar);
