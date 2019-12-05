@@ -41,12 +41,12 @@ export class ParentDashboard extends React.Component {
             ], "dietorock12", "MuSiCMaN"
         ),
         rides: [
-            new Ride(0, new Date('December 17, 2019 13:24:00'), new Date('December 17, 2019 14:30:00'), 0, "John Elton", "5555 saint peters St.", "4444 johnpaul Rd.", "going to drama practice", 300102, "John Delaney"),
-            new Ride(1, new Date('December 17, 2019 16:45:00'), new Date('December 17, 2019 17:00:00'), 0, "John Elton", "4444 johnpaul Rd.", "5555 saint peters St.", "drop him off with his teacher", 300101, "Kingston Khan")
+            new Ride(0, new Date('December 17, 2019 13:24:00'), new Date('December 17, 2019 14:30:00'), 0, "John Elton", "5555 saint peters St.", "4444 johnpaul Rd.", "going to drama practice", 300102, "John Delaney", new Child("John Elton", 6, "Scistercian Middle School", "Water Allergy", "", "pass1234!", 200100)),
+            new Ride(1, new Date('December 17, 2019 16:45:00'), new Date('December 17, 2019 17:00:00'), 0, "John Elton", "4444 johnpaul Rd.", "5555 saint peters St.", "drop him off with his teacher", 300101, "Kingston Khan", new Child("John Elton", 6, "Scistercian Middle School", "Water Allergy", "", "pass1234!", 200100))
         ],
         pastRides: [
-            new Ride(2, new Date('October 5, 2019 08:00:00'), new Date('October 5, 2019 09:00:00'), 0, "John Elton", "9999 Deep Blue Rd.", "7612 Cornell Ave", "Kid's got a birthday party but I'm working", 300100, "Sylvester Stalone"),
-            new Ride(3, new Date('October 7, 2019 07:00:00'), new Date('October 7, 2019 07:30:00'), 0, "Billy Maze", "55few55 St.", "4444few Rd.", "Get him to school", 300102, "John Delaney")
+            new Ride(2, new Date('October 5, 2019 08:00:00'), new Date('October 5, 2019 09:00:00'), 0, "John Elton", "9999 Deep Blue Rd.", "7612 Cornell Ave", "Kid's got a birthday party but I'm working", 300100, "Sylvester Stalone",new Child("John Elton", 6, "Scistercian Middle School", "Water Allergy", "", "pass1234!", 200100)),
+            new Ride(3, new Date('October 7, 2019 07:00:00'), new Date('October 7, 2019 07:30:00'), 0, "Billy Maze", "55few55 St.", "4444few Rd.", "Get him to school", 300102, "John Delaney", new Child("Billy Maze", 3, "Constellar Academy for the musically Gifted", "Peanut Allergy", "MIKEy", "watermelonsNICe44", 200101))
         ],
         drivers: [
             new DriverUser(300101, "Kingston Khan", "M", "I'm driving to help finance my masters in astrophysics'", "KHAAAAN@gmail.com", 2145556666, "Chevy", "equinox", 2009, "silver", "7M5E99", 3, "Slightly Used", "cupholder", "bucky", "pass"),
