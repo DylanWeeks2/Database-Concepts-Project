@@ -9,7 +9,7 @@ exports.setupChild = (req, res) => {
           res.status(200);
       }
   });
-  query = "CREATE TABLE `childUser` (`id` INT NOT NULL AUTO_INCREMENT, `name` VARCHAR(50), `username` VARCHAR(50) NOT NULL, `password` VARCHAR(500) NOT NULL, `grade` INT,`school` VARCHAR(200), `bio` VARCHAR(200), `healthConditions` VARCHAR(200), `emergencyContactName` VARCHAR(50), `emergencyContactNumber` VARCHAR(50), `rating` DECIMAL(19,4), `parentID` INT NULL, PRIMARY KEY (`id`), UNIQUE INDEX `id_UNIQUE` (`id` ASC), INDEX `parentID_idx` (`parentID` ASC), CONSTRAINT `parentID` FOREIGN KEY (`parentID`) REFERENCES `db`.`parentUser` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION); ";
+  query = "CREATE TABLE `childUser` (`id` INT NOT NULL AUTO_INCREMENT, `name` VARCHAR(50), `username` VARCHAR(50) NOT NULL, `password` VARCHAR(500) NOT NULL, `grade` INT,`school` VARCHAR(200), `bio` VARCHAR(200), `healthConditions` VARCHAR(200), `emergencyContactName` VARCHAR(50), `emergencyContactNumber` VARCHAR(50), `rating` DECIMAL(19,4), `parentID` INT NOT NULL, PRIMARY KEY (`id`), UNIQUE INDEX `id_UNIQUE` (`id` ASC), INDEX `parentID_idx` (`parentID` ASC), CONSTRAINT `parentID` FOREIGN KEY (`parentID`) REFERENCES `db`.`parentUser` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION); ";
   db.query(query, (err, result) => {
       if(err) {
         console.log(err);
