@@ -25,7 +25,7 @@ export class RideItem extends React.Component {
         modalVisible: false,
         services: [],
         accidents: [],
-        car: new Car()
+        car: new Car("Ford", "F-150", 2019, "grey", "H33", 4, "Like new", "Aux port, Cup holders")
     }
 
     render () {

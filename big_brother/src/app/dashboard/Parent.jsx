@@ -94,8 +94,10 @@ export class ParentDashboard extends React.Component {
     componentDidMount() {
         this.repo.getParentWithChildren(localStorage.getItem("userId"))
             .then(parent => {
-                if(parent.id)
+                if(parent.id) {
+                    debugger;
                     this.setState({account: parent});
+                }
                 else {
                     this.repo.getParent(localStorage.getItem("userId"))
                         .then(parent => this.setState({account: parent}))
