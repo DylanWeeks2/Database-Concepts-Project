@@ -73,5 +73,26 @@ exports.viewRideSchedule = (req,res) => {
     }
   });
 }
+
+ 
+ //get getDriverSchedule
+ exports.getDriverSchedule = (req, res) =>{
+  let query = "SELECT * FROM rideSchedule as r INNER JOIN childUser as c ON r.child = c.id WHERE r.driver = '" + req.query.driver + "';";
+  db.query(query, (err,rows, fields) => {
+    if(err){
+      logger.error("couldn't get drivers");
+      res.status(400).json({
+        "data": [],
+        "error": "MySQL error"
+      });
+    }
+    else{
+      res.status(200).json({
+        "data": rows
+      });
+    }
+  });
+ };
+
   
   

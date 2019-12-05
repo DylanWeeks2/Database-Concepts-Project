@@ -250,7 +250,6 @@ app.post('/addParent', parentUser.addParent);
 app.get('/getParent', parentUser.getParent);
 //driverUser
 app.post('/setupDriver', driverUser.setupDriver);
-app.get('/getDriverSchedule', driverUser.getDriverSchedule);
 //app.put('/changeDriverPassword', driverUser.changeDriverPassword);
 app.post('/addDriver', driverUser.addDriver);
 app.put('/updateDriver', driverUser.updateDriver);
@@ -285,6 +284,7 @@ app.post('/addRideSchedule', rideSchedule.addRideSchedule);
 app.post('/deleteRideSchedule', rideSchedule.deleteRideSchedule);
 app.post('/updateRideSchedule', rideSchedule.updateRideSchedule);
 app.get('/getRideSchedule', rideSchedule.viewRideSchedule);
+app.get('/getDriverSchedule', rideSchedule.getDriverSchedule);
 //reivews
 app.post('/setupReviews', reviews.setupReviews);
 app.post('/addReview', reviews.addReview);

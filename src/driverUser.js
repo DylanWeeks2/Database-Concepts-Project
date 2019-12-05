@@ -191,23 +191,3 @@ exports.login = (req, res) => {
     }
   })
 }
-
-//get getDriverSchedule
-exports.getDriverSchedule = (req, res) =>{
-  db.query("SELECT * FROM driverUser", (err, rows) => console.log("all rows", rows));
-  let query = "SELECT * FROM driverUser as d LEFT JOIN driverSchedule as ds ON d.id = ds.driverID LEFT JOIN rideSchedule as r ON r.driver = d.id LEFT JOIN childUser as c ON r.child = c.id WHERE d.id = '" + req.body.id + "';";
-  db.query(query, (err,rows, fields) => {
-    if(err){
-      logger.error("couldn't get drivers");
-      res.status(400).json({
-        "data": [],
-        "error": "MySQL error"
-      });
-    }
-    else{
-      res.status(200).json({
-        "data": rows
-      });
-    }
-  });
- };
