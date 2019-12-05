@@ -67,7 +67,7 @@ function AddRide(props) {
                         <Form.Label>Driver</Form.Label>
                             <Form.Control as="select" required>
                                 {
-                                    props.drivers.map(x => <option key={x.id} value = {x.id}>{x.name}</option>)
+                                    props.drivers.map(x => <option key={x.id} value = {x.id}>{`${x.name}, ${x.phone}, ${x.year} ${x.make} ${x.model}, ${x.numSeats} seats`}</option>)
                                 }
                             </Form.Control>
                         </Form.Group>
