@@ -37,7 +37,6 @@ exports.addChild = (req, res) => {
           res.status(400);
       }
       else{
-          res.status(200).send('Child has been added!!');
       }
   });
   var currID;
@@ -49,7 +48,6 @@ exports.addChild = (req, res) => {
     }
     else{
       currID = rows[0].id;
-      res.status(200).send('got the userID back');
     }
   });
   query = "insert into accounts values (NULL,'" + req.body.username +"','" + req.body.password +"','" + currID +"');";
