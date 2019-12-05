@@ -21,9 +21,9 @@ function Info(props) {
               className="my-modal"
               centered>
                 <Modal.Header closeButton>
-                  <Modal.Title>Ride For {props.ride.pickup_time.toLocaleString('default', { month: 'long' }) }  {props.ride.pickup_time.getDate()}, {props.ride.pickup_time.getFullYear()} </Modal.Title>
+                  <Modal.Title>Ride For {props.ride.pickup_time.toLocaleString('default', { month: 'long' }) }  {new Date(props.ride.pickup_time).getDate()}, {new Date(props.ride.pickup_time).getFullYear()} </Modal.Title>
                 </Modal.Header>
-                <Modal.Body className="clearfix">Ride is scheduled for {props.ride.pickup_time.toLocaleTimeString('en-US')}<br></br>
+                <Modal.Body className="clearfix">Ride is scheduled for {new Date(props.ride.pickup_time).toLocaleTimeString('en-US')}<br></br>
                 Driver is {props.ride.driverName} <span className="float-right">For Child {props.ride.childName}</span>
                 <br></br>
                 Pickup at {props.ride.pickupAddr} <span className="float-right">Going to {props.ride.destAddr}</span> <br></br>
