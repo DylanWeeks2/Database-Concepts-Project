@@ -22,7 +22,7 @@ exports.setupRideSchedule = (req,res) => {
 
 //post /addRideSchedule
 exports.addRideSchedule = (req, res) => {
-  let query = "insert into rideSchedule values('"+req.body.id+"','"+req.body.pick_up_location+"','"+req.body.drop_off_location+"','"+req.body.pick_up_time+"','"+req.body.drop_off_time+"','"+req.body.active+"','"+req.body.parent_id+"');";
+  let query = "insert into rideSchedule values(NULL,'"+ `${req.body.pick_up_location}', '${req.body.drop_off_location} ', ' ${req.body.pick_up_time} ', ' ${req.body.drop_off_time} ', 1, ' ${req.body.parent} ', ' ${req.body.child} ', ' ${req.body.driver} ')`;
   db.query(query, (err,result) => {
     if(err) {
       res.redirect('/');
