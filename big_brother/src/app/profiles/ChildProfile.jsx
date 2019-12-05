@@ -44,7 +44,7 @@ export class ChildProfile extends React.Component {
                             <Card.Text>
                 
                             </Card.Text>
-                            <Info  ride = {ride}/>
+                            <Info  ride = {ride} services={[]} accidents={[]} car={null}/>
                         </Card.Body>
                         </Card>
                         
