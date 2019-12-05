@@ -40,6 +40,7 @@ exports.deleteRideSchedule = (req,res) => {
   db.query(query, (err,result) => {
     if(err) {
       logger.error("cant delete schedule");
+      res.status(400);
     }
     res.status(200).send("ride has been removed");
   });
