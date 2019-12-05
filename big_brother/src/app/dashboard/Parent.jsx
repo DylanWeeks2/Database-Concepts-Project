@@ -16,19 +16,22 @@ import { Link } from 'react-router-dom'
 export class ParentDashboard extends React.Component {
     repo = new Repo();
 
-    addRide(time, children, driver, address, notes) {
-        const rides = new Ride(localStorage.getItem("userId"), time, new Date(),
-            this.state.account.children.find(y => y.id == children).id, this.state.account.children.find(y => y.id == children).name,
-            this.state.account.children.find(y => y.id == children).health,
-            address,
-            notes,
-            this.state.drivers.find(y => y.id == driver).id,
-            this.state.drivers.find(y => y.id == driver).name);
-        this.setState(prevState => {
-            prevState.rides.push(rides);
-            return prevState;
-        })
-    }
+    // addRide(time, children, driver, address, notes) {
+        
+    //     const rides = new Ride(localStorage.getItem("userId"), time, new Date(),
+    //         this.state.account.children.find(y => y.id == children).id, this.state.account.children.find(y => y.id == children).name,
+    //         this.state.account.children.find(y => y.id == children).health,
+    //         address,
+    //         notes,
+    //         this.state.drivers.find(y => y.id == driver).id,
+    //         this.state.drivers.find(y => y.id == driver).name);
+    //     this.repo.addRide(localStorage.getItem("userId"), rides)
+    //         .then()    
+    //     // this.setState(prevState => {
+    //     //     prevState.rides.push(rides);
+    //     //     return prevState;
+    //     // })
+    // }
     state = {
         modalVisible: false,
         account: new ParentUser(1, "test@test.gmail", "1234567890", "1234 test rd", "45567 test rd", "Joe Mama",
@@ -65,8 +68,10 @@ export class ParentDashboard extends React.Component {
             driver1.id,
             driver1.name);
         
-        //to do : call to DB
-        /*this.repo.addRide(rides);*/
+        //to do : this call doesn't work because the date-times aren't formatted correctly (we think)
+//        debugger;
+        // this.repo.addRide(localStorage.getItem("userId"), rides)
+        //     .then(resp => alert(resp))
         this.setState(prevState => {
             prevState.rides.push(rides);
             return prevState;
@@ -82,12 +87,19 @@ export class ParentDashboard extends React.Component {
     };
 
     //waiting for call from DB
-    /*componentDidMount() {
+    componentDidMount() {
         this.repo.getParentWithChildren(localStorage.getItem("userId"))
-            .then(parent => this.setState({account: parent}));
-        this.repo.getRidesForParent(localStorage.getItem("userId")) //TODO:: handle current rides vs. Past rides-
+            .then(parent => {
+                if(parent.id)
+                    this.setState({account: parent});
+                else {
+                    this.repo.getParent(localStorage.getItem("userId"))
+                        .then(parent => this.setState({account: parent}))
+                }
+            });
+        this.repo.getRides(localStorage.getItem("userId")) //TODO:: handle current rides vs. Past rides-
             .then(rides => this.setState({ activeRides: rides.activeRides, pastRides: rides.pastRides }));
-    }*/
+    }
 
     render() {
         return (
