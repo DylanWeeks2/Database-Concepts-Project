@@ -59,7 +59,7 @@ exports.updateRideSchedule = (req,res) => {
   
 //get /viewRideSchedule
 exports.viewRideSchedule = (req,res) => {
-  let query = "select * from rideSchedule where child = '" + req.body.child+"';";
+  let query = "select * from rideSchedule where child = '" + req.params.child+"';";
   db.query(query, (err,rows, fields) => {
     if(err){
       logger.error("couldn't get rides");
