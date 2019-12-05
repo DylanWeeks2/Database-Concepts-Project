@@ -248,6 +248,7 @@ app.get('/getParentAndChildInfo', parentUser.getParentAndChildInfo);
 //app.put('/changeParentPassword', parentUser.changeParentPassword);
 app.post('/addParent', parentUser.addParent);
 app.get('/getParent', parentUser.getParent);
+app.put('/updateParent', parentUser.updateParent);
 //driverUser
 app.post('/setupDriver', driverUser.setupDriver);
 //app.put('/changeDriverPassword', driverUser.changeDriverPassword);
