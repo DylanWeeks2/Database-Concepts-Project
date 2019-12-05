@@ -96,7 +96,7 @@ exports.getRideSchedule = (req,res) => {
  
  //get getDriverSchedule
  exports.getDriverSchedule = (req, res) =>{
-  let query = "SELECT * FROM rideSchedule as r INNER JOIN childUser as c ON r.child = c.id WHERE r.driver = '" + req.query.driver + "';";
+  let query = "SELECT * FROM rideSchedule as r INNER JOIN childUser as c ON r.child = c.id WHERE r.driver = '" + req.params.driver + "';";
   db.query(query, (err,rows, fields) => {
     if(err){
       logger.error("couldn't get drivers");
