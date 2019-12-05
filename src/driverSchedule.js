@@ -23,7 +23,7 @@ exports.setupDriverSchedule = (req, res) => {
 // post addDriverSchedule
 exports.addDriverSchedule = (req, res) => {
   console.log(req.body);
-  let query = "insert into driverSchedule values('" + req.body.id + "','" + req.body.start + "','" + req.body.end + "','" + req.body.active + "','" + req.body.parent_id + "');"; 
+  let query = "insert into driverSchedule values(NULL,'" + req.body.start + "','" + req.body.end + "','" + req.body.active + "','" + req.body.driver_id + "');"; 
   db.query(query, (err, result) => {
       if(err) {
           logger.error("failed saving new credit card");
