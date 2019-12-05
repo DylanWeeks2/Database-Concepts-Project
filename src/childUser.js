@@ -50,9 +50,7 @@ exports.addChild = (req, res) => {
     else{
       console.log(rows);
       currID = rows[0].id;
-    }
-  });
-  console.log(currID);
+      console.log(currID);
   query = "insert into accounts values (NULL,'" + req.body.username +"','" + req.body.password +"','" + currID +"');";
   db.query(query, (err,result) => {
     if(err){
@@ -65,6 +63,9 @@ exports.addChild = (req, res) => {
   res.status(200).json({
     "id": currID
   });
+    }
+  });
+  
 };
 
 //GET /getChild
