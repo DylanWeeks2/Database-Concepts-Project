@@ -59,7 +59,7 @@ exports.updateRideSchedule = (req,res) => {
   
 //get /viewRideSchedule
 exports.viewRideSchedule = (req,res) => {
-  let query = "select r.*, d.name from rideSchedule as r INNER JOIN driverUser as d ON r.driver = d.id where child = '" + req.query.child+"';";
+  let query = "select r.*, d.name as driverName, c.* from rideSchedule as r INNER JOIN driverUser as d ON r.driver = d.id INNER JOIN childUser as c on r.child = c.id where child = '" + req.query.child+"';";
   db.query(query, (err,rows, fields) => {
     if(err){
       logger.error("couldn't get rides");
