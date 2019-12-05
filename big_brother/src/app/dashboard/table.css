@@ -2,16 +2,16 @@
     background-color: white !important;
 }
 
-.header-box {
-    background: black;
-    border: 20px solid lightgray;
-    color: white;
+.header-box,
+.breadcrumb {
     position: relative;
-    width: 90%;
-    left: 5%;
-    right: 5%;
-    border-collapse: separate;
-    border-radius: 15%;
+    margin-top: 0.75em;
+    margin-left: 6em;
+    margin-right: 6em;
+}
+
+.header-box {
+    background-color: lightgray;
 }
 
 #row-h1 {
@@ -19,7 +19,10 @@
 }
 
 #submit-row {
-    margin-left: 70%;
+    margin-left: 63em;
     border-radius: 15%;
 }
 
+#displayHeader {
+    font-size: 1.5em;
+}

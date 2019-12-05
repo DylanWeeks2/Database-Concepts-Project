@@ -8,7 +8,7 @@ exports.setupAccounts = (req, res) => {
         res.status(400);
       }
     });
-    query = "CREATE TABLE `accounts` (`id` INT AUTO_INCREMENT, `username` VARCHAR(50) NOT NULL, `password` VARCHAR(50) NOT NULL, `userID` INT NOT NULL, PRIMARY KEY (`id`), UNIQUE INDEX `userID_UNIQUE` (`userID` ASC),UNIQUE INDEX `username_UNIQUE` (`username` ASC))";
+    query = "CREATE TABLE `accounts` (`id` INT AUTO_INCREMENT, `username` VARCHAR(50) NOT NULL, `password` VARCHAR(500) NOT NULL, `userID` INT NOT NULL, PRIMARY KEY (`id`), UNIQUE INDEX `userID_UNIQUE` (`userID` ASC),UNIQUE INDEX `username_UNIQUE` (`username` ASC))";
     db.query(query, (err, result) => { 
         if(err) {
           console.log(err);

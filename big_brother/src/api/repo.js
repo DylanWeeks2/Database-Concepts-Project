@@ -36,6 +36,10 @@ export class Repo {
     }
     
     login(username, password) {
+        const ps = createHash('sha256');
+        ps.update(password);
+        password = ps.digest('hex');
+        console.log("login password", password);
         let obj = {
             username: username,
             password: password
@@ -51,9 +55,9 @@ export class Repo {
     }
 
     addParent(parent) {
-        // const ps = createHash('sha256');
-        // ps.update(parent.password);
-        // parent.password = ps.digest('hex');
+         const ps = createHash('sha256');
+         ps.update(parent.password);
+         parent.password = ps.digest('hex');
         return new Promise((resolve, reject) => {
             axios.post(`${this.url}/addParent`, parent, this.config)
             .then(resp => {
@@ -104,6 +108,9 @@ export class Repo {
     // }
 
     addDriver(driver) {
+        const ps = createHash('sha256');
+        ps.update(driver.password);
+        driver.password = ps.digest('hex');
         return new Promise((resolve, reject) => {
             axios.post(`${this.url}/addDriver`, driver, this.config)
             .then(resp => {

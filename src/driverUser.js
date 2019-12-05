@@ -34,7 +34,7 @@ exports.setupDriver = (req, res) => {
       res.status(400);
     }
   });
-  query = "CREATE TABLE `driverUser` (`id` INT AUTO_INCREMENT, `name` VARCHAR(50) NOT NULL, `gender` VARCHAR(50),  `bio` VARCHAR(200), `email` VARCHAR(100),  `phone` VARCHAR(10) NOT NULL, `make` VARCHAR(50), `model` VARCHAR(50), `year` VARCHAR(50), `color` VARCHAR(50), `liscense` VARCHAR(50), `numSeats` VARCHAR(100), `condition` VARCHAR(200), `ammenities` VARCHAR(500),`username` VARCHAR(100) NOT NULL, `password` VARCHAR(100) NOT NULL, PRIMARY KEY (`id`), UNIQUE INDEX `id_UNIQUE` (`id` ASC)); ";
+  query = "CREATE TABLE `driverUser` (`id` INT AUTO_INCREMENT, `name` VARCHAR(50) NOT NULL, `gender` VARCHAR(50),  `bio` VARCHAR(200), `email` VARCHAR(100),  `phone` VARCHAR(10) NOT NULL, `make` VARCHAR(50), `model` VARCHAR(50), `year` VARCHAR(50), `color` VARCHAR(50), `liscense` VARCHAR(50), `numSeats` VARCHAR(100), `condition` VARCHAR(200), `ammenities` VARCHAR(500),`username` VARCHAR(100) NOT NULL, `password` VARCHAR(500) NOT NULL, PRIMARY KEY (`id`), UNIQUE INDEX `id_UNIQUE` (`id` ASC)); ";
   db.query(query, (err, result) => {
 
     if(err) {
@@ -191,3 +191,23 @@ exports.login = (req, res) => {
     }
   })
 }
+
+//get getDriverSchedule
+exports.getDriverSchedule = (req, res) =>{
+  db.query("SELECT * FROM driverUser", (err, rows) => console.log("all rows", rows));
+  let query = "SELECT * FROM driverUser as d LEFT JOIN driverSchedule as ds ON d.id = ds.driverID LEFT JOIN rideSchedule as r ON r.driver = d.id LEFT JOIN childUser as c ON r.child = c.id WHERE d.id = '" + req.body.id + "';";
+  db.query(query, (err,rows, fields) => {
+    if(err){
+      logger.error("couldn't get drivers");
+      res.status(400).json({
+        "data": [],
+        "error": "MySQL error"
+      });
+    }
+    else{
+      res.status(200).json({
+        "data": rows
+      });
+    }
+  });
+ };

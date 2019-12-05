@@ -1,5 +1,5 @@
 export class Child {
-    constructor(name, grade, school, health, username, password, id) {
+    constructor(name, grade, school, health, username, id, password) {
         this.name = name;
         this.grade = grade;
         this.school = school;

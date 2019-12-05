@@ -9,12 +9,26 @@ import { Rating } from './rating';
 import 'bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Repo } from '../../api/repo';
+import { Link } from 'react-router-dom'
 //const globalizeLocalizer = localizer(globalize)
 
 
 export class ParentDashboard extends React.Component {
     repo = new Repo();
 
+    addRide(time, children, driver, address, notes) {
+        const rides = new Ride(localStorage.getItem("userId"), time, new Date(),
+            this.state.account.children.find(y => y.id == children).id, this.state.account.children.find(y => y.id == children).name,
+            this.state.account.children.find(y => y.id == children).health,
+            address,
+            notes,
+            this.state.drivers.find(y => y.id == driver).id,
+            this.state.drivers.find(y => y.id == driver).name);
+        this.setState(prevState => {
+            prevState.rides.push(rides);
+            return prevState;
+        })
+    }
     state = {
         modalVisible: false,
         account: new ParentUser(1, "test@test.gmail", "1234567890", "1234 test rd", "45567 test rd", "Joe Mama",
@@ -79,7 +93,12 @@ export class ParentDashboard extends React.Component {
         return (
             <>
                 <div className="row header-box">
-                    <h1 className="" id="row-h1">Rides</h1>
+                    <nav aria-label="breadcrumb">
+                        <ol className="breadcrumb">
+                            <li className="breadcrumb-item"><Link to={`/parent/profile`} id="join">{this.state.account.name}</Link></li>
+                            <li className="breadcrumb-item active" aria-current="page">Add a Ride</li>
+                        </ol>
+                    </nav>
                     <AddRide children={this.state.account.children} drivers={this.state.drivers} submitRide={(time, children, driver, address, notes) => this.addRide(time, children, driver, address, notes)} />
                 </div>
                 {
@@ -98,39 +117,45 @@ export class ParentDashboard extends React.Component {
                 </div>
                 <div className="rideHistory"
                     style={{ "display": this.state.showResults > 0 ? 'block' : 'none' }}>
-                    <h1>Ride History</h1>
+                    <h1>Your Ride History</h1>
                     <ul className="list-group">
                         {
                             this.state.pastRides.map((x, i) =>
                                 <li key={i} className="list-group-item">
                                     <div className="card">
                                         <div className="card-header" id="displayHeader">
+                                            <div className="row mt-2 mb-2">
+                                                <div className="col-2">
+                                                    <label htmlFor="rating">Rating:</label>
+                                                </div>
+                                                <div className="col-3">
+                                                    <select
+                                                        name="rating"
+                                                        id="rating"
+                                                        className="form-control"
+                                                        value={this.state.rating}
+                                                        onChange={e => this.setState({ rating: e.target.value })}>
+                                                        <option></option>
+                                                        <option value="1">1 star</option>
+                                                        <option value="2">2 stars</option>
+                                                        <option value="3">3 stars</option>
+                                                        <option value="4">4 stars</option>
+                                                        <option value="5">5 stars</option>
+                                                    </select>
+                                                </div>
+                                                <div className="col-4" id="rating">
+                                                    <br />
+                                                    <Rating value={this.state.rating} />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div className="card-body" id="reviewCard">
                                             <span value={x.driverName}> </span>
                                             <span className="displayUser">{x.childName}</span>
                                             <span className='displayDate float-right'>{x.pickupAddr}</span>
                                             <br />
                                             <span className="displayComment">{x.destAddr}</span>
                                             <span className="displayDriver">{x.notes}</span>
-                                        </div>
-                                        <div className="card-body" id="reviewCard">
-                                            <label htmlFor="rating">Rating</label>
-                                            <select
-                                                name="rating"
-                                                id="rating"
-                                                className="form-control"
-                                                value={this.state.rating}
-                                                onChange={e => this.setState({ rating: e.target.value })}>
-                                                <option></option>
-                                                <option value="1">1 star</option>
-                                                <option value="2">2 stars</option>
-                                                <option value="3">3 stars</option>
-                                                <option value="4">4 stars</option>
-                                                <option value="5">5 stars</option>
-                                            </select>
-                                        </div>
-                                        <div className="col-2">
-                                            <br />
-                                            <Rating value={this.state.rating} />
                                         </div>
                                     </div>
                                 </li>)

@@ -48,6 +48,18 @@ export class Register extends Component {
   }
 
   addParent() {
+    if (this.state.parent_password == "" ) {
+      alert("Please enter a valid password!");
+      return;
+    }
+    if(this.state.parent_homeAddr == "") {
+      alert("Please enter a valid home address!");
+      return;
+    }
+    if(this.state.parent_username == "" ) {
+      alert("please enter a valid username!");
+      return;
+    } 
     let parent = new ParentUser(null, this.state.parent_email, this.state.parent_phone, this.state.parent_homeAddr, this.state.parent_workAddr, this.state.parent_name, null, this.state.parent_password, this.state.parent_username);
     this.repo.addParent(parent).then(user => {
       console.log("new USER, ", user.id);
@@ -59,25 +71,31 @@ export class Register extends Component {
   }
 
   addDriver() {
+    if(this.state.driver_username == "") {
+      alert("please enter a valid username!");
+      return;
+    }
+    if(this.state.driver_password == "") {
+      alert("please enter a valid password!");
+      return;
+    }
     let driver = new DriverUser(null, this.state.driver_name, this.state.gender, null, this.state.driver_email, this.state.driver_phone, null,null, null, null, null, null, null, null,this.state.driver_username, this.state.driver_password);
     this.repo.addDriver(driver).then(user => {
       console.log("new USER, ", user.id);
       localStorage.setItem("isLoggedIn", true);
       localStorage.setItem("userId", user.id);
       this.setState({ driver_redirect: true })
-    });
+    }).catch(err => {alert(err);});
 
   }
 
   render() {
     if (this.state.parent_redirect) {
       this.setState({parent_redirect: false});
-      console.log("PROFILE REDIRECT", this.state.parent_redirect);
       return <Redirect to='/parent/profile'/>;
     }
     else if (this.state.driver_redirect) {
       this.setState({driver_redirect: false});
-      console.log("Driver REDIRECT", this.state.driver_redirect);
       return <Redirect to='/driver/profile'/>;
     }
     return (
@@ -117,13 +135,13 @@ export class Register extends Component {
           <div className="container signup-container">
             <div className="row">
               <div className="col parent">
-                <h2>Parent Signup</h2>
+                <h1>Parent Signup</h1>
                 <form>
                   <div className="form-group">
                     <label htmlFor="name" id="label">Your Name:</label>
                     <input required type="text" className="form-control" placeholder="Name" value={this.state.parent_name} onChange={e => this.setState({ parent_name: e.target.value })} />
                     <label htmlFor="name" id="label">Username:</label>
-                    <input required type="text" className="form-control" placeholder="username" value={this.state.parent_username} onChange={e => this.setState({ parent_username: e.target.value })} />
+                    <input required type="text" className="form-control" placeholder="Username" value={this.state.parent_username} onChange={e => this.setState({ parent_username: e.target.value })} />
                     <label htmlFor="password" id="label">Password:</label>
                     <input required type="password" className="form-control"value={this.state.parent_password} onChange={e => this.setState({ parent_password: e.target.value })} />
                     <label htmlFor="email" id="label">Your Email:</label>
@@ -143,7 +161,7 @@ export class Register extends Component {
               </div>
 
               <div className="col driver">
-                <h2>Driver Signup</h2>
+                <h1>Driver Signup</h1>
                 <form>
                   <div className="form-group">
                     <label htmlFor="name" id="label">Your Name:</label>
