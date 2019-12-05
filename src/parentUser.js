@@ -144,7 +144,7 @@ exports.getParentAndChildInfo = (req, res) => {
 //put /updateParent
 exports.updateParent = (req, res) => {
   console.log(req.body);
-  let query = "update parentUser set email = '" + req.body.email + "', phone = '" + req.body.phone + "', homeAddr = '" + req.body.homeAddr + "', workAddr = '" + req.body.workAddr + "', name = '" + req.body.name +"'";
+  let query = "update parentUser set email = '" + req.body.email + "', phone = '" + req.body.phone + "', homeAddr = '" + req.body.homeAddr + "', workAddr = '" + req.body.workAddr + "', name = '" + req.body.name +"';";
   db.query(query, (err, result) => {
       if(err) {
           logger.error("failed to update parent");
