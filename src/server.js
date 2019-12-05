@@ -284,7 +284,8 @@ app.post('/setupRideSchedule', rideSchedule.setupRideSchedule);
 app.post('/addRideSchedule', rideSchedule.addRideSchedule);
 app.post('/deleteRideSchedule', rideSchedule.deleteRideSchedule);
 app.put('/updateRideSchedule', rideSchedule.updateRideSchedule);
-app.get('/getRideSchedule', rideSchedule.viewRideSchedule);
+app.get('/viewRideSchedule', rideSchedule.viewRideSchedule);
+app.get('/getRideSchedule', rideSchedule.getRideSchedule);
 app.get('/getDriverSchedule', rideSchedule.getDriverSchedule);
 //reivews
 app.post('/setupReviews', reviews.setupReviews);
