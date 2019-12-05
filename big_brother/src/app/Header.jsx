@@ -60,7 +60,7 @@ export class Header extends React.Component {
         this.dashboardLink = '/driver';
       }
       else {
-        profileLink = '/';
+        profileLink = '/child';
         this.dashboardLink = '/child';
       }
     }
