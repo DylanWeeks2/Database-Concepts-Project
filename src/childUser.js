@@ -30,7 +30,7 @@ exports.setupChild = (req, res) => {
 //post /addChild
 exports.addChild = (req, res) => {
   console.log(req.body);
-  let query = "INSERT into childUser values(NULL,'" + req.body.name + "','" + req.body.username + "','" + req.body.password + "','"  + req.body.grade + "', NULL,'" + req.body.healthConditions + "', NULL , NULL , NULL ,'" + req.body.parentID + "')"; 
+  let query = "INSERT into childUser values(NULL,'" + req.body.name + "','" + req.body.username + "','" + req.body.password + "','"  + req.body.grade + "', NULL,'" + req.body.healthConditions + "', NULL , NULL , NULL ,'" + req.body.parentID + "');"; 
   db.query(query, (err, result) => {
       if(err) {
           logger.error("failed too add child");
@@ -66,6 +66,24 @@ exports.addChild = (req, res) => {
 //GET /getChild
 exports.getChild = (req, res) => {
   let query = "select * from childUser where id = '" + req.query.id + "'";
+  db.query(query, function(err,rows, fields) {
+    if(err){
+        logger.error("couldn't get child info");
+        res.status(400).json({
+          "data": [],
+          "error": "MySQL error"
+        });
+      }
+      else{
+        res.status(200).json({
+          "data": rows
+        });
+      }
+  })
+}
+//GET /getChildOfParent
+exports.getChildOfParent = (req, res) => {
+  let query = "select * from childUser where parentID = '" + req.query.parent + "'";
   db.query(query, function(err,rows, fields) {
     if(err){
         logger.error("couldn't get child info");
