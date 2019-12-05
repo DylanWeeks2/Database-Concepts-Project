@@ -96,7 +96,7 @@ var auth = function(req, res, next) {
 
 
 //GET /setupdb
-app.get('/setupdb', (req, res) => {
+app.post('/setupdb', (req, res) => {
   console.log("setting up db");
   let query = "DROP TABLE if exists rideSchedule";
   db.query(query, (err, result) => 
@@ -244,16 +244,17 @@ app.post('/saveCreditCard', creditCard.saveCreditCard);
 app.get('/getCreditCard', creditCard.getCreditCard);
 //parentUser
 app.post('/setupParent', parentUser.setupParent);
+app.get('/getParentAndChildInfo', parentUser.getParentAndChildInfo);
 //app.put('/changeParentPassword', parentUser.changeParentPassword);
 app.post('/addParent', parentUser.addParent);
 app.get('/getParent', parentUser.getParent);
+app.put('/updateParent', parentUser.updateParent);
 //driverUser
 app.post('/setupDriver', driverUser.setupDriver);
 //app.put('/changeDriverPassword', driverUser.changeDriverPassword);
 app.post('/addDriver', driverUser.addDriver);
 app.put('/updateDriver', driverUser.updateDriver);
 app.get('/getDriver', driverUser.getDriver);
-//childUser
 //accidents
 app.post('/addAccident', accidents.addAccident);
 app.get('/getAccidents', accidents.getAccidents);
@@ -263,27 +264,30 @@ app.get('/getAvailabilities', availabilities.getAvailabilities);
 //services
 app.post('/addService', services.addService);
 app.get('/getServices', services.getServices);
-
+//childUser
 app.post('/setupChild', childUser.setupChild);
 app.post('/addChild', childUser.addChild);
-app.post('/updateChild', childUser.updateChild);
+app.put('/updateChild', childUser.updateChild);
 app.get('/getChild', childUser.getChild);
+app.get('/getChildOfParent', childUser.getChildOfParent);
 //car
 app.post('/setupCar', car.setupCar);
 app.post('/addCar', car.addCar);
 app.get('/getCar', car.getCar);
-app.post('/updateCar', car.updateCar);
+app.put('/updateCar', car.updateCar);
 //driverSchedule
 app.post('/setupDriverSchedule', driverSchedule.setupDriverSchedule);
 app.post('/addDriverSchedule', driverSchedule.addDriverSchedule);
-app.post('/setDriverScheduleStatus', driverSchedule.setDriverScheduleStatus);
+app.put('/setDriverScheduleStatus', driverSchedule.setDriverScheduleStatus);
 app.get('/getAvailableDrivers', driverSchedule.getAvailableDrivers);
 //rideSchedule
 app.post('/setupRideSchedule', rideSchedule.setupRideSchedule);
 app.post('/addRideSchedule', rideSchedule.addRideSchedule);
 app.post('/deleteRideSchedule', rideSchedule.deleteRideSchedule);
-app.post('/updateRideSchedule', rideSchedule.updateRideSchedule);
-app.get('/getRideSchedule', rideSchedule.viewRideSchedule);
+app.put('/updateRideSchedule', rideSchedule.updateRideSchedule);
+app.get('/viewRideSchedule', rideSchedule.viewRideSchedule);
+app.get('/getRideSchedule', rideSchedule.getRideSchedule);
+app.get('/getDriverSchedule', rideSchedule.getDriverSchedule);
 //reivews
 app.post('/setupReviews', reviews.setupReviews);
 app.post('/addReview', reviews.addReview);

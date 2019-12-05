@@ -3,7 +3,7 @@
 
 //post createRideSchedule
 exports.setupRideSchedule = (req,res) => {
-  let query = "drop table if exists rideSchedule";
+  let query = "drop table if exists rideSchedule;";
   db.query(query, (err,result) => {
     if(err){
       console.log(err);
@@ -22,11 +22,12 @@ exports.setupRideSchedule = (req,res) => {
 
 //post /addRideSchedule
 exports.addRideSchedule = (req, res) => {
-  let query = "insert into rideSchedule values('"+req.body.id+"','"+req.body.pick_up_location+"','"+req.body.drop_off_location+"','"+req.body.pick_up_time+"','"+req.body.drop_off_time+"','"+req.body.active+"','"+req.body.parent_id+"');";
+  //let query = "insert into rideSchedule values(NULL,'"+ `${req.body.pick_up_location}', '${req.body.drop_off_location} ', ' ${req.body.pick_up_time} ', ' ${req.body.drop_off_time} ', 1, ' ${req.body.parent} ', ' ${req.body.child} ', ' ${req.body.driver} ');`;
+  let query = "insert into rideSchedule values(NULL,'"+ req.body.pick_up_location + "','" + req.body.drop_off_location + "','" + req.body.pick_up_time + "','" + req.body.drop_off_time + "','" + req.body.parent + "','" + req.body.child + "','" + req.body.driver +"');";
   db.query(query, (err,result) => {
     if(err) {
-      res.redirect('/');
-      res.status(200).send('ride couldnt be scheduled');
+      logger.error(err);
+      res.status(400).send('ride couldnt be scheduled');
     }else{
       res.status(200).send('ride scheduled');
     }
@@ -39,6 +40,7 @@ exports.deleteRideSchedule = (req,res) => {
   db.query(query, (err,result) => {
     if(err) {
       logger.error("cant delete schedule");
+      res.status(400);
     }
     res.status(200).send("ride has been removed");
   });
@@ -46,7 +48,7 @@ exports.deleteRideSchedule = (req,res) => {
   
 //post /updateRideSchedule
 exports.updateRideSchedule = (req,res) => {
-  let query = "update schedule set pick_up_location = '" + req.body.pick_up_location + "', drop_off_location = '" + req.body.drop_off_location + "', pick_up_time = '" + req.body.pick_up_time + "', drop_off_time = '" + req.body.pick_up_time + "' where id = '" + req.body.id +"';";
+  let query = "update rideSchedule set pick_up_location = '" + req.body.pick_up_location + "', drop_off_location = '" + req.body.drop_off_location + "', pick_up_time = '" + req.body.pick_up_time + "', drop_off_time = '" + req.body.pick_up_time + "' where id = '" + req.body.id +"';";
   db.query(query, (err,result) => {
     if(err) {
       logger.error("cant update ride");
@@ -57,7 +59,7 @@ exports.updateRideSchedule = (req,res) => {
   
 //get /viewRideSchedule
 exports.viewRideSchedule = (req,res) => {
-  let query = "select * from schedule where child_id = '" + req.body.child_id+"';";
+  let query = "select r.*, d.name as driverName, c.* from rideSchedule as r INNER JOIN driverUser as d ON r.driver = d.id INNER JOIN childUser as c on r.child = c.id where child = '" + req.query.child+"';";
   db.query(query, (err,rows, fields) => {
     if(err){
       logger.error("couldn't get rides");
@@ -73,5 +75,44 @@ exports.viewRideSchedule = (req,res) => {
     }
   });
 }
+
+//get /getRideSchedule
+exports.getRideSchedule = (req,res) => {
+  let query = "select * from rideSchedule where parent = '" + req.body.parent +"';";
+  db.query(query, (err,rows, fields) => {
+    if(err){
+      logger.error("couldn't get rides");
+      res.status(400).json({
+        "data": [],
+        "error": "MySQL error"
+      });
+    }
+    else{
+      res.status(200).json({
+        "data": rows
+      });
+    }
+  });
+}
+ 
+ //get getDriverSchedule
+ exports.getDriverSchedule = (req, res) =>{
+  let query = "SELECT r.id as rideID, r.pick_up_location, r.drop_off_location, r.pick_up_time, r.drop_off_time, r.active, r.parent, r.driver, c.id as childID, c.name, c.username, c.password, c.grade, c.school, c.bio, c.healthConditions, c.emergencyContactName, c.emergencyContactNumber, c.rating FROM rideSchedule as r INNER JOIN childUser as c ON r.child = c.id WHERE r.driver = '" + req.query.driver + "';";
+  db.query(query, (err,rows, fields) => {
+    if(err){
+      logger.error("couldn't get drivers");
+      res.status(400).json({
+        "data": [],
+        "error": "MySQL error"
+      });
+    }
+    else{
+      res.status(200).json({
+        "data": rows
+      });
+    }
+  });
+ };
+
   
   

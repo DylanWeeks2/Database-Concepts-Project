@@ -1,5 +1,5 @@
 exports.setupAccident = (req, res) => {
-    let query = "drop table if exists `accidents`";
+    let query = "drop table if exists `accidents`;";
     db.query(query, (err, result) => {
       if(err){
         console.log("error setting up accidents", err);
@@ -7,7 +7,7 @@ exports.setupAccident = (req, res) => {
         res.status(400);
       }
     });
-    query = "CREATE TABLE accidents (driverId INT, `date` Date NOT NULL, `severity` VARCHAR(100), `type` VARCHAR(50), `descr` VARCHAR(400), FOREIGN KEY (driverId) REFERENCES driverUser(id))"
+    query = "CREATE TABLE accidents (driverId INT, `date` Date NOT NULL, `severity` VARCHAR(100), `type` VARCHAR(50), `descr` VARCHAR(400), FOREIGN KEY (driverId) REFERENCES driverUser(id));"
     db.query(query, (err, result) => {
       if(err) {
         console.log("error creating accidents", err);

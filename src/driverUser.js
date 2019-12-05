@@ -47,7 +47,7 @@ exports.setupDriver = (req, res) => {
       console.log("Driver Table Created");
     }
   })
-  query = "alter table driverUser auto_increment = 300000";
+  query = "alter table driverUser auto_increment = 300000;";
   db.query(query, (err, result) => {
     if(err) { 
       console.log(err);
@@ -57,7 +57,7 @@ exports.setupDriver = (req, res) => {
 
 // post /addDriver
 exports.addDriver = (req, res) => {
-  let query = "insert into driverUser values(NULL,'"+ `${req.body.name}', '${req.body.gender}` + "',NULL"  + `,'${req.body.email}','` + req.body.phone + `', NULL, NULL, NULL, NULL,NULL, NULL, NULL, NULL,'${req.body.username}','` + req.body.password + "')";
+  let query = "insert into driverUser values(NULL,'"+ `${req.body.name}', '${req.body.gender}` + "',NULL"  + `,'${req.body.email}','` + req.body.phone + `', NULL, NULL, NULL, NULL,NULL, NULL, NULL, NULL,'${req.body.username}','` + req.body.password + "');";
   db.query(query, (err, result) => {
     if(err) {
       console.log(err);
@@ -67,7 +67,7 @@ exports.addDriver = (req, res) => {
   });
   var currID;
   let user = null;
-  db.query("SELECT * FROM driverUser", (err, rows) => console.log("all rows", rows));
+  db.query("SELECT * FROM driverUser;", (err, rows) => console.log("all rows", rows));
   query = "select * from driverUser where name = '" + req.body.name + "' limit 1;"
   db.query(query, (err,rows,fields) => {
     if(err){
@@ -129,10 +129,10 @@ exports.addDriver = (req, res) => {
 //GET /getDriver
 exports.getDriver = (req, res) => {
   db.query("SELECT * FROM driverUser", (err, rows) => console.log("all rows", rows));
-  let query = "select * from driverUser d LEFT JOIN services s ON d.id = s.driverId where d.id = " + req.query.id + ";";
+  let query = "select * from driverUser as d LEFT JOIN services as s ON d.id = s.driverId where d.id = " + req.query.id + ";";
 
   console.log(query);
-  db.query("SELECT * FROM SERVICES", function(err, rows, fields) {console.log("services", rows)});
+  //db.query("SELECT * FROM SERVICES", function(err, rows, fields) {console.log("services", rows)});
   db.query(query, function(err,rows, fields) {
       if(err){
           logger.error("couldn't get driver user", err);
@@ -173,7 +173,7 @@ exports.updateDriver = (req, res) => {
 exports.login = (req, res) => {
   let username = req.body.username;
   let password = req.body.password;
-  let query = "select * from parentUser where name = '" + req.body.username + "' and password = '" + req.body.password + "' limit 1";
+  let query = "select * from driverUser where name = '" + req.body.username + "' and password = '" + req.body.password + "' limit 1;";
   db.query(query, function(err, rows, field) {
     if(rows == null  ||rows.length == 0){
       res.status(200).json({
@@ -181,7 +181,7 @@ exports.login = (req, res) => {
       });
     }
     else if(err) {
-      logger.error("failed logging in parent");
+      logger.error("failed logging in driver");
       res.status(400);
     }
     else{

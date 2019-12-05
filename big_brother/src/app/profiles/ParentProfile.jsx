@@ -9,23 +9,37 @@ import { Repo } from '../../api/repo';
 export class ParentProfile extends React.Component {
     repo = new Repo();
     state = {
-        profile: new ParentUser(0, "rando@rando.com", "9995554444", "5 Street Rd Dallas, Tx", "6 Road St Dallas, Tx", "Rando Name", [new Child("Test", "5", "Test Elementary", "Peanut Allergy", "XxTESTxX")])
+        profile: new ParentUser(100100, "sing.song@yahoo.com", "2145559874", "56322 League lakes blvd.", "45567 coit rd bldg 512", "Billie Joel",
+        [
+            (new Child("John Elton", 6, "Scistercian Middle School", "Water Allergy", "", "pass1234!", 200100)),
+            (new Child("Billy Maze", 3, "Constellar Academy for the musically Gifted", "Peanut Allergy", "MIKEy", "watermelonsNICe44", 200101))
+        ], "dietorock12", "MuSiCMaN"),
+        newPassField: ""
     }
 
-    updateChild(name, grade, school, health, username, password, id) {
+    changePassword() {
+        this.repo.changePass(localStorage.getItem("userId"), this.state.newPassField, this.state.profile.username)
+            .then(resp => alert(resp));
+    }
+
+    updateChild(name, grade, school, health, username, password, id){
+        //to-do: db call send
+        /*this.repo.updateChild(name, grade, school, health, username, password, id); */
         this.setState(prevState => {
-            const index = prevState.children.findIndex(x => x.id === id);
-            prevState.children[index].name = name;
-            prevState.children[index].grade = grade;
-            prevState.children[index].school = school;
-            prevState.children[index].health = health;
-            prevState.children[index].username = username;
-            prevState.children[index].password = password;
+            const index = prevState.profile.children.findIndex(x => x.id === id);
+            prevState.profile.children[index].name = name;
+            prevState.profile.children[index].grade = grade;
+            prevState.profile.children[index].school = school;
+            prevState.profile.children[index].health = health;
+            prevState.profile.children[index].username = username;
+            prevState.profile.children[index].password = password;
             return prevState;
         });
     }
 
     updateParent(email, phone, homeAddr, workAddr, name) {
+        /*this.repo.updateParent(email, phone, homeAddr, workAddr, name)
+            .then(add to state here); */
         this.setState(prevState => {
             prevState.profile.email = email;
             prevState.profile.phone = phone;
@@ -37,23 +51,33 @@ export class ParentProfile extends React.Component {
     }
 
     addChild(name, username, grade, school, health, password) {
-        this.setState(prevState => {
-            const child = new Child(name, grade, school, health, username, password, Math.random());
-            prevState.children.push(child);
-            return prevState;
+        //to-do: db call
+        let child;
+        this.repo.addChild(this.state.profile.id, name, username, grade, school, health, password)
+        .then(childId => {
+            child = new Child(name, grade, school, health, username, childId, password);
+            this.setState(prevState => {
+                prevState.profile.children.push(child);
+                return prevState;
+            })
         })
     }
 
+    //to-do: db call
+    
     componentDidMount() {
         this.repo.getParent(localStorage.getItem("userId"))
             .then((parent) => {
                 this.repo.getChildren(localStorage.getItem("userId"))
                     .then(children => {
-                        children.forEach(child => {
-                            parent.children.push(
-                                new Child(child["name"], child["grade"], child["school"], child["healthConditions"], child["userName"], child["password"], child["id"])
-                            );
-                        });
+                        if(children.length != 0) {
+                            children.forEach(child => {
+                                parent.children.push(
+                                    new Child(child["name"], child["grade"], child["school"], child["healthConditions"], child["username"], child["password"], child["id"])
+                                );
+                            });
+                        }
+                        this.setState({profile: parent});
                     });
             })
             .catch();
@@ -62,14 +86,14 @@ export class ParentProfile extends React.Component {
     render() {
         return (
             <>
-                <div className="row header-box">
+                {/* <div className="row header-box">
                     <nav aria-label="breadcrumb">
                         <ol className="breadcrumb">
                             <li className="breadcrumb-item"><Link to={`/parent`} id="addRide">Add Ride</Link></li>
                             <li className="breadcrumb-item active" aria-current="page">{`${this.state.profile.name}'s Profile`}</li>
                         </ol>
                     </nav>
-                </div>
+                </div> */}
                 <div style={{ margin: "5em" }}>
                     <h1 style={{ margin: "auto", borderradius: "5em" }} className="jumbotron jumbotron-fluid bg-info text-white w-50">Profile Information</h1>
 
@@ -104,6 +128,8 @@ export class ParentProfile extends React.Component {
                                     <th className="text-center">School</th>
                                     <th className="text-center">Health</th>
                                     <th className="text-center">Username</th>
+                                    <th className="text-center">Emergency Contact Name</th>
+                                    <th className="text-center">Emergency Contact Number</th>                                    
                                     <th />
                                 </tr>
                             </thead>
@@ -116,6 +142,8 @@ export class ParentProfile extends React.Component {
                                             <td className="text-center">{child.school}</td>
                                             <td className="text-center">{child.health}</td>
                                             <td className="text-center">{child.username}</td>
+                                            <td className="text-center">{child.emergencyCName}</td>
+                                            <td className="text-center">{child.emergencyCNum}</td>                                            
                                             <td className="text-center"><UpdateChild child={child} updateChild={(name, grade, school, health, username, password) => this.updateChild(name, grade, school, health, username, password, child.id)} /></td>
                                         </tr>
                                     )
@@ -136,10 +164,11 @@ export class ParentProfile extends React.Component {
                         <h3>Change Password</h3>
                         <form>
                             <div className="form-group">
-                                <input type="password" className="form-control" id="newPassword" />
+                                <input type="password" className="form-control" id="newPassword" value={this.state.newPassField} 
+                                    onChange={ e => this.setState({newPassField: e.target.value})}/>
                             </div>
                             <div className="input-group-append">
-                                <button className="resetButton btn btn-danger">Reset</button>
+                                <button className="resetButton btn btn-danger" onClick={pass => this.changePassword()}>Reset</button>
                             </div>
                         </form>
                     </div>

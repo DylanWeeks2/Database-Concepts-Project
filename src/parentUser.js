@@ -17,7 +17,7 @@ exports.setupParent = (req, res) => {
       console.log("Errpr creaing parent user", err);
       res.redirect('/'); }
   })
-  query = "ALTER TABLE parentUser AUTO_INCREMENT = 100000";
+  query = "ALTER TABLE parentUser AUTO_INCREMENT = 100000;";
   db.query(query, (err, result) => {
     if(err) { 
       console.log("Error altering parentuser", err);
@@ -52,7 +52,7 @@ exports.addParent = (req,res) => {
   })
   let currID = 0;
   let user = null;
-  db.query("select * from parentUser", (err,rows,fields) => {console.log("rows:", rows);});
+  //db.query("select * from parentUser", (err,rows,fields) => {console.log("rows:", rows);});
   query = "select * from parentUser where name = '" + req.body.name + "' limit 1;"
   db.query(query, (err,rows,fields) => {
     if(err){
@@ -66,8 +66,7 @@ exports.addParent = (req,res) => {
       console.log("Found User");
       user = rows[0];
       currID = rows[0].id;
-      console.log("insert into accounts values (NULL,'" + req.body.username +"','" + req.body.password +"'," + currID +");");
-      query = "insert into accounts values (NULL,'" + req.body.username +"','" + req.body.password +"'," + currID +");";
+      query = "insert into accounts values (NULL,'" + req.body.username +"','" + req.body.password +"','" + currID + "');"; 
       db.query(query, (err,rows, result) => {
         if(err){
           console.log(err);
@@ -123,3 +122,36 @@ exports.login = (req, res) => {
     }
   })
 }
+
+exports.getParentAndChildInfo = (req, res) => {
+  let query = "SELECT p.id as parentID, p.email, p.phone, p.homeAddr, p.workAddr, p.name as parentName, p.password as parentPass, p.username as parentUsername, c.id as childID, c.name as childName, c.username as childUsername, c.password as childPass, c.grade, c.school, c.bio, c.healthConditions, c.emergencyContactName, c.emergencyContactNumber, c.rating FROM parentUser as p LEFT JOIN childUser as c ON p.id = c.parentID WHERE p.id = "+ req.query.id + ";";
+  db.query(query, function(err, rows, fields) {
+    if(err){
+      logger.error("couldn't get parent user");
+      res.status(400).json({
+        "data": [],
+        "error": "MySQL error"
+      });
+    }
+    else{
+      res.status(200).json({
+        "data": rows
+      });
+    }
+  })
+}
+
+//put /updateParent
+exports.updateParent = (req, res) => {
+  console.log(req.body);
+  let query = "update parentUser set email = '" + req.body.email + "', phone = '" + req.body.phone + "', homeAddr = '" + req.body.homeAddr + "', workAddr = '" + req.body.workAddr + "', name = '" + req.body.name +"';";
+  db.query(query, (err, result) => {
+      if(err) {
+          logger.error("failed to update parent");
+          res.status(400);
+      }
+      else{
+          res.status(200).send('Parent has been updated!!');
+      }
+  })
+};

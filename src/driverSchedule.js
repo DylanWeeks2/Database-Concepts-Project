@@ -3,7 +3,7 @@
 
 // post setup driver schedule
 exports.setupDriverSchedule = (req, res) => {
-  let query = "drop table if exists driverSchedule";
+  let query = "drop table if exists driverSchedule;";
   db.query(query, (err,result) => {
     if(err){
       console.log(err);
@@ -23,7 +23,7 @@ exports.setupDriverSchedule = (req, res) => {
 // post addDriverSchedule
 exports.addDriverSchedule = (req, res) => {
   console.log(req.body);
-  let query = "insert into driverSchedule values('" + req.body.id + "','" + req.body.start + "','" + req.body.end + "','" + req.body.active + "','" + req.body.parent_id + "')"; 
+  let query = "insert into driverSchedule values(NULL,'" + req.body.start + "','" + req.body.end + "','" + req.body.active + "','" + req.body.driver_id + "');"; 
   db.query(query, (err, result) => {
       if(err) {
           logger.error("failed saving new credit card");
@@ -50,7 +50,7 @@ exports.setDriverScheduleStatus = (req, res) => {
  //get getAvailableDrivers
  exports.getAvailableDrivers = (req, res) =>{
   console.log(req,body);
-  let query = "select * from driverSchedule where '"+req.body.time+"' > driverSchedule.start and '"+req.body.time+ "'< driverSchedule.end";
+  let query = "select * from driverSchedule where '"+req.body.time+"' > driverSchedule.start and '"+req.body.time+ "'< driverSchedule.end;";
   db.query(query, (err,rows, fields) => {
     if(err){
       logger.error("couldn't get drivers");

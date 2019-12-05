@@ -15,44 +15,73 @@ import { Link } from 'react-router-dom'
 
 export class ParentDashboard extends React.Component {
     repo = new Repo();
+
+    // addRide(time, children, driver, address, notes) {
+        
+    //     const rides = new Ride(localStorage.getItem("userId"), time, new Date(),
+    //         this.state.account.children.find(y => y.id == children).id, this.state.account.children.find(y => y.id == children).name,
+    //         this.state.account.children.find(y => y.id == children).health,
+    //         address,
+    //         notes,
+    //         this.state.drivers.find(y => y.id == driver).id,
+    //         this.state.drivers.find(y => y.id == driver).name);
+    //     this.repo.addRide(localStorage.getItem("userId"), rides)
+    //         .then()    
+    //     // this.setState(prevState => {
+    //     //     prevState.rides.push(rides);
+    //     //     return prevState;
+    //     // })
+    // }
+    state = {
+        modalVisible: false,
+        account: new ParentUser(100100, "sing.song@yahoo.com", "2145559874", "56322 League lakes blvd.", "45567 coit rd bldg 512", "Billie Joel",
+            [
+                (new Child("John Elton", 6, "Scistercian Middle School", "Water Allergy", "", "pass1234!", 200100)),
+                (new Child("Billy Maze", 3, "Constellar Academy for the musically Gifted", "Peanut Allergy", "MIKEy", "watermelonsNICe44", 200101))
+            ], "dietorock12", "MuSiCMaN"
+        ),
+        rides: [
+            new Ride(0, new Date('December 17, 2019 13:24:00'), new Date('December 17, 2019 14:30:00'), 0, "John Elton", "5555 saint peters St.", "4444 johnpaul Rd.", "going to drama practice", 300102, "John Delaney", new Child("John Elton", 6, "Scistercian Middle School", "Water Allergy", "", "pass1234!", 200100)),
+            new Ride(1, new Date('December 17, 2019 16:45:00'), new Date('December 17, 2019 17:00:00'), 0, "John Elton", "4444 johnpaul Rd.", "5555 saint peters St.", "drop him off with his teacher", 300101, "Kingston Khan", new Child("John Elton", 6, "Scistercian Middle School", "Water Allergy", "", "pass1234!", 200100))
+        ],
+        pastRides: [
+            new Ride(2, new Date('October 5, 2019 08:00:00'), new Date('October 5, 2019 09:00:00'), 0, "John Elton", "9999 Deep Blue Rd.", "7612 Cornell Ave", "Kid's got a birthday party but I'm working", 300100, "Sylvester Stalone",new Child("John Elton", 6, "Scistercian Middle School", "Water Allergy", "", "pass1234!", 200100)),
+            new Ride(3, new Date('October 7, 2019 07:00:00'), new Date('October 7, 2019 07:30:00'), 0, "Billy Maze", "55few55 St.", "4444few Rd.", "Get him to school", 300102, "John Delaney", new Child("Billy Maze", 3, "Constellar Academy for the musically Gifted", "Peanut Allergy", "MIKEy", "watermelonsNICe44", 200101))
+        ],
+        drivers: [
+            new DriverUser(300101, "Kingston Khan", "M", "I'm driving to help finance my masters in astrophysics'", "KHAAAAN@gmail.com", 2145556666, "Chevy", "equinox", 2009, "silver", "7M5E99", 3, "Slightly Used", "cupholder", "bucky", "pass"),
+            new DriverUser(300100, "Sylvester Stalone", "M", "I LOVE KIDS", "pucnhout344@yahoo.com", 2145896326, "Ford", "fiesta", 2019, "Black", "CKR890", 5, "Like New", "Aux cords to play ur fav. tunes", "bucky", "pass"),
+            new DriverUser(300102, "John Delaney", "M", "I guarantee 0 interaction with my ride-ees", "jd777@gmail.com", 2189856546, "Chevy", "equinox", 2009, "silver", "7M5E99", 4, "Heavily Used", "", "bucky", "pass")
+        ]
+    }
+
     cancelRide(id) {
-        //changels for things here
-        console.log(id);
-        console.log(this.state.rides);
+        //to do: call to DB
+        /*this.repo.cancelParentRide(id);*/
         this.setState({ rides: this.state.rides.filter(x => { return x.id !== id }) });
     }
 
     addRide(time, children, driver, address, notes) {
-        const rides = new Ride(localStorage.getItem("userId"), time, new Date(),
-            this.state.account.children.find(y => y.id == children).id, this.state.account.children.find(y => y.id == children).name,
-            this.state.account.children.find(y => y.id == children).health,
+        let kid = this.state.account.children.find(y => y.id == children);
+        let driver1 = this.state.drivers.find(y => y.id == driver);
+        const rides =  new Ride(localStorage.getItem("userId"), time, new Date(), 
+            kid.id, kid.name,
+            kid.health,
             address,
             notes,
-            this.state.drivers.find(y => y.id == driver).id,
-            this.state.drivers.find(y => y.id == driver).name);
+            driver1.id,
+            driver1.name);
+        
+        //to do : this call doesn't work because the date-times aren't formatted correctly (we think)
+//        debugger;
+        // this.repo.addRide(localStorage.getItem("userId"), rides)
+        //     .then(resp => alert(resp))
         this.setState(prevState => {
             prevState.rides.push(rides);
             return prevState;
         })
     }
-    state = {
-        modalVisible: false,
-        account: new ParentUser(1, "test@test.gmail", "1234567890", "1234 test rd", "45567 test rd", "Joe Mama",
-            [
-                (new Child("Ben Dover", 2, "Good School", "Water Allergy", "xXx_BENDOVER69", 0)),
-                (new Child("Mike Hawk", 3, "BEst School", "Pain Allergy", "MIKE", 1))
-            ]
-        ),
-        rides: [
-            new Ride(0, new Date(), new Date(), 0, "Ben Dover", "5555 St.", "4444 Rd.", "This kid is fucking dope", 0, "Sofa King")
-        ],
-        pastRides: [
-            new Ride(1, new Date(), new Date(), 0, "Ben DICK", "55few55 St.", "4444few Rd.", "This kidfew is fucking dope", 0, "Sofafew King")
-        ],
-        drivers: [
-            new DriverUser(1, "Buck", "Chevy", 2009)
-        ]
-    }
+    
     toggleModel() {
         this.state.modalVisible
             ? this.setState({
@@ -60,33 +89,22 @@ export class ParentDashboard extends React.Component {
             })
             : this.setState({ modalVisible: true });
     };
-//FINISHSLDJLFSJLFKSJDFLJD FLKSJ DLKFSDJ FKL SDJLFKSJD FLSDFKLSDFKLSJFLKDF LSD F
+
+    //waiting for call from DB
     componentDidMount() {
-        this.repo.getParent(localStorage.getItem("userId"))
-            .then(parent => { //in the repo create the ParentUser object and then update that object using the children gotten below
-                this.repo.getChildren(localStorage.getItem("userId"))
-                    .then(children => { //Child table in database is missing a grade & a userName attribute
-                        children.forEach(child => {
-                            parent.children.push(new Child(child["name"], child["grade"], child["school"], 
-                                child["healthConditions"], child["userName"], child["id"]));
-                        });
-                        this.setState({ account: parent });
-                    })
-            })
+        this.repo.getParentWithChildren(localStorage.getItem("userId"))
+            .then(parent => {
+                if(parent.id) {
+                    debugger;
+                    this.setState({account: parent});
+                }
+                else {
+                    this.repo.getParent(localStorage.getItem("userId"))
+                        .then(parent => this.setState({account: parent}))
+                }
+            });
         this.repo.getRides(localStorage.getItem("userId")) //TODO:: handle current rides vs. Past rides-
-            .then(rides => {
-                let activeRides = [];
-                let pastRides = [];
-                rides.forEach(ride => {
-                    //Child objects right now have both the id and the name (and a Child object on Taylor's branch. This all needs to change)
-                    let obj = new Ride(ride.id, ride.pick_up_time, ride.drop_off_time, ride.child, )
-                    if(parseInt(ride["active"]) == 0) {
-                        pastRides.push();
-                    } else {
-                        activeRides.push();
-                    }
-                })
-            })
+            .then(rides => this.setState({ activeRides: rides.activeRides, pastRides: rides.pastRides }));
     }
 
     render() {
