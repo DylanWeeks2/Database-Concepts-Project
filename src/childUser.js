@@ -61,6 +61,9 @@ exports.addChild = (req, res) => {
       res.status(200).send("completed adding new user to accounts table");
     }
   });
+  res.status(200).json({
+    "id": currID
+  });
 };
 
 //GET /getChild
