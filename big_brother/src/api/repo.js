@@ -88,8 +88,9 @@ export class Repo {
                         kids.push(new Child(child["name"], child["grade"], child["school"],
                         child["healthConditions"], child["username"], child["id"], child["password"]));
                     });
-                    return new ParentUser(parent["id"], parent["email"], parent["phone"], parent["homeAddr"],
+                    let ret = new ParentUser(parent["id"], parent["email"], parent["phone"], parent["homeAddr"],
                     parent["workAddr"], parent["name"], kids, parent["password"], parent["username"]);
+                    resolve(ret);
                 });
         })
     }
@@ -209,13 +210,15 @@ export class Repo {
 
      addRide(ride) {
          return new Promise((resolve, reject) => {
-             axios.post(`${this.url}/addRideSchedule`, ride, this.config)
-             //.then(resp => resolve() /*handle successful post*/)
-             //.catch(resp => alert(resp));
+             axios.post(`${this.url}/addRideSchedule`, {pick_up_location: ride.pickupAddr, drop_off_location: ride.destAddr, pick_up_time: ride.pickupAddr, drop_off_time: ride.dropoff_time, active: 1, child: ride.childId, driver: ride.driverId}, this.config)
+             .then(resp => {
+                 resolve(resp.data); //returning the id of the ride
+             })
+             .catch(resp => alert(resp));
          });
      }
 
-     //Get the rides a parent has ordered FINISH THIS
+     //Get the rides a parent has ordered
      getRides(parentId) {
          return new Promise((resolve, reject) => {
              axios.get(`${this.url}/getRideSchedule`, parentId, this.config)
@@ -233,8 +236,17 @@ export class Repo {
                             ride["notes"], ride["driver"], ride["driverName"], new Child(null)));
                         }
                     });
-                    return { activeRides: activeRides, pastRides: pastRides };
+                    let ret = { activeRides: activeRides, pastRides: pastRides };
+                    resolve(ret);
                 });
+         });
+     }
+
+     cancelParentRide(rideId) {
+         return new Promise((resolve, reject) => {
+            axios.delete(`${this.url}/deleteRideSchedule`, rideId, this.config)
+            .then(resp => resolve(resp.data))
+            .catch(resp => alert(resp));
          });
      }
 
@@ -248,7 +260,7 @@ export class Repo {
                         ride["pick_up_location"], ride["drop_off_location"], "", ride["driver"], "", 
                         new Child(ride["name"], ride["grade"], ride["school"], ride["health"], ride["username"], ride["id"], ride["password"])));
                     });
-                    return ret;
+                    resolve(ret);
                 })
          });
      }
@@ -263,7 +275,7 @@ export class Repo {
                         ride["pick_up_location"], ride["drop_off_location"], "", ride["driver"], "", 
                         new Child(ride["name"], ride["grade"], ride["school"], ride["health"], ride["username"], ride["id"], ride["password"])));
                     });
-                    return ret;
+                    resolve(ret);
                 });
          });
      }
