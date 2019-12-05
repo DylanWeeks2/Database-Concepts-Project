@@ -23,7 +23,7 @@ exports.setupRideSchedule = (req,res) => {
 //post /addRideSchedule
 exports.addRideSchedule = (req, res) => {
   //let query = "insert into rideSchedule values(NULL,'"+ `${req.body.pick_up_location}', '${req.body.drop_off_location} ', ' ${req.body.pick_up_time} ', ' ${req.body.drop_off_time} ', 1, ' ${req.body.parent} ', ' ${req.body.child} ', ' ${req.body.driver} ');`;
-  let query = "insert into rideSchedule values(NULL,'"+ req.body.pick_up_location + "','" + req.body.drop_off_location + "','" + req.body.pick_up_time + "','" + req.body.drop_off_location + "','" + req.body.paren + "','" + req.body.child + "','" + req.body.driver +"');";
+  let query = "insert into rideSchedule values(NULL,'"+ req.body.pick_up_location + "','" + req.body.drop_off_location + "','" + req.body.pick_up_time + "','" + req.body.drop_off_time + "','" + req.body.parent + "','" + req.body.child + "','" + req.body.driver +"');";
   db.query(query, (err,result) => {
     if(err) {
       logger.error(err);
@@ -59,7 +59,7 @@ exports.updateRideSchedule = (req,res) => {
   
 //get /viewRideSchedule
 exports.viewRideSchedule = (req,res) => {
-  let query = "select * from rideSchedule where child = '" + req.query.child+"';";
+  let query = "select r.*, d.name from rideSchedule as r INNER JOIN driverUser as d ON r.driver = d.id where child = '" + req.query.child+"';";
   db.query(query, (err,rows, fields) => {
     if(err){
       logger.error("couldn't get rides");
